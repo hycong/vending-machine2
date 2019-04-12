@@ -1,0 +1,1 @@
+<?phpnamespace app\rep\controller;class Index extends Common{    /**     * 首页数据     * @return mixed     */    public function index()    {        return $this->fetch();    }}
