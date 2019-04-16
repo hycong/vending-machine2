@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    {include file="../application/common/view/web/head.html" title=" - 微信管理"}
+    <style>
+        .extract_form {
+            display: none;
+        }
+    </style>
+</head>
+<!-- begin::Body -->
+<body class="m-page--fluid m--skin- m-content--skin-light2 m-header--fixed m-header--fixed-mobile m-aside-left--enabled m-aside-left--skin-dark m-aside-left--fixed m-aside-left--offcanvas m-footer--push m-aside--offcanvas-default">
+<!-- begin:: Page -->
+<div class="m-grid m-grid--hor m-grid--root m-page">
+    <!-- BEGIN: Header -->
+    {include file="../application/common/view/web/header.html"}
+    <!-- END: Header -->
+    <!-- begin::Body -->
+    <div class="m-grid__item m-grid__item--fluid m-grid m-grid--ver-desktop m-grid--desktop m-body">
+        <!-- BEGIN: Left Aside -->
+        {include file="../application/common/view/web/left.html"}
+        <!-- END: Left Aside -->
+        <div class="m-grid__item m-grid__item--fluid m-wrapper">
+            <div class="m-subheader ">
+                <div class="d-flex align-items-center">
+                    <div class="mr-auto">
+                        <h3 class="m-subheader__title m-subheader__title--separator">微信管理</h3>
+                        <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
+                            <li class="m-nav__item m-nav__item--home">
+                                <a href="{:url('Index/index')}" class="m-nav__link m-nav__link--icon">
+                                    <i class="m-nav__link-icon la la-home"></i>
+                                </a>
+                            </li>
+                            <li class="m-nav__separator">-</li>
+                            <li class="m-nav__item">
+                                <a href="{:url('depost/index')}" class="m-nav__link">
+                                    <span class="m-nav__link-text">提现管理</span>
+                                </a>
+                            </li>
+                            <li class="m-nav__separator">-</li>
+                            <li class="m-nav__item">
+                                <a href="" class="m-nav__link">
+                                    <span class="m-nav__link-text">提现列表</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="m-content">
+                <div class="m-portlet">
+                    <div class="m-portlet__head">
+                        <div class="m-portlet__head-caption">
+                            <div class="m-portlet__head-title">
+                                <h3 class="m-portlet__head-text">关键字列表</h3>
+                            </div>
+                        </div>
+                        <div class="m-portlet__head-tools">
+                            <ul class="m-portlet__nav"></ul>
+                        </div>
+                    </div>
+                    <div class="m-portlet__body">
+                        <div class="dataTables_wrapper">
+                            <table class="table table-striped- table-bordered table-hover table-checkable">
+                                <thead>
+                                <tr>
+                                    <th class="text-center">提现ID</th>
+                                    <th >提现加盟商</th>
+                                    <th >提现金额</th>
+                                    <th >提现银行</th>
+                                    <th >提现账号</th>
+                                    <th >提现人</th>
+                                    <th >提现人电话</th>
+                                    <th >提现时间</th>
+                                    <th class="text-center">提现状态</th>
+                                    <th >操作</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {volist name="agent_record" id="vo"}
+                                <tr class="extract_box_{$vo.extract_id}">
+                                    <td class="text-middle text-center">{$vo.extract_id}</td>
+                                    <td class="text-middle">{$vo.agent_name}</td>
+                                    <td class="text-middle">{$vo.extract_money|floatval}</td>
+                                    <td class="text-middle">{$vo.extract_bank}</td>
+                                    <td class="text-middle">{$vo.extract_card}</td>
+                                    <td class="text-middle">{$vo.extract_name}</td>
+                                    <td class="text-middle">{$vo.extract_mobile}</td>
+                                    <td class="text-middle text-center">{$vo.extract_time}</td>
+                                    <td class="text-middle text-center">
+                                        {switch name="$vo.extract_status"}
+                                        {case value="0"}<span style="color: orange">未处理</span>{/case}
+                                        {case value="1"}<span style="color: green">已转账</span>{/case}
+                                        {case value="2"}<span style="color: red">已拒绝</span>{/case}
+                                        {/switch}
+                                    </td>
+                                    <td class="">
+                                        <button class="btn btn-sm btn-info extract_btn" data-extract="{$vo.extract_id}" hrefs="{:url('depost',['extract_id'=>$vo.extract_id])}">详情</button>
+                                    </td>
+                                </tr>
+                                <tr class="extract_form extract_{$vo.extract_id}">
+                                    <td colspan="10">
+                                        <form action="{:url('depost')}" class="form-horizontal adminex-form depost_{$vo.extract_id}" method="post">
+                                            <table class="table table-bordered table-hover table-striped table-condensed">
+                                                <tr>
+                                                    <td class="am-text-right">提现状态</td>
+                                                    {switch name="$vo.extract_status"}
+                                                    {case value="0"}
+                                                    <td style="background-color: #ccc">未处理</td>
+                                                    {/case}
+                                                    {case value="1"}
+                                                    <td style="background-color: #0daf35;color: #fff;">已转账</td>
+                                                    {/case}
+                                                    {case value="2"}
+                                                    <td style="background-color: #cc0c03;color: #fff;">已拒绝</td>
+                                                    {/case}
+                                                    {/switch}
+                                                </tr>
+                                                <tr>
+                                                    <td class="am-text-right">提现加盟商 (ID)</td>
+                                                    <td class="">{$vo.agent_name} ({$vo.extract_agent_id})</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="am-text-right">提现金额</td>
+                                                    <td class="">￥{$vo.extract_money|floatval} <strong style="color: red;">(
+                                                        提现：￥{$vo.extract_money|floatval}，手续费：￥{$vo.extract_tax|floatval}
+                                                        )</strong></td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="am-text-right">提现银行</td>
+                                                    <td class="">{$vo.extract_bank}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="am-text-right">提现账号</td>
+                                                    <td class="">{$vo.extract_card}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="am-text-right">提现人</td>
+                                                    <td class="">{$vo.extract_name}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="am-text-right">提现人电话</td>
+                                                    <td class="">{$vo.extract_mobile}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="am-text-right">申请时间</td>
+                                                    <td class="">{$vo.extract_time}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="am-text-right">提现备注</td>
+                                                    <td class="">{$vo.extract_remark}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="am-text-right">处理结果</td>
+                                                    <td class="">{$vo.extract_remark}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="am-text-right">处理人</td>
+                                                    <td class="">
+                                                        {switch name="$vo.extract_deal_agent"}
+                                                        {case value="0"}/{/case}
+                                                        {case value="-1"}总后台{/case}
+                                                        {default /}{$vo.extract_deal_agent}
+                                                        {/switch}
+                                                    </td>
+                                                </tr>
+                                                {if condition="$vo.extract_status == 0"}
+                                                <tr>
+                                                    <td class="am-text-right am-text-middle">处理结果</td>
+                                                    <td class="am-form am-text-middle">
+                                                        <input type="hidden" name="extract_id" value="{$vo.extract_id}">
+                                                        <div class="m-radio-inline">
+                                                            <label class="m-radio">
+                                                                <input type="radio" name="extract_status" value="1"> 已转账
+                                                                <span></span>
+                                                            </label>
+                                                            <label class="m-radio">
+                                                                <input type="radio" name="extract_status" value="2" checked> 已拒绝
+                                                                <span></span>
+                                                            </label>
+                                                        </div>
+
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="am-text-right am-text-middle">处理结果备注</td>
+                                                    <td class="">
+                                                        <div class="am-form">
+                                                            <textarea name="extract_remark" class="form-control" cols="30" rows="10"></textarea>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="am-text-right am-text-middle">处理结果备注</td>
+                                                    <td class="">
+                                                        <input type="button" class="btn btn-info" onclick="depost_sumbit('{$vo.extract_id}')" value="提交审核">
+                                                    </td>
+                                                </tr>
+                                                {/if}
+                                            </table>
+                                        </form>
+                                    </td>
+                                </tr>
+                                {/volist}
+                                </tbody>
+                            </table>
+                            <div class="dataTables_pager">
+                                <div class="dataTables_paginate paging_simple_numbers">{$agent_record->render()}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- end:: Body -->
+    <!-- begin::Footer -->
+    {include file="../application/common/view/web/footer.html"}
+    <!-- end::Footer -->
+</div>
+<!-- end:: Page -->
+{include file="../application/common/view/web/foot.html"}
+</body>
+<!-- end::Body -->
+</html>
+
+<script>
+    nav_url = "{:url('depost/index')}";
+    $('.extract_btn').click(function () {
+        let id = $(this).data('extract');
+        if ($('.extract_' + id).css("display") == "none") {
+            $('.extract_form').hide();
+            $(this).text('隐藏');
+            $('.extract_' + id).css('display','table-row');
+            let top = $('.extract_' + id).offset().top;
+            $("html,body").animate({scrollTop: top - 130}, 1000);
+        } else {
+            $(this).text('详情');
+            $('.extract_' + id).hide();
+        }
+    });
+
+    /**
+     * 提交处理
+     * @param id
+     */
+    function depost_sumbit(id) {
+        submit_form({
+            url : '{:url("depost")}',
+            data : $('.depost_'+id).serialize(),
+            fun : function (res) {
+                if(res.state = 200){
+                    layer.msg(res.msg,{},function () {
+                        window.location.reload();
+                    });
+                }else{
+                    layer.open({
+                        title:'审核提示',
+                        content:res.msg,
+                    });
+                }
+            }
+        });
+    }
+</script>

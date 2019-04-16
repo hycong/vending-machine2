@@ -15,7 +15,7 @@ class VWxkeyword extends Validate
 {
 
     protected $rule =   [
-        'keyword_title'   => 'require',
+        'keyword_title'   => 'require|unique:keyword,keyword_id,,keyword_id',
         'keyword_reply' => 'require',
         'keyword_url'  => 'require',
         'keyword_responseType'  => 'require',
@@ -23,6 +23,7 @@ class VWxkeyword extends Validate
 
     protected $message  =   [
         'keyword_title.require'      => '请输入关键字',
+        'keyword_title.unique'      => '请输入关键字',
         'keyword_reply.require'       => '请输入回复内容',
         'keyword_url.require'       => '请输入链接地址',
         'keyword_responseType.require'        => '请选择回复类型',

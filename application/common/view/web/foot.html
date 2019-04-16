@@ -1,0 +1,43 @@
+<!-- begin::Scroll Top -->
+<div id="m_scroll_top" class="m-scroll-top">
+    <i class="la la-arrow-up"></i>
+</div>
+<!-- end::Scroll Top -->
+<!--begin::Global Theme Bundle -->
+<script src="/resource/web/assets/vendors/base/vendors.bundle.js" type="text/javascript"></script>
+<script src="/resource/web/assets/demo/default/base/scripts.bundle.js" type="text/javascript"></script>
+<!--end::Global Theme Bundle -->
+<script>
+    var isSubmit = true;
+    var submit_option = {
+        url:'',
+        data:{},
+        type:'POST',
+        dataType: 'json',
+        fun:function (res) {}
+    };
+    /**
+     * 提交处理
+     * @param id
+     */
+    function submit_form(option) {
+        if(isSubmit == false) return false;
+        option = $.extend(submit_option,option);
+        isSubmit = false;
+        $.ajax({
+            url: option.url,
+            data: option.data,
+            type:'POST',
+            dataType:'json',
+            success:function (res) {
+                option.fun(res);
+                isSubmit = true;
+            },
+            error:function (e) {
+                console.log('提交错误！');
+                console.log(e);
+                isSubmit = true;
+            }
+        });
+    }
+</script>
