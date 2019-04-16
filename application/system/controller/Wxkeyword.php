@@ -19,7 +19,7 @@ class Wxkeyword extends Common
     public function index(){
         $list = Db::name('keyword')->where([
             'keyword_triggerType' => 2,
-        ])->paginate(20,false,['query'=>request()->param()]);
+        ])->paginate($this->pageNum,false,['query'=>request()->param()]);
         return $this->fetch('',['list' => $list]);
     }
 

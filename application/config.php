@@ -236,8 +236,12 @@ return [
 
     //分页配置
     'paginate'               => [
-        'type'      => 'bootstrap',
+        'type'      => 'bootstrap1',
         'var_page'  => 'page',
         'list_rows' => 15,
+    ],
+
+    'employ_config' => [
+        'wechat_refund' => 1, // 是否开启微信退款   1 开启， 2 关闭
     ],
 ];

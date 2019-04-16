@@ -65,7 +65,7 @@
                         <a href="#" class="m-link">
                         </a>
                         <a href="#">
-                            <button id="m_login_signin_submit"
+                            <button id="login_submit"
                                     class="btn btn-primary m-btn m-btn--pill m-btn--custom m-btn--air m-login__btn m-login__btn--primary">
                                 登录
                             </button>
@@ -98,7 +98,7 @@
 <!-- end::Body -->
 </html>
 <script>
-    $('#m_login_signin_submit').click(function () {
+    $('#login_submit').click(function () {
         var captcha = $("#captcha").val();
         var username = $("#userName").val();
         var password = $("#userPassword").val();
@@ -112,7 +112,11 @@
                     location.href = "{:url('index/index')}";
                 }else{
                     $('#verify_img').trigger('click');
-                    layer.msg(data.msg);
+                    Swal.fire({
+                        title: data.msg,
+                        type:'error',
+                        timer: 2000,
+                    });
                 }
             }
         });
