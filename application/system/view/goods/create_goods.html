@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    {include file="../application/common/view/web/head.html" title=" - 商品管理"}
+</head>
+<!-- begin::Body -->
+<body class="m-page--fluid m--skin- m-content--skin-light2 m-header--fixed m-header--fixed-mobile m-aside-left--enabled m-aside-left--skin-dark m-aside-left--fixed m-aside-left--offcanvas m-footer--push m-aside--offcanvas-default">
+<!-- begin:: Page -->
+<div class="m-grid m-grid--hor m-grid--root m-page">
+    <!-- BEGIN: Header -->
+    {include file="../application/common/view/web/header.html"}
+    <!-- END: Header -->
+    <!-- begin::Body -->
+    <div class="m-grid__item m-grid__item--fluid m-grid m-grid--ver-desktop m-grid--desktop m-body">
+        <!-- BEGIN: Left Aside -->
+        {include file="../application/common/view/web/left.html"}
+        <!-- END: Left Aside -->
+        <div class="m-grid__item m-grid__item--fluid m-wrapper">
+            <div class="m-subheader ">
+                <div class="d-flex align-items-center">
+                    <div class="mr-auto">
+                        <h3 class="m-subheader__title m-subheader__title--separator">微信管理</h3>
+                        <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
+                            <li class="m-nav__item m-nav__item--home">
+                                <a href="{:url('Index/index')}" class="m-nav__link m-nav__link--icon">
+                                    <i class="m-nav__link-icon la la-home"></i>
+                                </a>
+                            </li>
+                            <li class="m-nav__separator">-</li>
+                            <li class="m-nav__item">
+                                <a href="{:url('Goods/index')}" class="m-nav__link">
+                                    <span class="m-nav__link-text">商品管理</span>
+                                </a>
+                            </li>
+                            <li class="m-nav__separator">-</li>
+                            <li class="m-nav__item">
+                                <a href="" class="m-nav__link">
+                                    <span class="m-nav__link-text">商品列表</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="m-content">
+                <div class="m-portlet">
+                    <div class="m-portlet__head">
+                        <div class="m-portlet__head-caption">
+                            <div class="m-portlet__head-title">
+                                <h3 class="m-portlet__head-text">添加商品</h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="m-portlet__body">
+                        <form class="m-form m-form--fit m-form--label-align-right" action="{:url('')}" method="post" id="form">
+                            <div class="m-portlet__body">
+
+                                <div class="form-group m-form__group row">
+                                    <label for="goods_name" class="col-form-label col-lg-2 col-md-2 col-sm-12">商品名称</label>
+                                    <div class="col-lg-10 col-md-10 col-sm-12">
+                                        <input class="form-control" type="text" id="goods_name" name="goods_name" placeholder="请输入名称">
+                                    </div>
+                                </div>
+                                <div class="form-group m-form__group row">
+                                    <label for="goods_name" class="col-form-label col-lg-2 col-md-2 col-sm-12">商品备注</label>
+                                    <div class="col-lg-10 col-md-10 col-sm-12">
+                                        <input class="form-control" type="text" id="goods_type" name="goods_type" placeholder="请输入备注">
+                                    </div>
+                                </div>
+                                <div class="form-group m-form__group row">
+                                    <label  class="col-form-label col-lg-2 col-md-2 col-sm-12">商品图片</label>
+                                    <div class="col-lg-10 col-md-10 col-sm-12">
+                                        <div class="form-group m-form__group row am-form-file">
+                                            <div class="tpl-form-file-img">
+                                                <img alt="" id="myImg">
+                                            </div>
+                                            <button type="button" class="am-btn am-btn-danger am-btn-sm" >
+                                                <i class="am-icon-cloud-upload"></i> 添加商品图片 </button>
+                                            <input id="doc-form-file"  type="file" name="goods_pic" onchange="changImg(event)">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group m-form__group row">
+                                    <label for="goods_price" class="col-form-label col-lg-2 col-md-2 col-sm-12">建议价格</label>
+                                    <div class="col-lg-10 col-md-10 col-sm-12">
+                                        <input class="form-control" type="text" id="goods_price" name="goods_price" placeholder="请输入建议价格">
+                                    </div>
+                                </div>
+                                <div class="form-group m-form__group row">
+                                    <label for="goods_desc" class="col-form-label col-lg-2 col-md-2 col-sm-12">商品描述</label>
+                                    <div class="col-lg-10 col-md-10 col-sm-12">
+                                        <textarea class="form-control" rows="5" id="goods_desc" name="goods_desc" placeholder="请输入商品描述"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="m-portlet__foot m-portlet__foot--fit">
+                                <div class="m-form__actions m-form__actions">
+                                    <div class="row">
+                                        <div class="col-lg-9 ml-lg-auto">
+                                            <button type="button" id="sub" class="btn btn-success">保存设置</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- end:: Body -->
+    <!-- begin::Footer -->
+    {include file="../application/common/view/web/footer.html"}
+    <!-- end::Footer -->
+</div>
+<!-- end:: Page -->
+{include file="../application/common/view/web/foot.html"}
+</body>
+<!-- end::Body -->
+</html>
+<script>
+    nav_url = "{:url('wxkeyword/index')}";
+    $('#sub').click(function () {
+        submit_form({
+            url: '{:url("")}',
+            data: $('#form').serialize(),
+            fun: function (res) {
+                if(res.state == 200){
+                    Swal.fire({
+                        title: res.msg,
+                        type:'success',
+                        timer: 2000,
+                        onClose: () => {
+                            window.location.href = '{:url("index")}';
+                        }
+                    });
+                }else{
+                    Swal.fire({
+                        title: res.msg,
+                        type:'error',
+                    });
+                }
+            }
+        });
+    });
+</script>
