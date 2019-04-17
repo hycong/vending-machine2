@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    {include file="../application/common/view/web/head.html" title=" - 广告管理"}
+    <style>
+        input[type=text].show-mch-no {
+            border: none;
+            background-color: transparent;
+            width: 83px;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
+
+    </style>
+</head>
+<!-- begin::Body -->
+<body class="m-page--fluid m--skin- m-content--skin-light2 m-header--fixed m-header--fixed-mobile m-aside-left--enabled m-aside-left--skin-dark m-aside-left--fixed m-aside-left--offcanvas m-footer--push m-aside--offcanvas-default">
+<!-- begin:: Page -->
+<div class="m-grid m-grid--hor m-grid--root m-page">
+    <!-- BEGIN: Header -->
+    {include file="../application/common/view/web/header.html"}
+    <!-- END: Header -->
+    <!-- begin::Body -->
+    <div class="m-grid__item m-grid__item--fluid m-grid m-grid--ver-desktop m-grid--desktop m-body">
+        <!-- BEGIN: Left Aside -->
+        {include file="../application/common/view/web/left.html"}
+        <!-- END: Left Aside -->
+        <div class="m-grid__item m-grid__item--fluid m-wrapper">
+            <div class="m-subheader ">
+                <div class="d-flex align-items-center">
+                    <div class="mr-auto">
+                        <h3 class="m-subheader__title m-subheader__title--separator">广告管理</h3>
+                        <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
+                            <li class="m-nav__item m-nav__item--home">
+                                <a href="{:url('Index/index')}" class="m-nav__link m-nav__link--icon">
+                                    <i class="m-nav__link-icon la la-home"></i>
+                                </a>
+                            </li>
+                            <li class="m-nav__separator">-</li>
+                            <li class="m-nav__item">
+                                <a href="{:url('Adver/index')}" class="m-nav__link">
+                                    <span class="m-nav__link-text">广告管理</span>
+                                </a>
+                            </li>
+                            <li class="m-nav__separator">-</li>
+                            <li class="m-nav__item">
+                                <a href="{:url('Advertising/index')}" class="m-nav__link">
+                                    <span class="m-nav__link-text">投放列表</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="m-content">
+                <div class="row">
+                    <div class="col-lg-3">
+
+                        <!--begin::Portlet-->
+                        <div class="m-portlet">
+                            <div class="m-portlet__head">
+                                <div class="m-portlet__head-caption">
+                                    <div class="m-portlet__head-title">
+												<span class="m-portlet__head-icon">
+													<i class="flaticon-add"></i>
+												</span>
+                                        <h3 class="m-portlet__head-text">
+                                           投放信息
+                                        </h3>
+                                    </div>
+                                </div>
+                            </div>
+                            <form class="m-form m-form--fit m-form--label-align-right">
+                                <div class="m-portlet__body">
+                                    <div class="form-group m-form__group">
+                                        <label >投放类型</label>
+                                        <div class="m-form__control">
+                                        <label class="m-radio m-radio--solid m-radio--success" style="line-height: 1.85em;margin-right: 2em;">
+                                            <input type="radio" class="form-control" name="advType" value="1" checked> 不分屏
+                                            <span></span>
+                                        </label>
+                                        <label class="m-radio m-radio--solid m-radio--success" style="line-height: 1.85em">
+                                            <input type="radio" class="form-control" name="advType" value="2"> 分屏
+                                            <span></span>
+                                        </label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group m-form__group">
+                                        <label for="adver">投放素材</label>
+                                        <div class="m-form__control">
+                                            <select class="form-control m-input m-input--solid" id="adver" multiple="multiple"></select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group m-form__group">
+                                        <label for="exampleInputEmail1">投放区域</label>
+                                        <select class="form-control m-input m-input--solid" id="exampleInputEmail1">
+                                            <option>1</option>
+                                            <option>2</option>
+                                            <option>3</option>
+                                            <option>4</option>
+                                            <option>5</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group m-form__group">
+                                    <label >投放机器</label>
+                                    <div class="m-form__control">
+                                        <input type="text" class="form-control m-input m-input--solid">
+                                    </div>
+                                </div>
+                                    <!--<div class="form-group m-form__group">-->
+                                        <!--<label for="exampleTextarea">Example textarea</label>-->
+                                        <!--<textarea class="form-control m-input m-input&#45;&#45;solid" id="exampleTextarea" rows="3"></textarea>-->
+                                    <!--</div>-->
+                                </div>
+                                <div class="m-portlet__foot m-portlet__foot--fit">
+                                    <div class="m-form__actions">
+                                        <button type="button" class="btn btn-success">投放</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+
+                        <!--end::Portlet-->
+                    </div>
+                    <div class="col-lg-9">
+
+                        <!--begin::Portlet-->
+                        <div class="m-portlet" id="m_portlet">
+                            <div class="m-portlet__head">
+                                <div class="m-portlet__head-caption">
+                                    <div class="m-portlet__head-title">
+												<span class="m-portlet__head-icon">
+													<i class="flaticon-imac"></i>
+												</span>
+                                        <h3 class="m-portlet__head-text">
+                                            机器选择
+                                        </h3>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="m-portlet__body">
+
+                                <!--begin: Search Form -->
+                                <div class="m-form m-form--label-align-right m--margin-top-20 m--margin-bottom-30">
+                                    <div class="row align-items-center">
+                                        <div class="col-xl-8 order-2 order-xl-1">
+                                            <div class="form-group m-form__group row align-items-center">
+                                                <div class="col-md-4">
+                                                    <div class="m-form__group m-form__group--inline">
+                                                        <div class="m-form__label">
+                                                            <label>Status:</label>
+                                                        </div>
+                                                        <div class="m-form__control">
+                                                            <div class="dropdown bootstrap-select form-control m-bootstrap-select m-bootstrap-select--solid"><select class="form-control m-bootstrap-select m-bootstrap-select--solid" id="m_form_status" tabindex="-98">
+                                                                <option value="">All</option>
+                                                                <option value="1">Pending</option>
+                                                                <option value="2">Delivered</option>
+                                                                <option value="3">Canceled</option>
+                                                            </select><button type="button" class="btn dropdown-toggle bs-placeholder btn-light" data-toggle="dropdown" role="button" data-id="m_form_status" title="All"><div class="filter-option"><div class="filter-option-inner">All</div></div>&nbsp;<span class="bs-caret"><span class="caret"></span></span></button><div class="dropdown-menu " role="combobox"><div class="inner show" role="listbox" aria-expanded="false" tabindex="-1"><ul class="dropdown-menu inner show"></ul></div></div></div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="d-md-none m--margin-bottom-10"></div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="m-form__group m-form__group--inline">
+                                                        <div class="m-form__label">
+                                                            <label class="m-label m-label--single">Type:</label>
+                                                        </div>
+                                                        <div class="m-form__control">
+                                                            <div class="dropdown bootstrap-select form-control m-bootstrap-select m-bootstrap-select--solid"><select class="form-control m-bootstrap-select m-bootstrap-select--solid" id="m_form_type" tabindex="-98">
+                                                                <option value="">All</option>
+                                                                <option value="1">Online</option>
+                                                                <option value="2">Retail</option>
+                                                                <option value="3">Direct</option>
+                                                            </select><button type="button" class="btn dropdown-toggle bs-placeholder btn-light" data-toggle="dropdown" role="button" data-id="m_form_type" title="All"><div class="filter-option"><div class="filter-option-inner">All</div></div>&nbsp;<span class="bs-caret"><span class="caret"></span></span></button><div class="dropdown-menu " role="combobox"><div class="inner show" role="listbox" aria-expanded="false" tabindex="-1"><ul class="dropdown-menu inner show"></ul></div></div></div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="d-md-none m--margin-bottom-10"></div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="m-input-icon m-input-icon--left">
+                                                        <input type="text" class="form-control m-input m-input--solid" placeholder="Search..." id="generalSearch">
+                                                        <span class="m-input-icon__icon m-input-icon__icon--left">
+															<span><i class="la la-search"></i></span>
+														</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-xl-4 order-1 order-xl-2 m--align-right">
+                                            <a href="#" class="btn btn-info m-btn m-btn--custom m-btn--icon m-btn--air">
+												<span>
+													<i class="la la-cart-plus"></i>
+													<span>New Order</span>
+												</span>
+                                            </a>
+                                            <div class="m-separator m-separator--dashed d-xl-none"></div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!--end: Search Form -->
+
+                                <!--begin: Selected Rows Group Action Form -->
+                                <div class="m-form m-form--label-align-right m--margin-top-20 m--margin-bottom-30 collapse" id="m_datatable_group_action_form">
+                                    <div class="row align-items-center">
+                                        <div class="col-xl-12">
+                                            <div class="m-form__group m-form__group--inline">
+                                                <div class="m-form__label m-form__label-no-wrap">
+                                                    <label class="m--font-bold m--font-danger-">Selected
+                                                        <span id="m_datatable_selected_number">0</span> records:</label>
+                                                </div>
+                                                <div class="m-form__control">
+                                                    <div class="btn-toolbar">
+                                                        <div class="dropdown">
+                                                            <button type="button" class="btn btn-accent btn-sm dropdown-toggle" data-toggle="dropdown">
+                                                                Update status
+                                                            </button>
+                                                            <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                                                                <a class="dropdown-item" href="#">Pending</a>
+                                                                <a class="dropdown-item" href="#">Delivered</a>
+                                                                <a class="dropdown-item" href="#">Canceled</a>
+                                                            </div>
+                                                        </div>
+                                                        &nbsp;&nbsp;&nbsp;
+                                                        <button class="btn btn-sm btn-danger" type="button" id="m_datatable_delete_all">Delete All</button>
+                                                        &nbsp;&nbsp;&nbsp;
+                                                        <button class="btn btn-sm btn-success" type="button" data-toggle="modal" data-target="#m_modal_fetch_id">Fetch Selected Records</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!--end: Selected Rows Group Action Form -->
+
+                                <!--begin: Datatable -->
+                                <div class="m_datatable m-datatable m-datatable--default m-datatable--loaded m-datatable--scroll" id="local_record_selection" style=""><table class="m-datatable__table" style="display: block; min-height: 300px; max-height: 550px;"><thead class="m-datatable__head"><tr class="m-datatable__row" style="left: 0px;"><th data-field="RecordID" class="m-datatable__cell--center m-datatable__cell m-datatable__cell--check"><span style="width: 40px;"><label class="m-checkbox m-checkbox--single m-checkbox--all m-checkbox--solid m-checkbox--brand"><input type="checkbox">&nbsp;<span></span></label></span></th><th data-field="ID" class="m-datatable__cell m-datatable__cell--sort"><span style="width: 40px;">ID</span></th><th data-field="ShipCountry" class="m-datatable__cell m-datatable__cell--sort"><span style="width: 150px;">Ship Country</span></th><th data-field="ShipCity" class="m-datatable__cell m-datatable__cell--sort"><span style="width: 110px;">Ship City</span></th><th data-field="Currency" class="m-datatable__cell m-datatable__cell--sort"><span style="width: 100px;">Currency</span></th><th data-field="ShipDate" class="m-datatable__cell m-datatable__cell--sort"><span style="width: 110px;">Ship Date</span></th><th data-field="Latitude" class="m-datatable__cell m-datatable__cell--sort"><span style="width: 110px;">Latitude</span></th><th data-field="Status" class="m-datatable__cell m-datatable__cell--sort"><span style="width: 110px;">Status</span></th><th data-field="Type" class="m-datatable__cell m-datatable__cell--sort"><span style="width: 110px;">Type</span></th><th data-field="Actions" class="m-datatable__cell m-datatable__cell--sort"><span style="width: 110px;">Actions</span></th></tr></thead><tbody class="m-datatable__body ps ps--active-x ps--active-y" style="max-height: 499px;"><tr data-row="10" class="m-datatable__row" style="left: 0px;"><td class="m-datatable__cell--center m-datatable__cell m-datatable__cell--check" data-field="RecordID"><span style="width: 40px;"><label class="m-checkbox m-checkbox--single m-checkbox--solid m-checkbox--brand"><input type="checkbox" value="11">&nbsp;<span></span></label></span></td><td data-field="ID" class="m-datatable__cell"><span style="width: 40px;">11</span></td><td data-field="ShipCountry" class="m-datatable__cell"><span style="width: 150px;">BR - Canguaretama</span></td><td data-field="ShipCity" class="m-datatable__cell"><span style="width: 110px;">Canguaretama</span></td><td data-field="Currency" class="m-datatable__cell"><span style="width: 100px;">BRL</span></td><td data-field="ShipDate" class="m-datatable__cell"><span style="width: 110px;">3/8/2017</span></td><td data-field="Latitude" class="m-datatable__cell"><span style="width: 110px;">-6.3810573</span></td><td data-field="Status" class="m-datatable__cell"><span style="width: 110px;"><span class="m-badge  m-badge--success m-badge--wide">Success</span></span></td><td data-field="Type" class="m-datatable__cell"><span style="width: 110px;"><span class="m-badge m-badge--primary m-badge--dot"></span>&nbsp;<span class="m--font-bold m--font-primary">Retail</span></span></td><td data-field="Actions" class="m-datatable__cell"><span style="overflow: visible; position: relative; width: 110px;">						<div class="dropdown ">							<a href="#" class="btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" data-toggle="dropdown">                                <i class="la la-ellipsis-h"></i>                            </a>						  	<div class="dropdown-menu dropdown-menu-right">						    	<a class="dropdown-item" href="#"><i class="la la-edit"></i> Edit Details</a>						    	<a class="dropdown-item" href="#"><i class="la la-leaf"></i> Update Status</a>						    	<a class="dropdown-item" href="#"><i class="la la-print"></i> Generate Report</a>						  	</div>						</div>						<a href="#" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" title="Edit details">							<i class="la la-edit"></i>						</a>						<a href="#" class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill" title="Delete">							<i class="la la-trash"></i>						</a>					</span></td></tr><tr data-row="11" class="m-datatable__row m-datatable__row--even" style="left: 0px;"><td class="m-datatable__cell--center m-datatable__cell m-datatable__cell--check" data-field="RecordID"><span style="width: 40px;"><label class="m-checkbox m-checkbox--single m-checkbox--solid m-checkbox--brand"><input type="checkbox" value="12">&nbsp;<span></span></label></span></td><td data-field="ID" class="m-datatable__cell"><span style="width: 40px;">12</span></td><td data-field="ShipCountry" class="m-datatable__cell"><span style="width: 150px;">CN - Jiamachi</span></td><td data-field="ShipCity" class="m-datatable__cell"><span style="width: 110px;">Jiamachi</span></td><td data-field="Currency" class="m-datatable__cell"><span style="width: 100px;">CNY</span></td><td data-field="ShipDate" class="m-datatable__cell"><span style="width: 110px;">4/2/2017</span></td><td data-field="Latitude" class="m-datatable__cell"><span style="width: 110px;">29.503085</span></td><td data-field="Status" class="m-datatable__cell"><span style="width: 110px;"><span class="m-badge  m-badge--primary m-badge--wide">Canceled</span></span></td><td data-field="Type" class="m-datatable__cell"><span style="width: 110px;"><span class="m-badge m-badge--danger m-badge--dot"></span>&nbsp;<span class="m--font-bold m--font-danger">Online</span></span></td><td data-field="Actions" class="m-datatable__cell"><span style="overflow: visible; position: relative; width: 110px;">						<div class="dropdown ">							<a href="#" class="btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" data-toggle="dropdown">                                <i class="la la-ellipsis-h"></i>                            </a>						  	<div class="dropdown-menu dropdown-menu-right">						    	<a class="dropdown-item" href="#"><i class="la la-edit"></i> Edit Details</a>						    	<a class="dropdown-item" href="#"><i class="la la-leaf"></i> Update Status</a>						    	<a class="dropdown-item" href="#"><i class="la la-print"></i> Generate Report</a>						  	</div>						</div>						<a href="#" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" title="Edit details">							<i class="la la-edit"></i>						</a>						<a href="#" class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill" title="Delete">							<i class="la la-trash"></i>						</a>					</span></td></tr><tr data-row="12" class="m-datatable__row" style="left: 0px;"><td class="m-datatable__cell--center m-datatable__cell m-datatable__cell--check" data-field="RecordID"><span style="width: 40px;"><label class="m-checkbox m-checkbox--single m-checkbox--solid m-checkbox--brand"><input type="checkbox" value="13">&nbsp;<span></span></label></span></td><td data-field="ID" class="m-datatable__cell"><span style="width: 40px;">13</span></td><td data-field="ShipCountry" class="m-datatable__cell"><span style="width: 150px;">CN - Qiaole</span></td><td data-field="ShipCity" class="m-datatable__cell"><span style="width: 110px;">Qiaole</span></td><td data-field="Currency" class="m-datatable__cell"><span style="width: 100px;">CNY</span></td><td data-field="ShipDate" class="m-datatable__cell"><span style="width: 110px;">6/7/2016</span></td><td data-field="Latitude" class="m-datatable__cell"><span style="width: 110px;">28.643587</span></td><td data-field="Status" class="m-datatable__cell"><span style="width: 110px;"><span class="m-badge  m-badge--primary m-badge--wide">Canceled</span></span></td><td data-field="Type" class="m-datatable__cell"><span style="width: 110px;"><span class="m-badge m-badge--danger m-badge--dot"></span>&nbsp;<span class="m--font-bold m--font-danger">Online</span></span></td><td data-field="Actions" class="m-datatable__cell"><span style="overflow: visible; position: relative; width: 110px;">						<div class="dropdown ">							<a href="#" class="btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" data-toggle="dropdown">                                <i class="la la-ellipsis-h"></i>                            </a>						  	<div class="dropdown-menu dropdown-menu-right">						    	<a class="dropdown-item" href="#"><i class="la la-edit"></i> Edit Details</a>						    	<a class="dropdown-item" href="#"><i class="la la-leaf"></i> Update Status</a>						    	<a class="dropdown-item" href="#"><i class="la la-print"></i> Generate Report</a>						  	</div>						</div>						<a href="#" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" title="Edit details">							<i class="la la-edit"></i>						</a>						<a href="#" class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill" title="Delete">							<i class="la la-trash"></i>						</a>					</span></td></tr><tr data-row="13" class="m-datatable__row m-datatable__row--even" style="left: 0px;"><td class="m-datatable__cell--center m-datatable__cell m-datatable__cell--check" data-field="RecordID"><span style="width: 40px;"><label class="m-checkbox m-checkbox--single m-checkbox--solid m-checkbox--brand"><input type="checkbox" value="14">&nbsp;<span></span></label></span></td><td data-field="ID" class="m-datatable__cell"><span style="width: 40px;">14</span></td><td data-field="ShipCountry" class="m-datatable__cell"><span style="width: 150px;">PT - Burgau</span></td><td data-field="ShipCity" class="m-datatable__cell"><span style="width: 110px;">Burgau</span></td><td data-field="Currency" class="m-datatable__cell"><span style="width: 100px;">EUR</span></td><td data-field="ShipDate" class="m-datatable__cell"><span style="width: 110px;">10/11/2017</span></td><td data-field="Latitude" class="m-datatable__cell"><span style="width: 110px;">37.0734616</span></td><td data-field="Status" class="m-datatable__cell"><span style="width: 110px;"><span class="m-badge  m-badge--success m-badge--wide">Success</span></span></td><td data-field="Type" class="m-datatable__cell"><span style="width: 110px;"><span class="m-badge m-badge--danger m-badge--dot"></span>&nbsp;<span class="m--font-bold m--font-danger">Online</span></span></td><td data-field="Actions" class="m-datatable__cell"><span style="overflow: visible; position: relative; width: 110px;">						<div class="dropdown ">							<a href="#" class="btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" data-toggle="dropdown">                                <i class="la la-ellipsis-h"></i>                            </a>						  	<div class="dropdown-menu dropdown-menu-right">						    	<a class="dropdown-item" href="#"><i class="la la-edit"></i> Edit Details</a>						    	<a class="dropdown-item" href="#"><i class="la la-leaf"></i> Update Status</a>						    	<a class="dropdown-item" href="#"><i class="la la-print"></i> Generate Report</a>						  	</div>						</div>						<a href="#" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" title="Edit details">							<i class="la la-edit"></i>						</a>						<a href="#" class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill" title="Delete">							<i class="la la-trash"></i>						</a>					</span></td></tr><tr data-row="14" class="m-datatable__row" style="left: 0px;"><td class="m-datatable__cell--center m-datatable__cell m-datatable__cell--check" data-field="RecordID"><span style="width: 40px;"><label class="m-checkbox m-checkbox--single m-checkbox--solid m-checkbox--brand"><input type="checkbox" value="15">&nbsp;<span></span></label></span></td><td data-field="ID" class="m-datatable__cell"><span style="width: 40px;">15</span></td><td data-field="ShipCountry" class="m-datatable__cell"><span style="width: 150px;">PT - Bacelo</span></td><td data-field="ShipCity" class="m-datatable__cell"><span style="width: 110px;">Bacelo</span></td><td data-field="Currency" class="m-datatable__cell"><span style="width: 100px;">EUR</span></td><td data-field="ShipDate" class="m-datatable__cell"><span style="width: 110px;">8/17/2017</span></td><td data-field="Latitude" class="m-datatable__cell"><span style="width: 110px;">41.3121037</span></td><td data-field="Status" class="m-datatable__cell"><span style="width: 110px;"><span class="m-badge m-badge--brand m-badge--wide">Pending</span></span></td><td data-field="Type" class="m-datatable__cell"><span style="width: 110px;"><span class="m-badge m-badge--primary m-badge--dot"></span>&nbsp;<span class="m--font-bold m--font-primary">Retail</span></span></td><td data-field="Actions" class="m-datatable__cell"><span style="overflow: visible; position: relative; width: 110px;">						<div class="dropdown ">							<a href="#" class="btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" data-toggle="dropdown">                                <i class="la la-ellipsis-h"></i>                            </a>						  	<div class="dropdown-menu dropdown-menu-right">						    	<a class="dropdown-item" href="#"><i class="la la-edit"></i> Edit Details</a>						    	<a class="dropdown-item" href="#"><i class="la la-leaf"></i> Update Status</a>						    	<a class="dropdown-item" href="#"><i class="la la-print"></i> Generate Report</a>						  	</div>						</div>						<a href="#" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" title="Edit details">							<i class="la la-edit"></i>						</a>						<a href="#" class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill" title="Delete">							<i class="la la-trash"></i>						</a>					</span></td></tr><tr data-row="15" class="m-datatable__row m-datatable__row--even" style="left: 0px;"><td class="m-datatable__cell--center m-datatable__cell m-datatable__cell--check" data-field="RecordID"><span style="width: 40px;"><label class="m-checkbox m-checkbox--single m-checkbox--solid m-checkbox--brand"><input type="checkbox" value="16">&nbsp;<span></span></label></span></td><td data-field="ID" class="m-datatable__cell"><span style="width: 40px;">16</span></td><td data-field="ShipCountry" class="m-datatable__cell"><span style="width: 150px;">ZA - Pongola</span></td><td data-field="ShipCity" class="m-datatable__cell"><span style="width: 110px;">Pongola</span></td><td data-field="Currency" class="m-datatable__cell"><span style="width: 100px;">ZAR</span></td><td data-field="ShipDate" class="m-datatable__cell"><span style="width: 110px;">7/24/2016</span></td><td data-field="Latitude" class="m-datatable__cell"><span style="width: 110px;">-33.7363181</span></td><td data-field="Status" class="m-datatable__cell"><span style="width: 110px;"><span class="m-badge  m-badge--info m-badge--wide">Info</span></span></td><td data-field="Type" class="m-datatable__cell"><span style="width: 110px;"><span class="m-badge m-badge--accent m-badge--dot"></span>&nbsp;<span class="m--font-bold m--font-accent">Direct</span></span></td><td data-field="Actions" class="m-datatable__cell"><span style="overflow: visible; position: relative; width: 110px;">						<div class="dropdown ">							<a href="#" class="btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" data-toggle="dropdown">                                <i class="la la-ellipsis-h"></i>                            </a>						  	<div class="dropdown-menu dropdown-menu-right">						    	<a class="dropdown-item" href="#"><i class="la la-edit"></i> Edit Details</a>						    	<a class="dropdown-item" href="#"><i class="la la-leaf"></i> Update Status</a>						    	<a class="dropdown-item" href="#"><i class="la la-print"></i> Generate Report</a>						  	</div>						</div>						<a href="#" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" title="Edit details">							<i class="la la-edit"></i>						</a>						<a href="#" class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill" title="Delete">							<i class="la la-trash"></i>						</a>					</span></td></tr><tr data-row="16" class="m-datatable__row" style="left: 0px;"><td class="m-datatable__cell--center m-datatable__cell m-datatable__cell--check" data-field="RecordID"><span style="width: 40px;"><label class="m-checkbox m-checkbox--single m-checkbox--solid m-checkbox--brand"><input type="checkbox" value="17">&nbsp;<span></span></label></span></td><td data-field="ID" class="m-datatable__cell"><span style="width: 40px;">17</span></td><td data-field="ShipCountry" class="m-datatable__cell"><span style="width: 150px;">RU - Novokizhinginsk</span></td><td data-field="ShipCity" class="m-datatable__cell"><span style="width: 110px;">Novokizhinginsk</span></td><td data-field="Currency" class="m-datatable__cell"><span style="width: 100px;">RUB</span></td><td data-field="ShipDate" class="m-datatable__cell"><span style="width: 110px;">3/4/2016</span></td><td data-field="Latitude" class="m-datatable__cell"><span style="width: 110px;">51.598999</span></td><td data-field="Status" class="m-datatable__cell"><span style="width: 110px;"><span class="m-badge  m-badge--primary m-badge--wide">Canceled</span></span></td><td data-field="Type" class="m-datatable__cell"><span style="width: 110px;"><span class="m-badge m-badge--danger m-badge--dot"></span>&nbsp;<span class="m--font-bold m--font-danger">Online</span></span></td><td data-field="Actions" class="m-datatable__cell"><span style="overflow: visible; position: relative; width: 110px;">						<div class="dropdown dropup">							<a href="#" class="btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" data-toggle="dropdown">                                <i class="la la-ellipsis-h"></i>                            </a>						  	<div class="dropdown-menu dropdown-menu-right">						    	<a class="dropdown-item" href="#"><i class="la la-edit"></i> Edit Details</a>						    	<a class="dropdown-item" href="#"><i class="la la-leaf"></i> Update Status</a>						    	<a class="dropdown-item" href="#"><i class="la la-print"></i> Generate Report</a>						  	</div>						</div>						<a href="#" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" title="Edit details">							<i class="la la-edit"></i>						</a>						<a href="#" class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill" title="Delete">							<i class="la la-trash"></i>						</a>					</span></td></tr><tr data-row="17" class="m-datatable__row m-datatable__row--even" style="left: 0px;"><td class="m-datatable__cell--center m-datatable__cell m-datatable__cell--check" data-field="RecordID"><span style="width: 40px;"><label class="m-checkbox m-checkbox--single m-checkbox--solid m-checkbox--brand"><input type="checkbox" value="18">&nbsp;<span></span></label></span></td><td data-field="ID" class="m-datatable__cell"><span style="width: 40px;">18</span></td><td data-field="ShipCountry" class="m-datatable__cell"><span style="width: 150px;">BR - Conceição das Alagoas</span></td><td data-field="ShipCity" class="m-datatable__cell"><span style="width: 110px;">Conceição das Alagoas</span></td><td data-field="Currency" class="m-datatable__cell"><span style="width: 100px;">BRL</span></td><td data-field="ShipDate" class="m-datatable__cell"><span style="width: 110px;">2/21/2018</span></td><td data-field="Latitude" class="m-datatable__cell"><span style="width: 110px;">-19.9241693</span></td><td data-field="Status" class="m-datatable__cell"><span style="width: 110px;"><span class="m-badge m-badge--brand m-badge--wide">Pending</span></span></td><td data-field="Type" class="m-datatable__cell"><span style="width: 110px;"><span class="m-badge m-badge--primary m-badge--dot"></span>&nbsp;<span class="m--font-bold m--font-primary">Retail</span></span></td><td data-field="Actions" class="m-datatable__cell"><span style="overflow: visible; position: relative; width: 110px;">						<div class="dropdown dropup">							<a href="#" class="btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" data-toggle="dropdown">                                <i class="la la-ellipsis-h"></i>                            </a>						  	<div class="dropdown-menu dropdown-menu-right">						    	<a class="dropdown-item" href="#"><i class="la la-edit"></i> Edit Details</a>						    	<a class="dropdown-item" href="#"><i class="la la-leaf"></i> Update Status</a>						    	<a class="dropdown-item" href="#"><i class="la la-print"></i> Generate Report</a>						  	</div>						</div>						<a href="#" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" title="Edit details">							<i class="la la-edit"></i>						</a>						<a href="#" class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill" title="Delete">							<i class="la la-trash"></i>						</a>					</span></td></tr><tr data-row="18" class="m-datatable__row" style="left: 0px;"><td class="m-datatable__cell--center m-datatable__cell m-datatable__cell--check" data-field="RecordID"><span style="width: 40px;"><label class="m-checkbox m-checkbox--single m-checkbox--solid m-checkbox--brand"><input type="checkbox" value="19">&nbsp;<span></span></label></span></td><td data-field="ID" class="m-datatable__cell"><span style="width: 40px;">19</span></td><td data-field="ShipCountry" class="m-datatable__cell"><span style="width: 150px;">UA - Yasinya</span></td><td data-field="ShipCity" class="m-datatable__cell"><span style="width: 110px;">Yasinya</span></td><td data-field="Currency" class="m-datatable__cell"><span style="width: 100px;">UAH</span></td><td data-field="ShipDate" class="m-datatable__cell"><span style="width: 110px;">1/21/2016</span></td><td data-field="Latitude" class="m-datatable__cell"><span style="width: 110px;">48.2595628</span></td><td data-field="Status" class="m-datatable__cell"><span style="width: 110px;"><span class="m-badge m-badge--brand m-badge--wide">Pending</span></span></td><td data-field="Type" class="m-datatable__cell"><span style="width: 110px;"><span class="m-badge m-badge--primary m-badge--dot"></span>&nbsp;<span class="m--font-bold m--font-primary">Retail</span></span></td><td data-field="Actions" class="m-datatable__cell"><span style="overflow: visible; position: relative; width: 110px;">						<div class="dropdown dropup">							<a href="#" class="btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" data-toggle="dropdown">                                <i class="la la-ellipsis-h"></i>                            </a>						  	<div class="dropdown-menu dropdown-menu-right">						    	<a class="dropdown-item" href="#"><i class="la la-edit"></i> Edit Details</a>						    	<a class="dropdown-item" href="#"><i class="la la-leaf"></i> Update Status</a>						    	<a class="dropdown-item" href="#"><i class="la la-print"></i> Generate Report</a>						  	</div>						</div>						<a href="#" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" title="Edit details">							<i class="la la-edit"></i>						</a>						<a href="#" class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill" title="Delete">							<i class="la la-trash"></i>						</a>					</span></td></tr><tr data-row="19" class="m-datatable__row m-datatable__row--even" style="left: 0px;"><td class="m-datatable__cell--center m-datatable__cell m-datatable__cell--check" data-field="RecordID"><span style="width: 40px;"><label class="m-checkbox m-checkbox--single m-checkbox--solid m-checkbox--brand"><input type="checkbox" value="20">&nbsp;<span></span></label></span></td><td data-field="ID" class="m-datatable__cell"><span style="width: 40px;">20</span></td><td data-field="ShipCountry" class="m-datatable__cell"><span style="width: 150px;">ID - Kembang</span></td><td data-field="ShipCity" class="m-datatable__cell"><span style="width: 110px;">Kembang</span></td><td data-field="Currency" class="m-datatable__cell"><span style="width: 100px;">IDR</span></td><td data-field="ShipDate" class="m-datatable__cell"><span style="width: 110px;">9/6/2017</span></td><td data-field="Latitude" class="m-datatable__cell"><span style="width: 110px;">-6.4712737</span></td><td data-field="Status" class="m-datatable__cell"><span style="width: 110px;"><span class="m-badge  m-badge--metal m-badge--wide">Delivered</span></span></td><td data-field="Type" class="m-datatable__cell"><span style="width: 110px;"><span class="m-badge m-badge--accent m-badge--dot"></span>&nbsp;<span class="m--font-bold m--font-accent">Direct</span></span></td><td data-field="Actions" class="m-datatable__cell"><span style="overflow: visible; position: relative; width: 110px;">						<div class="dropdown dropup">							<a href="#" class="btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" data-toggle="dropdown">                                <i class="la la-ellipsis-h"></i>                            </a>						  	<div class="dropdown-menu dropdown-menu-right">						    	<a class="dropdown-item" href="#"><i class="la la-edit"></i> Edit Details</a>						    	<a class="dropdown-item" href="#"><i class="la la-leaf"></i> Update Status</a>						    	<a class="dropdown-item" href="#"><i class="la la-print"></i> Generate Report</a>						  	</div>						</div>						<a href="#" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" title="Edit details">							<i class="la la-edit"></i>						</a>						<a href="#" class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill" title="Delete">							<i class="la la-trash"></i>						</a>					</span></td></tr><div class="ps__rail-x" style="width: 748px; left: 0px; bottom: 0px;"><div class="ps__thumb-x" tabindex="0" style="left: 0px; width: 470px;"></div></div><div class="ps__rail-y" style="top: 0px; height: 499px; right: 0px;"><div class="ps__thumb-y" tabindex="0" style="top: 0px; height: 448px;"></div></div></tbody></table><div class="m-datatable__pager m-datatable--paging-loaded clearfix"><ul class="m-datatable__pager-nav"><li><a title="First" class="m-datatable__pager-link m-datatable__pager-link--first" data-page="1"><i class="la la-angle-double-left"></i></a></li><li><a title="Previous" class="m-datatable__pager-link m-datatable__pager-link--prev" data-page="1"><i class="la la-angle-left"></i></a></li><li style="display: none;"><a title="More pages" class="m-datatable__pager-link m-datatable__pager-link--more-prev" data-page="1"><i class="la la-ellipsis-h"></i></a></li><li style="display: none;"><input type="text" class="m-pager-input form-control" title="Page number"></li><li><a class="m-datatable__pager-link m-datatable__pager-link-number" data-page="1" title="1">1</a></li><li><a class="m-datatable__pager-link m-datatable__pager-link-number m-datatable__pager-link--active" data-page="2" title="2">2</a></li><li><a class="m-datatable__pager-link m-datatable__pager-link-number" data-page="3" title="3">3</a></li><li><a class="m-datatable__pager-link m-datatable__pager-link-number" data-page="4" title="4">4</a></li><li><a class="m-datatable__pager-link m-datatable__pager-link-number" data-page="5" title="5">5</a></li><li><a class="m-datatable__pager-link m-datatable__pager-link-number" data-page="6" title="6">6</a></li><li><a title="More pages" class="m-datatable__pager-link m-datatable__pager-link--more-next" data-page="7"><i class="la la-ellipsis-h"></i></a></li><li><a title="Next" class="m-datatable__pager-link m-datatable__pager-link--next" data-page="3"><i class="la la-angle-right"></i></a></li><li><a title="Last" class="m-datatable__pager-link m-datatable__pager-link--last" data-page="35"><i class="la la-angle-double-right"></i></a></li></ul><div class="m-datatable__pager-info"><div class="dropdown bootstrap-select m-datatable__pager-size" style="width: 70px;"><select class="selectpicker m-datatable__pager-size" title="Select page size" data-width="70px" data-selected="10" tabindex="-98"><option class="bs-title-option" value="">Select page size</option><option value="10">10</option><option value="20">20</option><option value="30">30</option><option value="50">50</option><option value="100">100</option></select><button type="button" class="btn dropdown-toggle btn-light" data-toggle="dropdown" role="button" title="Select page size"><div class="filter-option"><div class="filter-option-inner">10</div></div>&nbsp;<span class="bs-caret"><span class="caret"></span></span></button><div class="dropdown-menu " role="combobox"><div class="inner show" role="listbox" aria-expanded="false" tabindex="-1"><ul class="dropdown-menu inner show"></ul></div></div></div><span class="m-datatable__pager-detail">Displaying 11 - 20 of 350 records</span></div></div></div>
+
+                                <!--end: Datatable -->
+                            </div>
+                        </div>
+
+                        <!--end::Portlet-->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- end:: Body -->
+    <!-- begin::Footer -->
+    {include file="../application/common/view/web/footer.html"}
+    <!-- end::Footer -->
+</div>
+<!-- end:: Page -->
+{include file="../application/common/view/web/foot.html"}
+<script src="/resource/web/assets/demo/default/custom/crud/forms/widgets/select2.js"  type="text/javascript"></script>
+<!--<script src="/resource/web/assets/demo/default/custom/crud/metronic-datatable/base/record-selection.js" type="text/javascript"></script>-->
+
+<script>
+
+    $(function(){
+        $("#adver").select2({
+            placeholder: "请至少选择一个素材",
+            tags:true,
+            // maximumSelectionLength: 5,//限制最多选择个数
+            createTag:function (decorated, params) {
+                return null;
+            },
+            width:'100%',
+        });
+
+        getAdverList(1);
+        $("input:radio[name='advType']").change(function () {
+            // console.log("advType", $(this).val());
+            getAdverList($(this).val());
+        });
+    });
+
+    $("#adver").change(function () {
+        console.log("select2", $("#adver").val());
+    });
+
+    function getAdverList(type) {
+        $.ajax({
+            url:"{:url('getAdverList')}",
+            type:"POST",
+            data:{type:type},
+            success:function (resData) {
+                if(resData["state"] == 200){
+                    // toastr.success(resData["msg"]);
+                    var adverData = resData["data"];
+                    var adverListLength = resData["data"].length;
+                    if(adverListLength == 0){
+                        toastr.success('素材未上传，请先上传该类型素材！');
+                        return false;
+                    }
+                    $("#adverList").empty();
+                    for (var i=0;i<adverListLength;i++){
+                        option = '<option value="'+adverData[i]["resource_id"]+'" >'+adverData[i]["resource_name"]+'</option>';
+                        $("#adver").append(option);
+                    }
+
+                }else{
+                    toastr.warning(resData["msg"]);
+                }
+            },error:function (error) {
+                console.log("error",error);
+                toastr.warning("网络异常，获取广告素材失败");
+            }
+        });
+    }
+</script>
+</body>
+<!-- end::Body -->
+</html>
+<script>
+    nav_url = "{:url('advertising/index')}";
+</script>

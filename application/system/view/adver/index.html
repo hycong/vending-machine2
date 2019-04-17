@@ -28,60 +28,29 @@
                 <div class="m-subheader ">
                     <div class="d-flex align-items-center">
                         <div class="mr-auto">
-                            <h3 class="m-subheader__title m-subheader__title--separator">Column Search Examples</h3>
+                            <h3 class="m-subheader__title m-subheader__title--separator">广告管理</h3>
                             <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
                                 <li class="m-nav__item m-nav__item--home">
-                                    <a href="#" class="m-nav__link m-nav__link--icon">
+                                    <a href="{:url('Index/index')}" class="m-nav__link m-nav__link--icon">
                                         <i class="m-nav__link-icon la la-home"></i>
                                     </a>
                                 </li>
                                 <li class="m-nav__separator">-</li>
                                 <li class="m-nav__item">
-                                    <a href="" class="m-nav__link">
-                                        <span class="m-nav__link-text">DataTables</span>
+                                    <a href="{:url('Adver/index')}" class="m-nav__link">
+                                        <span class="m-nav__link-text">广告管理</span>
                                     </a>
                                 </li>
                                 <li class="m-nav__separator">-</li>
                                 <li class="m-nav__item">
-                                    <a href="" class="m-nav__link">
-                                        <span class="m-nav__link-text">Search Options</span>
-                                    </a>
-                                </li>
-                                <li class="m-nav__separator">-</li>
-                                <li class="m-nav__item">
-                                    <a href="" class="m-nav__link">
-                                        <span class="m-nav__link-text">Column Search</span>
+                                    <a href="javascript:void(0);" class="m-nav__link">
+                                        <span class="m-nav__link-text">素材列表</span>
                                     </a>
                                 </li>
                             </ul>
                         </div>
-                        <div>
-                            <div class="m-dropdown m-dropdown--inline m-dropdown--arrow m-dropdown--align-right m-dropdown--align-push" m-dropdown-toggle="hover" aria-expanded="true">
-                                <a href="#" class="m-portlet__nav-link btn btn-lg btn-secondary  m-btn m-btn--outline-2x m-btn--air m-btn--icon m-btn--icon-only m-btn--pill  m-dropdown__toggle">
-                                    <i class="la la-plus m--hide"></i>
-                                    <i class="la la-ellipsis-h"></i>
-                                </a>
-                            </div>
-                        </div>
                     </div>
                 </div>
-                <!--<div class="d-flex align-items-center">-->
-                    <!--<div class="mr-auto">-->
-                        <!--<h3 class="m-subheader__title ">素材列表</h3>-->
-                    <!--</div>-->
-                    <!--&lt;!&ndash;<div>&ndash;&gt;-->
-								<!--&lt;!&ndash;<span class="m-subheader__daterange" id="m_dashboard_daterangepicker">&ndash;&gt;-->
-									<!--&lt;!&ndash;<span class="m-subheader__daterange-label">&ndash;&gt;-->
-										<!--&lt;!&ndash;<span class="m-subheader__daterange-title"></span>&ndash;&gt;-->
-										<!--&lt;!&ndash;<span class="m-subheader__daterange-date m&#45;&#45;font-brand"></span>&ndash;&gt;-->
-									<!--&lt;!&ndash;</span>&ndash;&gt;-->
-									<!--&lt;!&ndash;<a href="#"&ndash;&gt;-->
-                                       <!--&lt;!&ndash;class="btn btn-sm btn-brand m-btn m-btn&#45;&#45;icon m-btn&#45;&#45;icon-only m-btn&#45;&#45;custom m-btn&#45;&#45;pill">&ndash;&gt;-->
-										<!--&lt;!&ndash;<i class="la la-angle-down"></i>&ndash;&gt;-->
-									<!--&lt;!&ndash;</a>&ndash;&gt;-->
-								<!--&lt;!&ndash;</span>&ndash;&gt;-->
-                    <!--&lt;!&ndash;</div>&ndash;&gt;-->
-                <!--</div>-->
             </div>
 
             <!-- END: Subheader -->
@@ -92,7 +61,7 @@
                             <ul class="nav nav-pills nav-pills--brand m-nav-pills--align-right m-nav-pills--btn-pill m-nav-pills--btn-sm" role="tablist">
                                 <li class="m-portlet__nav-item">
                                     <a href="{:url('adver/addAdver')}" class="btn btn-info m-btn m-btn--custom m-btn--pill m-btn--icon m-btn--air">
-												<span><i class="la la-plus"></i><span>上传新素材</span></span>
+                                        <span><i class="la la-plus"></i><span>上传素材</span></span>
                                     </a>
                                 </li>
                             </ul>
@@ -173,11 +142,9 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="m-datatable m-datatable--default">
-                            <div class="m-datatable__pager">
-                                <div class="m-datatable__pager-nav">
-                                   {$adver_list->render();}
-                                </div>
+                            <div class="dataTables_wrapper">
+                            <div class="dataTables_pager">
+                                <div class="dataTables_paginate paging_simple_numbers"> {$adver_list->render();}</div>
                             </div>
                             </div>
                         </div>
@@ -220,6 +187,7 @@
 <script src="/resource/web/assets/app/js/dashboard.js" type="text/javascript"></script>
 <!--end::Page Scripts -->
 <script>
+    nav_url = "{:url('adver/index')}";
     /**
      * 删除素材
      * @param node

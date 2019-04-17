@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    {include file="../application/common/view/web/head.html" title=" - 广告管理"}
+    <style>
+        input[type=text].show-mch-no {
+            border: none;
+            background-color: transparent;
+            width: 83px;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
+
+    </style>
+</head>
+<!-- begin::Body -->
+<body class="m-page--fluid m--skin- m-content--skin-light2 m-header--fixed m-header--fixed-mobile m-aside-left--enabled m-aside-left--skin-dark m-aside-left--fixed m-aside-left--offcanvas m-footer--push m-aside--offcanvas-default">
+<!-- begin:: Page -->
+<div class="m-grid m-grid--hor m-grid--root m-page">
+    <!-- BEGIN: Header -->
+    {include file="../application/common/view/web/header.html"}
+    <!-- END: Header -->
+    <!-- begin::Body -->
+    <div class="m-grid__item m-grid__item--fluid m-grid m-grid--ver-desktop m-grid--desktop m-body">
+        <!-- BEGIN: Left Aside -->
+        {include file="../application/common/view/web/left.html"}
+        <!-- END: Left Aside -->
+        <div class="m-grid__item m-grid__item--fluid m-wrapper">
+            <div class="m-subheader ">
+                <div class="d-flex align-items-center">
+                    <div class="mr-auto">
+                        <h3 class="m-subheader__title m-subheader__title--separator">广告管理</h3>
+                        <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
+                            <li class="m-nav__item m-nav__item--home">
+                                <a href="{:url('Index/index')}" class="m-nav__link m-nav__link--icon">
+                                    <i class="m-nav__link-icon la la-home"></i>
+                                </a>
+                            </li>
+                            <li class="m-nav__separator">-</li>
+                            <li class="m-nav__item">
+                                <a href="{:url('Adver/index')}" class="m-nav__link">
+                                    <span class="m-nav__link-text">广告管理</span>
+                                </a>
+                            </li>
+                            <li class="m-nav__separator">-</li>
+                            <li class="m-nav__item">
+                                <a href="{:url('Advertising/index')}" class="m-nav__link">
+                                    <span class="m-nav__link-text">投放列表</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="m-content">
+                <div class="m-portlet">
+                    <div class="m-portlet__head">
+                        <div class="m-portlet__head-tools">
+                            <ul class="nav nav-pills nav-pills--brand m-nav-pills--align-right m-nav-pills--btn-pill m-nav-pills--btn-sm" role="tablist">
+                                <li class="m-portlet__nav-item">
+                                    <a href="{:url('advertising/putAdver')}" class="btn btn-info m-btn m-btn--custom m-btn--pill m-btn--icon m-btn--air">
+                                        <span><i class="la la-plus"></i><span>广告投放</span></span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="m-portlet__body">
+                        <div class="dataTables_wrapper">
+                            <table class="table table-striped- table-bordered table-hover table-checkable" id="m_table_1">
+                                <thead>
+                                <tr>
+                                    <th>消费ID</th>
+                                    <th class="text-center">消费设备</th>
+                                    <th>货道</th>
+                                    <th>消费用户</th>
+                                    <th>消费商品</th>
+                                    <th>消费金额</th>
+                                    <th>支付类型</th>
+                                    <th>支付订单</th>
+                                    <th>商户订单号</th>
+                                    <th>支付状态</th>
+                                    <th>出货状态</th>
+                                    <th>生成订单时间</th>
+                                    <th class="text-center">操作</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+
+                                </tbody>
+                            </table>
+                            <div class="dataTables_pager">
+                                <div class="dataTables_paginate paging_simple_numbers"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- end:: Body -->
+    <!-- begin::Footer -->
+    {include file="../application/common/view/web/footer.html"}
+    <!-- end::Footer -->
+</div>
+<!-- end:: Page -->
+{include file="../application/common/view/web/foot.html"}
+</body>
+<!-- end::Body -->
+</html>
+<script>
+    nav_url = "{:url('advertising/index')}";
+</script>

@@ -32,42 +32,26 @@
                 <div class="m-subheader ">
                     <div class="d-flex align-items-center">
                         <div class="mr-auto">
-                            <!--<h3 class="m-subheader__title m-subheader__title&#45;&#45;separator">素材管理</h3>-->
+                            <h3 class="m-subheader__title m-subheader__title--separator">广告管理</h3>
                             <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
                                 <li class="m-nav__item m-nav__item--home">
-                                    <a href="#" class="m-nav__link m-nav__link--icon">
+                                    <a href="{:url('Index/index')}" class="m-nav__link m-nav__link--icon">
                                         <i class="m-nav__link-icon la la-home"></i>
                                     </a>
                                 </li>
                                 <li class="m-nav__separator">-</li>
                                 <li class="m-nav__item">
-                                    <a href="" class="m-nav__link">
+                                    <a href="{:url('Adver/index')}" class="m-nav__link">
                                         <span class="m-nav__link-text">广告管理</span>
                                     </a>
                                 </li>
                                 <li class="m-nav__separator">-</li>
                                 <li class="m-nav__item">
-                                    <a href="" class="m-nav__link">
-                                        <span class="m-nav__link-text">素材管理</span>
-                                    </a>
-                                </li>
-                                <li class="m-nav__separator">-</li>
-                                <li class="m-nav__item">
-                                    <a href="" class="m-nav__link">
-                                        <span class="m-nav__link-text">素材上传</span>
+                                    <a href="javascript:void(0);" class="m-nav__link">
+                                        <span class="m-nav__link-text">上传素材</span>
                                     </a>
                                 </li>
                             </ul>
-                        </div>
-                        <div>
-                            <div class="m-dropdown m-dropdown--inline m-dropdown--arrow m-dropdown--align-right m-dropdown--align-push"
-                                 m-dropdown-toggle="hover" aria-expanded="true">
-                                <a href="#"
-                                   class="m-portlet__nav-link btn btn-lg btn-secondary  m-btn m-btn--outline-2x m-btn--air m-btn--icon m-btn--icon-only m-btn--pill  m-dropdown__toggle">
-                                    <i class="la la-plus m--hide"></i>
-                                    <i class="la la-ellipsis-h"></i>
-                                </a>
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -532,6 +516,7 @@
 <!-- end::Scroll Top -->
 
 <script>
+    nav_url = "{:url('adver/index')}";
     $("input:radio[name='advType']").change(function () {
         //当div标签属性display为none时，初始化上传插件会失败
         $("#fileType").show();
