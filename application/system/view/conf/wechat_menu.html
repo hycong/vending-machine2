@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    {include file="../application/common/view/web/head.html" title=" - 微信管理"}
+    <!--begin::Page Vendors Styles -->
+    <link rel="stylesheet" href="/resource/web/assets/wechatMenu/css/menu.css">
+<!--    <script src="/resource/web/assets/wechatMenu/js/vue.js"></script>-->
+    <script src="/resource/web/assets/wechatMenu/js/vue.min.js"></script>
+</head>
+<!-- begin::Body -->
+<body class="m-page--fluid m--skin- m-content--skin-light2 m-header--fixed m-header--fixed-mobile m-aside-left--enabled m-aside-left--skin-dark m-aside-left--fixed m-aside-left--offcanvas m-footer--push m-aside--offcanvas-default">
+<!-- begin:: Page -->
+<div class="m-grid m-grid--hor m-grid--root m-page">
+    <!-- BEGIN: Header -->
+    {include file="../application/common/view/web/header.html"}
+    <!-- END: Header -->
+    <!-- begin::Body -->
+    <div class="m-grid__item m-grid__item--fluid m-grid m-grid--ver-desktop m-grid--desktop m-body">
+        <!-- BEGIN: Left Aside -->
+        {include file="../application/common/view/web/left.html"}
+        <!-- END: Left Aside -->
+        <div class="m-grid__item m-grid__item--fluid m-wrapper">
+            <div class="m-subheader ">
+                <div class="d-flex align-items-center">
+                    <div class="mr-auto">
+                        <h3 class="m-subheader__title m-subheader__title--separator">微信管理</h3>
+                        <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
+                            <li class="m-nav__item m-nav__item--home">
+                                <a href="{:url('Index/index')}" class="m-nav__link m-nav__link--icon">
+                                    <i class="m-nav__link-icon la la-home"></i>
+                                </a>
+                            </li>
+                            <li class="m-nav__separator">-</li>
+                            <li class="m-nav__item">
+                                <a href="{:url('Index/index')}" class="m-nav__link">
+                                    <span class="m-nav__link-text">微信管理</span>
+                                </a>
+                            </li>
+                            <li class="m-nav__separator">-</li>
+                            <li class="m-nav__item">
+                                <a href="" class="m-nav__link">
+                                    <span class="m-nav__link-text">微信支付配置</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="m-content">
+                <div class="m-portlet">
+                    <div class="m-portlet__head">
+                        <div class="m-portlet__head-caption">
+                            <div class="m-portlet__head-title">
+                                <h3 class="m-portlet__head-text">微信支付配置</h3>
+                            </div>
+                        </div>
+                    </div>
+                    <form class="m-form m-form--fit m-form--label-align-right" action="{:url('')}" method="post"
+                          enctype="multipart/form-data">
+                        <div class="m-portlet__body">
+                            <div id="box">
+                                <div class="custom-menu-edit-con">
+                                    <div class="hbox">
+                                        <div class="inner-left">
+                                            <div class="custom-menu-view-con">
+                                                <div class="custom-menu-view">
+                                                    <div class="custom-menu-view__title">公众号名称</div>
+                                                    <div class="custom-menu-view__body">
+                                                        <div class="weixin-msg-list"><ul class="msg-con"></ul></div>
+                                                    </div>
+                                                    <div id="menuMain" class="custom-menu-view__footer">
+                                                        <div class="custom-menu-view__footer__left"></div>
+                                                        <div id="customBtns" class="custom-menu-view__footer__right" >
+                                                            <div class="custom-menu-view__menu"  v-if="menuObj.button.length>0"
+                                                                 v-for="(item,index) in menuObj.button"
+                                                                 :class="{subbutton__actived:menuIndex[index].isActive}"
+                                                                 :style="{width:buttonWidth}">
+                                                                <div class="text-ellipsis" @click="menuTab(index)">{{item.name}}</div>
+                                                                <ul class="custom-menu-view__menu__sub">
+                                                                    <li v-for="(subItem,subIndex) in item.sub_button"
+                                                                        class="custom-menu-view__menu__sub__add"
+                                                                        :class="{subbutton__actived:subIndex==subBtnIndex[index].num}"
+                                                                        @click="liTab(index,subIndex)">
+                                                                        {{subItem.name}}
+                                                                    </li>
+                                                                    <li v-if="item.sub_button.length<5" @click="subAddBtn(index)">
+                                                                        <i class="fa fa-plus text-info"></i>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                            <div class="custom-menu-view__menu" v-if="menuObj.button.length==0" @click="addBtn(0)" style="width: 100%;">
+                                                                <div class="text-ellipsis">
+                                                                    <i class="fa fa-plus text-info iBtn"></i>
+                                                                </div>
+                                                            </div>
+                                                            <div class="custom-menu-view__menu" v-if="menuObj.button.length==1" @click="addBtn(1)" style="width: 50%;">
+                                                                <div class="text-ellipsis">
+                                                                    <i class="fa fa-plus text-info iBtn"></i>
+                                                                </div>
+                                                            </div>
+                                                            <div class="custom-menu-view__menu" v-if="menuObj.button.length==2" @click="addBtn(2)" style="width: 33.33%;">
+                                                                <div class="text-ellipsis">
+                                                                    <i class="fa fa-plus text-info iBtn"></i>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="inner-right">
+                                            <div class="cm-edit-after">
+                                                <div class="cm-edit-right-header b-b"><span>{{rightTitle}}</span> <a @click="del()" class="pull-right" href="javascript:;">删除菜单</a></div>
+                                                <form class="form-horizontal wrapper-md" name="custom_form">
+                                                    <div class="form-group">
+                                                        <label class="col-sm-2 control-label">菜单名称:</label><div class="col-sm-5">
+                                                        <input name="custom_input_title" type="text" class="form-control"
+                                                               v-model="rightTitle"
+                                                               v-on:input="updateValue()"></div><div class="col-sm-5 help-block">
+                                                        <div v-show="isRightTitle">字数不超过5个汉字或16个字符</div>
+                                                        <div v-show="rightTitle.length==0">菜单内容不能为空</div>
+                                                    </div>
+                                                    </div>
+                                                </form>
+
+                                                <div class="cm-edit-content-con" id="editPage" v-if="urlShow">
+                                                    <div class="cm-edit-page">
+                                                        <div class="row">
+                                                            <label class="col-sm-6 control-label" style="text-align: left;">粉丝点击该菜单会跳转到以下链接:
+                                                            </label>
+                                                        </div>
+                                                        <div class="row">
+                                                            <label class="col-sm-2 control-label" style="text-align: left;">页面地址:
+                                                            </label>
+                                                            <div class="col-sm-5">
+                                                                <input type="text" name="url" class="form-control"
+                                                                       v-model="url" v-on:input="updateUrl()" placeholder="认证号才可手动输入地址">
+                                                                <span class="help-block" v-if="isUrl">必填,必须是正确的URL格式</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="cm-edit-before" v-if="menuObj.button.length==0 || operationShow"><h5>点击左侧菜单进行操作</h5></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="cm-edit-footer">
+                                    <button @click="save" type="button" class="btn btn-info1">保存</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- end:: Body -->
+    <!-- begin::Footer -->
+    {include file="../application/common/view/web/footer.html"}
+    <!-- end::Footer -->
+</div>
+<!-- end:: Page -->
+{include file="../application/common/view/web/foot.html"}
+</body>
+<script>
+    var data = {$info|default="[]"};
+</script>
+<script src="/resource/web/assets/wechatMenu/js/wechatMenu.js"></script>
+<!-- end::Body -->
+</html>
+

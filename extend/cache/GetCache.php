@@ -10,7 +10,7 @@ namespace cache;
 
 
 use think\Db;
-use think\facade\Cache;
+use think\Cache;
 
 class GetCache
 {
