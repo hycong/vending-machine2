@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="zh">
+<head>
+    {include file="common/head" title="- 添加设备类型"/}
+</head>
+<body data-type="widgets">
+<div class="tpl-page-container tpl-page-header-fixed">
+    {include file="common/header"/}
+    {include file="common/left"/}
+    <!-- 内容区域 -->
+    <div class="tpl-content-wrapper">
+        <div class="tpl-content-page-title">设备类型</div>
+        <ol class="am-breadcrumb">
+            <li><a href="{:url('index/index')}" class="am-icon-home">首页</a></li>
+            <li><a href="{:url('machine/index')}" class="am-icon-sitemap">设备管理</a></li>
+            <li><a href="{:url('machinetype/index')}">设备类型</a></li>
+            <li class="am-active">添加设备类型</li>
+        </ol>
+        <div class="tpl-portlet-components">
+            <div class="portlet-title">
+                <div class="caption font-green bold">
+                    添加设备类型
+                </div>
+            </div>
+            <div class="tpl-block">
+                <div class="am-g">
+                    <div class="tpl-form-body tpl-form-line">
+                        <form class="am-form tpl-form-line-form" action="{:url('')}" method="post" id="create_machine" >
+                            <div class="am-form-group">
+                                <label for="type_name" class="am-u-sm-2 am-form-label">类型名称</label>
+                                <div class="am-u-sm-10">
+                                    <input type="text" id="type_name" name="type_name" placeholder="请输入类型名称">
+                                </div>
+                            </div>
+                            <div class="am-form-group">
+                                <label for="channel_level" class="am-u-sm-2 am-form-label">总层数</label>
+                                <div class="am-u-sm-10">
+                                    <input type="number" id="channel_level" name="channel_level" value="3" placeholder="请输入总层数">
+                                </div>
+                            </div>
+                            <div class="am-form-group">
+                                <label for="channel_sum" class="am-u-sm-2 am-form-label">货道容量<span class="tpl-form-line-small-title">(单)</span></label>
+                                <div class="am-u-sm-10">
+                                    <input type="number" id="channel_sum" name="channel_sum" value="8" placeholder="请输入货道容量(单)">
+                                </div>
+                            </div>
+                            <div class="am-form-group">
+                                <label class="am-u-sm-2 am-form-label">每层货道数</label>
+                                <div class="am-u-sm-10" id="level_list"></div>
+                            </div>
+                            <div class="am-form-group">
+                                <label for="sum_store" class="am-u-sm-2 am-form-label">贷道数量<span class="tpl-form-line-small-title">(单层)</span></label>
+                                <div class="am-u-sm-10">
+                                    <input type="number" id="sum_store" name="sum_store" value="6" placeholder="请输入贷道数量(单层)">
+                                </div>
+                            </div>
+                            <div class="am-form-group">
+                                <label class="am-u-sm-2 am-form-label">详细设置</label>
+                                <div class="am-u-sm-10" id="channel_details">
+                                </div>
+                            </div>
+                            <div class="am-form-group">
+                                <div class="am-u-sm-10 am-u-sm-push-2">
+                                    <button type="submit" id="sub" class="am-btn am-btn-primary">确认并保存</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+{include file="common/footer"/}
+</body>
+</html>
+<script>
+    new_url = '{:url("index")}';
+    channel_level();
+    create_channel();
+
+    function create_channel() {
+        let channel_level = $('#channel_level').val();
+        let sum_store = $('#sum_store').val();
+        let html = '<table class="am-table">';
+        let number = 1;
+        for (var i=1;i<=channel_level;i++){
+            html += "<tr>";
+            for (var j=1;j<=$('#level_'+i).val();j++){
+                let this_number = number < 10 ? '0'+number : number;
+                html += '<td style="max-width: 100px;">' +
+                    '<div class="am-text-center" style="font-size: 12px;line-height: 36px;">货道 <input type="text" name="type_channel_content['+ number +'][title]" value="' + this_number + '" style="width: 28px;float: right;text-align: center;"></div>'+
+                    '<input type="number" name="type_channel_content['+ number +'][store]" value="'+ sum_store +'" placeholder="请输入库存数" class="am-text-center">' +
+                    '</td>';
+                number++;
+            }
+            html += "</tr>";
+        }
+        html += "</table>";
+        console.log(html);
+        $('#channel_details').html(html);
+    }
+
+    $('#channel_level').bind('input propertychange',function () {
+        channel_level();
+        create_channel();
+    });
+    $('#channel_sum').bind('input propertychange',function () {
+        $('.level_list').val($(this).val());
+        create_channel();
+    });
+    function channel_level() {
+        let value = $('#channel_level').val();
+        let html = '';
+        for (var i= 1;i<=value;i++){
+            html += '<div class="am-form-group">';
+            html += '<label for="sum_store" class="am-u-sm-2 am-form-label">第'+ i +'层</label>';
+            html += '<div class="am-u-sm-10">';
+            html += '<input type="number" name="level_list['+ i +']" class="level_list" id="level_'+ i +'" value="'+ $('#channel_sum').val() +'" placeholder="请输入货道数">';
+            html += '</div></div>';
+        }
+        $('#level_list').html(html);
+        $('.level_list,#channel_sum,#sum_store').bind('input propertychange',function () {
+            create_channel();
+        });
+    }
+</script>

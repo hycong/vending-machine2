@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="zh">
+<head>
+    {include file="common/head" title="- 添加设备"/}
+</head>
+<body data-type="widgets">
+<script src="/resource/js/theme.js"></script>
+<div class="tpl-page-container tpl-page-header-fixed">
+    {include file="common/header"/}
+    {include file="common/left"/}
+    <!-- 内容区域 -->
+    <div class="tpl-content-wrapper">
+        <div class="tpl-content-page-title">添加设备</div>
+        <ol class="am-breadcrumb">
+            <li><a href="{:url('index/index')}" class="am-icon-home">首页</a></li>
+            <li><a href="{:url('index')}" class="am-icon-sitemap">设备管理</a></li>
+            <li class="am-active">添加设备</li>
+        </ol>
+        <div class="tpl-portlet-components">
+            <div class="portlet-title">
+                <div class="caption font-green bold">
+                    添加设备
+                </div>
+            </div>
+            <div class="tpl-block">
+                <div class="am-g tpl-amazeui-form">
+                    <div class="tpl-form-body tpl-form-line">
+                        <form class="am-form am-form-horizontal" action="{:url('')}" method="post" id="create_machine" data-am-validator>
+                            <div class="am-form-group">
+                                <label for="machine_name" class="am-u-sm-2 am-form-label">设备名称</label>
+                                <div class="am-u-sm-10">
+                                    <input type="text" id="machine_name" name="machine_name" placeholder="请输入设备名称" required>
+                                </div>
+                            </div>
+                            <div class="am-form-group">
+                                <label for="machine_name" class="am-u-sm-2 am-form-label">设备类型</label>
+                                <div class="am-u-sm-10 tpl-table-list-select">
+                                    <select data-am-selected="{btnWidth: '100%', btnSize: 'md'}" name="machine_type_id">
+                                        {volist name="$type_list" id="vo"}
+                                        <option value="{$vo.type_id}">{$vo.type_name}</option>
+                                        {/volist}
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="am-form-group">
+                                <label for="machine_name" class="am-u-sm-2 am-form-label">设置代理</label>
+                                <div class="am-u-sm-10 tpl-table-list-select">
+                                    <select data-am-selected="{btnWidth: '100%', btnSize: 'md'}" name="machine_agent_id">
+                                        {volist name="$agent_list" id="vo"}
+                                        <option value="{$vo.agent_id}">{$vo.agent_name}</option>
+                                        {/volist}
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="am-form-group">
+                                <label for="machine_code" class="am-u-sm-2 am-form-label">设备序列号</label>
+                                <div class="am-u-sm-10">
+                                    <input type="text" id="machine_code" name="machine_code" placeholder="请输入设备序列号" required>
+                                </div>
+                            </div>
+                            <div class="am-form-group">
+                                <label for="machine_address" class="am-u-sm-2 am-form-label">设备地址</label>
+                                <div class="am-u-sm-10">
+                                    <input type="text" id="machine_address" name="machine_address" placeholder="请输入设备地址" required>
+                                </div>
+                            </div>
+                            <div class="am-form-group">
+                                <div class="am-u-sm-10 am-u-sm-push-2">
+                                    <button type="submit" id="sub" class="am-btn am-btn-primary">确认并保存</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{include file="common/footer"/}
+</body>
+</html>
+<script>
+    new_url = '{:url("index")}';
+</script>

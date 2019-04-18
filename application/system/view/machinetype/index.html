@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="zh">
+<head>
+    {include file="common/head" title="- 设备类型"/}
+</head>
+<body data-type="widgets">
+    <div class="tpl-page-container tpl-page-header-fixed">
+        {include file="common/header"/}
+        {include file="common/left"/}
+        <div class="tpl-content-wrapper">
+            <div class="tpl-content-page-title">设备类型</div>
+            <ol class="am-breadcrumb">
+                <li><a href="{:url('index/index')}" class="am-icon-home">首页</a></li>
+                <li><a href="{:url('index')}" class="am-icon-sitemap">设备管理</a></li>
+                <li class="am-active">设备类型</li>
+            </ol>
+            <div class="tpl-portlet-components">
+                <div class="tpl-block">
+                    <div class="portlet-title">
+                        <div class="am-u-sm-12 am-u-md-5">
+                            <div class="am-btn-toolbar">
+                                <div class="am-btn-group am-btn-group-xs">
+                                    <a href="{:url('create_type')}"><button type="button" class="am-btn am-btn-default am-btn-success"><span class="am-icon-plus"></span> 创建类型</button></a>
+                                </div>
+                                <div class="am-btn-group am-btn-group-xs"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="am-g">
+                        <div class="am-u-sm-12 am-u-md-12">
+                            <form action="{:url('')}" method="get" id="search_form">
+                                <table class="am-table am-table-striped am-table-hover table-main" id="example-r">
+                                    <!--<table class="am-table am-table-striped am-table-hover table-main  am-table-radius am-table-bordered " style="text-align: center">-->
+                                    <thead>
+                                    <tr>
+                                        <th >类型ID</th>
+                                        <th >类型名称</th>
+                                        <th >贷道层数</th>
+                                        <th >贷道条数(单层)</th>
+                                        <th >贷道库存(单条)</th>
+                                        <th >类型状态</th>
+                                        <th >创建时间</th>
+                                        <th >操作</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {volist name="type_list" id="vo"}
+                                    <tr>
+                                        <td><input type="checkbox" value="{$vo.type_id}"></td>
+                                        <td class="am-text-middle">{$vo.type_name}</td>
+                                        <td class="am-text-middle">{$vo.type_channel_content.channel_level}</td>
+                                        <td class="am-text-middle">{$vo.type_channel_content.channel_sum}</td>
+                                        <td class="am-text-middle">{$vo.type_channel_content.sum_store}</td>
+                                        <td class="am-text-middle">
+                                            {switch name="vo.type_status"}
+                                            {case value="1"}<span style="color: #19a97b">正在使用</span>{/case}
+                                            {case value="2"}<span style="color: #666">已禁用</span>{/case}
+                                            {/switch}
+                                        </td>
+                                        <td class="am-text-middle">{$vo.type_createTime}</td>
+                                        <td class="am-text-middle">
+                                            <div class="am-btn-toolbar">
+                                                <div class="am-btn-group am-btn-group-xs">
+                                                    <a href="{:url('edit_type',['type_id'=>$vo['type_id']])}" class="am-btn am-btn-secondary am-btn-xs  am-btn-xs">
+                                                        <span class="am-icon-pencil-square-o"></span> 编辑
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    {/volist}
+                                    </tbody>
+                                </table>
+                                <hr>
+                                <div class="am-cf">
+                                    <div class="am-fr">
+                                        {$type_list->render()|raw}
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    {include file="common/footer"/}
+</body>
+</html>
