@@ -10,6 +10,7 @@ class Goods extends Common
 {
 
     public function index(){
+        return returnState(200, '上传成功', [],'');
         $map['g.goods_status'] = ['<>', 3];
         $goods_list = Db::name('goods')->alias('g')
             ->join('supplier s', 's.supplier_id = g.goods_supplier_id', 'left')
@@ -42,6 +43,27 @@ class Goods extends Common
             return returnState(200,'添加成功',url('index'));
         }
         return $this->fetch();
+    }
+
+    public function goodsUpload()
+    {
+        $file = request()->file("file");
+//        print_r($file);
+        if ($file) {
+            $info = $file->move(ROOT_PATH . 'public' . DS . '/uploads/goods/');
+            if ($info) {
+                // 成功上传后 获取上传信息
+                $data = [
+                    'filePath' => '/uploads/goods/' . $info->getSaveName(),
+                    'fileSize' => $info->getInfo()["size"]
+                ];
+                return json(returnState(200, '上传成功', $data));
+            } else {
+                // 上传失败获取错误信息
+                return json(returnState(100, '上传失败', $file->getError()));
+            }
+        }
+        return json(returnState(100, '请上传文件'));
     }
 
 }
