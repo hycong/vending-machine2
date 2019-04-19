@@ -1,128 +1,534 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="zh">
 <head>
-    {include file="common/head" title="- 添加设备类型"/}
+    {include file="../application/common/view/web/head.html" title=" - 首页"}
+    <!--begin::Page Vendors Styles -->
+    <link href="/resource/web/assets/vendors/custom/fullcalendar/fullcalendar.bundle.css" rel="stylesheet"
+          type="text/css"/>
+    <!--引入CSS-->
+    <link rel="stylesheet" type="text/css" href="/resource/webUpload/webuploader.css">
+    <script src="/resource/web/assets/app/js/toastr.js"></script>
 </head>
-<body data-type="widgets">
-<div class="tpl-page-container tpl-page-header-fixed">
-    {include file="common/header"/}
-    {include file="common/left"/}
-    <!-- 内容区域 -->
-    <div class="tpl-content-wrapper">
-        <div class="tpl-content-page-title">设备类型</div>
-        <ol class="am-breadcrumb">
-            <li><a href="{:url('index/index')}" class="am-icon-home">首页</a></li>
-            <li><a href="{:url('machine/index')}" class="am-icon-sitemap">设备管理</a></li>
-            <li><a href="{:url('machinetype/index')}">设备类型</a></li>
-            <li class="am-active">添加设备类型</li>
-        </ol>
-        <div class="tpl-portlet-components">
-            <div class="portlet-title">
-                <div class="caption font-green bold">
-                    添加设备类型
+<!-- begin::Body -->
+<body class="m-page--fluid m--skin- m-content--skin-light2 m-header--fixed m-header--fixed-mobile m-aside-left--enabled m-aside-left--skin-dark m-aside-left--fixed m-aside-left--offcanvas m-footer--push m-aside--offcanvas-default">
+<!-- begin:: Page -->
+<div class="m-grid m-grid--hor m-grid--root m-page">
+
+    <!-- BEGIN: Header -->
+    {include file="../application/common/view/web/header.html"}
+
+    <!-- END: Header -->
+
+    <!-- begin::Body -->
+    <div class="m-grid__item m-grid__item--fluid m-grid m-grid--ver-desktop m-grid--desktop m-body">
+
+        <!-- BEGIN: Left Aside -->
+        {include file="../application/common/view/web/left.html"}
+
+        <!-- END: Left Aside -->
+        <div class="m-grid__item m-grid__item--fluid m-wrapper">
+            <!-- BEGIN: Subheader -->
+            <div class="m-subheader ">
+                <div class="m-subheader ">
+                    <div class="d-flex align-items-center">
+                        <div class="mr-auto">
+                            <h3 class="m-subheader__title m-subheader__title--separator">设备管理</h3>
+                            <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
+                                <li class="m-nav__item m-nav__item--home">
+                                    <a href="{:url('Index/index')}" class="m-nav__link m-nav__link--icon">
+                                        <i class="m-nav__link-icon la la-home"></i>
+                                    </a>
+                                </li>
+                                <li class="m-nav__separator">-</li>
+                                <li class="m-nav__item">
+                                    <a href="{:url('Machine/index')}" class="m-nav__link">
+                                        <span class="m-nav__link-text">设备管理</span>
+                                    </a>
+                                </li>
+                                <li class="m-nav__separator">-</li>
+                                <li class="m-nav__item">
+                                    <a href="javascript:void(0);" class="m-nav__link">
+                                        <span class="m-nav__link-text">添加设备类型</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="tpl-block">
-                <div class="am-g">
-                    <div class="tpl-form-body tpl-form-line">
-                        <form class="am-form tpl-form-line-form" action="{:url('')}" method="post" id="create_machine" >
-                            <div class="am-form-group">
-                                <label for="type_name" class="am-u-sm-2 am-form-label">类型名称</label>
-                                <div class="am-u-sm-10">
-                                    <input type="text" id="type_name" name="type_name" placeholder="请输入类型名称">
+
+            <!-- END: Subheader -->
+            <div class="m-content">
+
+
+                <div class="m-portlet">
+                    <div class="m-portlet__head">
+                        <div class="m-portlet__head-caption">
+                            <div class="m-portlet__head-title">
+                                <h3 class="m-portlet__head-text">
+                                    添加设备类型
+                                </h3>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--begin::Form-->
+                    <form class="m-form m-form--fit m-form--label-align-right" action="{:url('')}" method="post">
+
+                        <div class="m-portlet__body">
+                            <div class="form-group m-form__group row">
+                                <label class="col-form-label col-lg-3 col-sm-12">设备类型名称</label>
+                                <div class="m-radio-line" style="line-height: 40px;">
+                                    <input type="text" class="form-control m-input" id="type_name" name="type_name"  placeholder="请输入类型名称">
                                 </div>
                             </div>
-                            <div class="am-form-group">
-                                <label for="channel_level" class="am-u-sm-2 am-form-label">总层数</label>
-                                <div class="am-u-sm-10">
-                                    <input type="number" id="channel_level" name="channel_level" value="3" placeholder="请输入总层数">
+                        </div>
+                        <div class="m-portlet__body">
+                            <div class="form-group m-form__group row">
+                                <label class="col-form-label col-lg-3 col-sm-12">设备货道排序方式</label>
+                                <div class="m-radio-line" style="line-height: 40px;">
+                                    <label class="m-radio m-radio--solid m-radio--success" style="line-height: 1.85em;margin-right: 2em;">
+                                        <input type="radio" name="sortType" value="1" checked> 自然排序
+                                        <span></span>
+                                    </label>
+                                    <label class="m-radio m-radio--solid m-radio--success" style="line-height: 1.85em">
+                                        <input type="radio" name="sortType" value="2"> 逐层排序
+                                        <span></span>
+                                    </label>
                                 </div>
                             </div>
-                            <div class="am-form-group">
-                                <label for="channel_sum" class="am-u-sm-2 am-form-label">货道容量<span class="tpl-form-line-small-title">(单)</span></label>
-                                <div class="am-u-sm-10">
-                                    <input type="number" id="channel_sum" name="channel_sum" value="8" placeholder="请输入货道容量(单)">
+                        </div>
+                        <div class="m-portlet__body">
+                            <div class="form-group m-form__group row">
+                                <label class="col-form-label col-lg-3 col-sm-12">设备货道开始序号</label>
+                                <div class="m-radio-line" style="line-height: 40px;">
+                                    <select class="form-control m-input" name="channel_start">
+                                        <option value="1" checked>从0开始</option>
+                                        <option value="2">从1开始</option>
+                                    </select>
                                 </div>
                             </div>
-                            <div class="am-form-group">
-                                <label class="am-u-sm-2 am-form-label">每层货道数</label>
-                                <div class="am-u-sm-10" id="level_list"></div>
-                            </div>
-                            <div class="am-form-group">
-                                <label for="sum_store" class="am-u-sm-2 am-form-label">贷道数量<span class="tpl-form-line-small-title">(单层)</span></label>
-                                <div class="am-u-sm-10">
-                                    <input type="number" id="sum_store" name="sum_store" value="6" placeholder="请输入贷道数量(单层)">
+                        </div>
+                        <div class="m-portlet__body" id="natrueType">
+                            <div class="form-group m-form__group row">
+                                <label class="col-form-label col-lg-3 col-sm-12">总数</label>
+                                <div class="m-radio-line" style="line-height: 40px;">
+                                    <input type="text" class="form-control m-input" id="natrueNum" name="natrueNum"  placeholder="请输入货道总数">
                                 </div>
                             </div>
-                            <div class="am-form-group">
-                                <label class="am-u-sm-2 am-form-label">详细设置</label>
-                                <div class="am-u-sm-10" id="channel_details">
+                        </div>
+
+                        <div class="m-portlet__body pilesType" style="display:none">
+                            <div class="form-group m-form__group row">
+                                <label class="col-form-label col-lg-3 col-sm-12">总层数</label>
+                                <div class="m-radio-line" style="line-height: 40px;">
+                                    <input type="text" class="form-control m-input" id="channel_level" name="channel_level"  placeholder="请输入设备总层数">
                                 </div>
                             </div>
-                            <div class="am-form-group">
-                                <div class="am-u-sm-10 am-u-sm-push-2">
-                                    <button type="submit" id="sub" class="am-btn am-btn-primary">确认并保存</button>
+                        </div>
+                        <div class="m-portlet__body pilesType" style="display:none">
+                            <div class="form-group m-form__group row">
+                                <label class="col-form-label col-lg-3 col-sm-12">每层货道个数</label>
+                                <div class="m-radio-line" style="line-height: 40px;">
+                                    <input type="text" class="form-control m-input" id="channel_list" name="channel_list"  placeholder="请输入每层货道个数">
                                 </div>
                             </div>
-                        </form>
+                        </div>
+                        <div class="m-portlet__body">
+                            <div class="form-group m-form__group row">
+                                <label class="col-form-label col-lg-3 col-sm-12">单个货道容量</label>
+                                <div class="m-radio-line" style="line-height: 40px;">
+                                    <input type="text" class="form-control m-input" id="channel_capacity" name="channel_capacity"  placeholder="请输入单个货道容量">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="m-portlet__foot m-portlet__foot--fit">
+                            <div class="m-form__actions m-form__actions">
+                                <div class="row">
+                                    <div class="col-lg-9 ml-lg-auto">
+                                        <button type="submit" class="btn btn-info">提交</button>
+                                        <button type="reset" class="btn btn-warning">重置</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+
+                    <!--end::Form-->
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- end:: Body -->
+
+    <!-- begin::Footer -->
+    {include file="../application/common/view/web/footer.html"}
+    <!-- end::Footer -->
+</div>
+
+<!-- end:: Page -->
+
+
+<!-- begin::Quick Sidebar -->
+<div id="m_quick_sidebar" class="m-quick-sidebar m-quick-sidebar--tabbed m-quick-sidebar--skin-light">
+    <div class="m-quick-sidebar__content m--hide">
+        <span id="m_quick_sidebar_close" class="m-quick-sidebar__close"><i class="la la-close"></i></span>
+        <ul id="m_quick_sidebar_tabs" class="nav nav-tabs m-tabs m-tabs-line m-tabs-line--brand" role="tablist">
+            <li class="nav-item m-tabs__item">
+                <a class="nav-link m-tabs__link active" data-toggle="tab" href="#m_quick_sidebar_tabs_messenger"
+                   role="tab">Messages</a>
+            </li>
+            <li class="nav-item m-tabs__item">
+                <a class="nav-link m-tabs__link" data-toggle="tab" href="#m_quick_sidebar_tabs_settings" role="tab">Settings</a>
+            </li>
+            <li class="nav-item m-tabs__item">
+                <a class="nav-link m-tabs__link" data-toggle="tab" href="#m_quick_sidebar_tabs_logs" role="tab">Logs</a>
+            </li>
+        </ul>
+        <div class="tab-content">
+            <div class="tab-pane active" id="m_quick_sidebar_tabs_messenger" role="tabpanel">
+                <div class="m-messenger m-messenger--message-arrow m-messenger--skin-light">
+                    <div class="m-messenger__messages m-scrollable">
+                        <div class="m-messenger__wrapper">
+                            <div class="m-messenger__message m-messenger__message--in">
+                                <div class="m-messenger__message-pic">
+                                    <img src="/resource/web/assets/app/media/img/users/user3.jpg"
+                                         tppabs="http://metronic.net.cn/dist/default/assets/app/media/img//users/user3.jpg"
+                                         alt=""/>
+                                </div>
+                                <div class="m-messenger__message-body">
+                                    <div class="m-messenger__message-arrow"></div>
+                                    <div class="m-messenger__message-content">
+                                        <div class="m-messenger__message-username">
+                                            Megan wrote
+                                        </div>
+                                        <div class="m-messenger__message-text">
+                                            Hi Bob. What time will be the meeting ?
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="m-messenger__wrapper">
+                            <div class="m-messenger__message m-messenger__message--out">
+                                <div class="m-messenger__message-body">
+                                    <div class="m-messenger__message-arrow"></div>
+                                    <div class="m-messenger__message-content">
+                                        <div class="m-messenger__message-text">
+                                            Hi Megan. It's at 2.30PM
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="m-messenger__wrapper">
+                            <div class="m-messenger__message m-messenger__message--in">
+                                <div class="m-messenger__message-pic">
+                                    <img src="/resource/web/assets/app/media/img/users/user3.jpg"
+                                         tppabs="http://metronic.net.cn/dist/default/assets/app/media/img//users/user3.jpg"
+                                         alt=""/>
+                                </div>
+                                <div class="m-messenger__message-body">
+                                    <div class="m-messenger__message-arrow"></div>
+                                    <div class="m-messenger__message-content">
+                                        <div class="m-messenger__message-username">
+                                            Megan wrote
+                                        </div>
+                                        <div class="m-messenger__message-text">
+                                            Will the development team be joining ?
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="m-messenger__wrapper">
+                            <div class="m-messenger__message m-messenger__message--out">
+                                <div class="m-messenger__message-body">
+                                    <div class="m-messenger__message-arrow"></div>
+                                    <div class="m-messenger__message-content">
+                                        <div class="m-messenger__message-text">
+                                            Yes sure. I invited them as well
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="m-messenger__datetime">2:30PM</div>
+                        <div class="m-messenger__wrapper">
+                            <div class="m-messenger__message m-messenger__message--in">
+                                <div class="m-messenger__message-pic">
+                                    <img src="/resource/web/assets/app/media/img/users/user3.jpg"
+                                         tppabs="http://metronic.net.cn/dist/default/assets/app/media/img//users/user3.jpg"
+                                         alt=""/>
+                                </div>
+                                <div class="m-messenger__message-body">
+                                    <div class="m-messenger__message-arrow"></div>
+                                    <div class="m-messenger__message-content">
+                                        <div class="m-messenger__message-username">
+                                            Megan wrote
+                                        </div>
+                                        <div class="m-messenger__message-text">
+                                            Noted. For the Coca-Cola Mobile App project as well ?
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="m-messenger__wrapper">
+                            <div class="m-messenger__message m-messenger__message--out">
+                                <div class="m-messenger__message-body">
+                                    <div class="m-messenger__message-arrow"></div>
+                                    <div class="m-messenger__message-content">
+                                        <div class="m-messenger__message-text">
+                                            Yes, sure.
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="m-messenger__wrapper">
+                            <div class="m-messenger__message m-messenger__message--out">
+                                <div class="m-messenger__message-body">
+                                    <div class="m-messenger__message-arrow"></div>
+                                    <div class="m-messenger__message-content">
+                                        <div class="m-messenger__message-text">
+                                            Please also prepare the quotation for the Loop CRM project as well.
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="m-messenger__datetime">3:15PM</div>
+                        <div class="m-messenger__wrapper">
+                            <div class="m-messenger__message m-messenger__message--in">
+                                <div class="m-messenger__message-no-pic m--bg-fill-danger">
+                                    <span>M</span>
+                                </div>
+                                <div class="m-messenger__message-body">
+                                    <div class="m-messenger__message-arrow"></div>
+                                    <div class="m-messenger__message-content">
+                                        <div class="m-messenger__message-username">
+                                            Megan wrote
+                                        </div>
+                                        <div class="m-messenger__message-text">
+                                            Noted. I will prepare it.
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="m-messenger__wrapper">
+                            <div class="m-messenger__message m-messenger__message--out">
+                                <div class="m-messenger__message-body">
+                                    <div class="m-messenger__message-arrow"></div>
+                                    <div class="m-messenger__message-content">
+                                        <div class="m-messenger__message-text">
+                                            Thanks Megan. I will see you later.
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="m-messenger__wrapper">
+                            <div class="m-messenger__message m-messenger__message--in">
+                                <div class="m-messenger__message-pic">
+                                    <img src="/resource/web/assets/app/media/img/users/user3.jpg"
+                                         tppabs="http://metronic.net.cn/dist/default/assets/app/media/img//users/user3.jpg"
+                                         alt=""/>
+                                </div>
+                                <div class="m-messenger__message-body">
+                                    <div class="m-messenger__message-arrow"></div>
+                                    <div class="m-messenger__message-content">
+                                        <div class="m-messenger__message-username">
+                                            Megan wrote
+                                        </div>
+                                        <div class="m-messenger__message-text">
+                                            Sure. See you in the meeting soon.
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="m-messenger__seperator"></div>
+                    <div class="m-messenger__form">
+                        <div class="m-messenger__form-controls">
+                            <input type="text" name="" placeholder="Type here..." class="m-messenger__form-input">
+                        </div>
+                        <div class="m-messenger__form-tools">
+                            <a href="" class="m-messenger__form-attachment">
+                                <i class="la la-paperclip"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane" id="m_quick_sidebar_tabs_settings" role="tabpanel">
+                <div class="m-list-settings m-scrollable">
+                    <div class="m-list-settings__group">
+                        <div class="m-list-settings__heading">General Settings</div>
+                        <div class="m-list-settings__item">
+                            <span class="m-list-settings__item-label">Email Notifications</span>
+                            <span class="m-list-settings__item-control">
+										<span class="m-switch m-switch--outline m-switch--icon-check m-switch--brand">
+											<label>
+												<input type="checkbox" checked="checked" name="">
+												<span></span>
+											</label>
+										</span>
+									</span>
+                        </div>
+                        <div class="m-list-settings__item">
+                            <span class="m-list-settings__item-label">Site Tracking</span>
+                            <span class="m-list-settings__item-control">
+										<span class="m-switch m-switch--outline m-switch--icon-check m-switch--brand">
+											<label>
+												<input type="checkbox" name="">
+												<span></span>
+											</label>
+										</span>
+									</span>
+                        </div>
+                        <div class="m-list-settings__item">
+                            <span class="m-list-settings__item-label">SMS Alerts</span>
+                            <span class="m-list-settings__item-control">
+										<span class="m-switch m-switch--outline m-switch--icon-check m-switch--brand">
+											<label>
+												<input type="checkbox" name="">
+												<span></span>
+											</label>
+										</span>
+									</span>
+                        </div>
+                        <div class="m-list-settings__item">
+                            <span class="m-list-settings__item-label">Backup Storage</span>
+                            <span class="m-list-settings__item-control">
+										<span class="m-switch m-switch--outline m-switch--icon-check m-switch--brand">
+											<label>
+												<input type="checkbox" name="">
+												<span></span>
+											</label>
+										</span>
+									</span>
+                        </div>
+                        <div class="m-list-settings__item">
+                            <span class="m-list-settings__item-label">Audit Logs</span>
+                            <span class="m-list-settings__item-control">
+										<span class="m-switch m-switch--outline m-switch--icon-check m-switch--brand">
+											<label>
+												<input type="checkbox" checked="checked" name="">
+												<span></span>
+											</label>
+										</span>
+									</span>
+                        </div>
+                    </div>
+                    <div class="m-list-settings__group">
+                        <div class="m-list-settings__heading">System Settings</div>
+                        <div class="m-list-settings__item">
+                            <span class="m-list-settings__item-label">System Logs</span>
+                            <span class="m-list-settings__item-control">
+										<span class="m-switch m-switch--outline m-switch--icon-check m-switch--brand">
+											<label>
+												<input type="checkbox" name="">
+												<span></span>
+											</label>
+										</span>
+									</span>
+                        </div>
+                        <div class="m-list-settings__item">
+                            <span class="m-list-settings__item-label">Error Reporting</span>
+                            <span class="m-list-settings__item-control">
+										<span class="m-switch m-switch--outline m-switch--icon-check m-switch--brand">
+											<label>
+												<input type="checkbox" name="">
+												<span></span>
+											</label>
+										</span>
+									</span>
+                        </div>
+                        <div class="m-list-settings__item">
+                            <span class="m-list-settings__item-label">Applications Logs</span>
+                            <span class="m-list-settings__item-control">
+										<span class="m-switch m-switch--outline m-switch--icon-check m-switch--brand">
+											<label>
+												<input type="checkbox" name="">
+												<span></span>
+											</label>
+										</span>
+									</span>
+                        </div>
+                        <div class="m-list-settings__item">
+                            <span class="m-list-settings__item-label">Backup Servers</span>
+                            <span class="m-list-settings__item-control">
+										<span class="m-switch m-switch--outline m-switch--icon-check m-switch--brand">
+											<label>
+												<input type="checkbox" checked="checked" name="">
+												<span></span>
+											</label>
+										</span>
+									</span>
+                        </div>
+                        <div class="m-list-settings__item">
+                            <span class="m-list-settings__item-label">Audit Logs</span>
+                            <span class="m-list-settings__item-control">
+										<span class="m-switch m-switch--outline m-switch--icon-check m-switch--brand">
+											<label>
+												<input type="checkbox" name="">
+												<span></span>
+											</label>
+										</span>
+									</span>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-
     </div>
 </div>
-{include file="common/footer"/}
-</body>
-</html>
+<!--<script src="/resource/web/assets/vendors/base/vendors.bundle.js" type="text/javascript"></script>-->
+<!--<script src="/resource/web/assets/demo/default/base/scripts.bundle.js" type="text/javascript"></script>-->
+<!--引入JS-->
+<script type="text/javascript" src="/resource/webUpload/webuploader.js"></script>
+<script src="/resource/web/assets/vendors/base/vendors.bundle.js" type="text/javascript"></script>
+<script src="/resource/web/assets/demo/default/base/scripts.bundle.js" type="text/javascript"></script>
+
+<!--end::Global Theme Bundle -->
+
+<!--begin::Page Vendors -->
+<script src="/resource/web/assets/vendors/custom/fullcalendar/fullcalendar.bundle.js" type="text/javascript"></script>
+
+<!--end::Page Vendors -->
+
+<!--begin::Page Scripts -->
+<script src="/resource/web/assets/app/js/dashboard.js" type="text/javascript"></script>
+<!-- begin::Scroll Top -->
+<div id="m_scroll_top" class="m-scroll-top">
+    <i class="la la-arrow-up"></i>
+</div>
+
+<!-- end::Scroll Top -->
+
 <script>
-    new_url = '{:url("index")}';
-    channel_level();
-    create_channel();
-
-    function create_channel() {
-        let channel_level = $('#channel_level').val();
-        let sum_store = $('#sum_store').val();
-        let html = '<table class="am-table">';
-        let number = 1;
-        for (var i=1;i<=channel_level;i++){
-            html += "<tr>";
-            for (var j=1;j<=$('#level_'+i).val();j++){
-                let this_number = number < 10 ? '0'+number : number;
-                html += '<td style="max-width: 100px;">' +
-                    '<div class="am-text-center" style="font-size: 12px;line-height: 36px;">货道 <input type="text" name="type_channel_content['+ number +'][title]" value="' + this_number + '" style="width: 28px;float: right;text-align: center;"></div>'+
-                    '<input type="number" name="type_channel_content['+ number +'][store]" value="'+ sum_store +'" placeholder="请输入库存数" class="am-text-center">' +
-                    '</td>';
-                number++;
-            }
-            html += "</tr>";
-        }
-        html += "</table>";
-        console.log(html);
-        $('#channel_details').html(html);
-    }
-
-    $('#channel_level').bind('input propertychange',function () {
-        channel_level();
-        create_channel();
-    });
-    $('#channel_sum').bind('input propertychange',function () {
-        $('.level_list').val($(this).val());
-        create_channel();
-    });
-    function channel_level() {
-        let value = $('#channel_level').val();
-        let html = '';
-        for (var i= 1;i<=value;i++){
-            html += '<div class="am-form-group">';
-            html += '<label for="sum_store" class="am-u-sm-2 am-form-label">第'+ i +'层</label>';
-            html += '<div class="am-u-sm-10">';
-            html += '<input type="number" name="level_list['+ i +']" class="level_list" id="level_'+ i +'" value="'+ $('#channel_sum').val() +'" placeholder="请输入货道数">';
-            html += '</div></div>';
-        }
-        $('#level_list').html(html);
-        $('.level_list,#channel_sum,#sum_store').bind('input propertychange',function () {
-            create_channel();
-        });
-    }
+    checkType();
+    nav_url = "{:url('Machinetype/index')}";
+   function checkType() {
+       $("input:radio[name='sortType']").change(function () {
+           var sortType = $(this).val();
+           if(sortType == 1){
+               $("#natrueType").show();
+               $(".pilesType").hide();
+           }else if(sortType == 2){
+               $("#natrueType").hide();
+               $(".pilesType").show();
+           }
+       });
+   }
 </script>
+<!--end::Page Scripts -->
+</body>
+
+<!-- end::Body -->
+</html>

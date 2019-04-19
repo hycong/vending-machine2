@@ -32,8 +32,8 @@ class VMachine extends Validate
     ];
 
     protected $scene = [
-        'create'  =>  ['machine_name','machine_type_id','machine_agent_id','machine_code','machine_address'],
-        'edit'  =>  ['machine_name','machine_agent_id','machine_address'],
+        'create'  =>  ['machine_type_id','machine_agent_id','machine_code','machine_address'],
+        'edit'  =>  ['machine_agent_id','machine_address'],
     ];
 
 }

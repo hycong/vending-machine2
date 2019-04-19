@@ -15,8 +15,13 @@ use think\Request;
 
 class Adver extends Common
 {
-    protected $pageNum = 5;
+    protected $pageNum = 8;
 
+    /**
+     * 素材列表（首页）
+     * @return mixed
+     * @throws \think\exception\DbException
+     */
     public function index()
     {
         $adver_list = Db::name("adver_resource")->order("resource_id DESC")
@@ -25,6 +30,10 @@ class Adver extends Common
         return self::fetch();
     }
 
+    /**
+     * 素材上传页面
+     * @return mixed|void
+     */
     public function addAdver()
     {
         $request = Request::instance();
@@ -59,11 +68,6 @@ class Adver extends Common
             return self::fetch();
     }
 
-    public function editAdver()
-    {
-        return self::fetch();
-    }
-
     /**
      * 上/下架
      * @return \think\response\Json
@@ -84,7 +88,6 @@ class Adver extends Common
                 break;
         }
     }
-
 
     /**
      * 下架素材（暂未判断已投放广告）
@@ -176,6 +179,10 @@ class Adver extends Common
         }
     }
 
+    /**
+     * 上传文件/图片
+     * @return \think\response\Json
+     */
     public function webUpload()
     {
         $file = request()->file("file");

@@ -19,17 +19,20 @@ class VMachineType extends Validate
         'channel_level' => 'require',
         'channel_sum'  => 'require',
         'sum_store'  => 'require',
+        'channel_capacity' => 'require',
     ];
 
     protected $message  =   [
-        'type_name.require'      => '请输入类型名称',
-        'channel_level.require'       => '请输入总层数',
-        'channel_sum.require'       => '请输入货道容量(单)',
-        'sum_store.require'        => '请输入贷道数量(单层)',
+        'type_name.require' => '请输入类型名称',
+        'channel_level.require' => '请输入总层数',
+        'channel_sum.require' => '请输入货道容量(单)',
+        'sum_store.require' => '请输入贷道数量(单层)',
+        'channel_capacity' => '请输入单个货道容量',
     ];
 
     protected $scene = [
-        'create'  =>  ['type_name','channel_level','channel_sum','sum_store'],
+        'create'  =>  ['type_name','channel_level','channel_capacity'],
+        'sortCreate' => ['type_name','natrueNum','channel_capacity']
     ];
 
 }

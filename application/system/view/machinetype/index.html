@@ -1,90 +1,174 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="zh">
 <head>
-    {include file="common/head" title="- 设备类型"/}
+    {include file="../application/common/view/web/head.html" title=" - 订单管理"}
+    <style>
+        input[type=text].show-mch-no {
+            border: none;
+            background-color: transparent;
+            width: 83px;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
+
+    </style>
 </head>
-<body data-type="widgets">
-    <div class="tpl-page-container tpl-page-header-fixed">
-        {include file="common/header"/}
-        {include file="common/left"/}
-        <div class="tpl-content-wrapper">
-            <div class="tpl-content-page-title">设备类型</div>
-            <ol class="am-breadcrumb">
-                <li><a href="{:url('index/index')}" class="am-icon-home">首页</a></li>
-                <li><a href="{:url('index')}" class="am-icon-sitemap">设备管理</a></li>
-                <li class="am-active">设备类型</li>
-            </ol>
-            <div class="tpl-portlet-components">
-                <div class="tpl-block">
-                    <div class="portlet-title">
-                        <div class="am-u-sm-12 am-u-md-5">
-                            <div class="am-btn-toolbar">
-                                <div class="am-btn-group am-btn-group-xs">
-                                    <a href="{:url('create_type')}"><button type="button" class="am-btn am-btn-default am-btn-success"><span class="am-icon-plus"></span> 创建类型</button></a>
-                                </div>
-                                <div class="am-btn-group am-btn-group-xs"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="am-g">
-                        <div class="am-u-sm-12 am-u-md-12">
-                            <form action="{:url('')}" method="get" id="search_form">
-                                <table class="am-table am-table-striped am-table-hover table-main" id="example-r">
-                                    <!--<table class="am-table am-table-striped am-table-hover table-main  am-table-radius am-table-bordered " style="text-align: center">-->
-                                    <thead>
-                                    <tr>
-                                        <th >类型ID</th>
-                                        <th >类型名称</th>
-                                        <th >贷道层数</th>
-                                        <th >贷道条数(单层)</th>
-                                        <th >贷道库存(单条)</th>
-                                        <th >类型状态</th>
-                                        <th >创建时间</th>
-                                        <th >操作</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    {volist name="type_list" id="vo"}
-                                    <tr>
-                                        <td><input type="checkbox" value="{$vo.type_id}"></td>
-                                        <td class="am-text-middle">{$vo.type_name}</td>
-                                        <td class="am-text-middle">{$vo.type_channel_content.channel_level}</td>
-                                        <td class="am-text-middle">{$vo.type_channel_content.channel_sum}</td>
-                                        <td class="am-text-middle">{$vo.type_channel_content.sum_store}</td>
-                                        <td class="am-text-middle">
-                                            {switch name="vo.type_status"}
-                                            {case value="1"}<span style="color: #19a97b">正在使用</span>{/case}
-                                            {case value="2"}<span style="color: #666">已禁用</span>{/case}
-                                            {/switch}
-                                        </td>
-                                        <td class="am-text-middle">{$vo.type_createTime}</td>
-                                        <td class="am-text-middle">
-                                            <div class="am-btn-toolbar">
-                                                <div class="am-btn-group am-btn-group-xs">
-                                                    <a href="{:url('edit_type',['type_id'=>$vo['type_id']])}" class="am-btn am-btn-secondary am-btn-xs  am-btn-xs">
-                                                        <span class="am-icon-pencil-square-o"></span> 编辑
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    {/volist}
-                                    </tbody>
-                                </table>
-                                <hr>
-                                <div class="am-cf">
-                                    <div class="am-fr">
-                                        {$type_list->render()|raw}
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
+<!-- begin::Body -->
+<body class="m-page--fluid m--skin- m-content--skin-light2 m-header--fixed m-header--fixed-mobile m-aside-left--enabled m-aside-left--skin-dark m-aside-left--fixed m-aside-left--offcanvas m-footer--push m-aside--offcanvas-default">
+<!-- begin:: Page -->
+<div class="m-grid m-grid--hor m-grid--root m-page">
+    <!-- BEGIN: Header -->
+    {include file="../application/common/view/web/header.html"}
+    <!-- END: Header -->
+    <!-- begin::Body -->
+    <div class="m-grid__item m-grid__item--fluid m-grid m-grid--ver-desktop m-grid--desktop m-body">
+        <!-- BEGIN: Left Aside -->
+        {include file="../application/common/view/web/left.html"}
+        <!-- END: Left Aside -->
+        <div class="m-grid__item m-grid__item--fluid m-wrapper">
+            <div class="m-subheader ">
+                <div class="d-flex align-items-center">
+                    <div class="mr-auto">
+                        <h3 class="m-subheader__title m-subheader__title--separator">订单管理</h3>
+                        <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
+                            <li class="m-nav__item m-nav__item--home">
+                                <a href="{:url('Index/index')}" class="m-nav__link m-nav__link--icon">
+                                    <i class="m-nav__link-icon la la-home"></i>
+                                </a>
+                            </li>
+                            <li class="m-nav__separator">-</li>
+                            <li class="m-nav__item">
+                                <a href="{:url('Orders/index')}" class="m-nav__link">
+                                    <span class="m-nav__link-text">订单管理</span>
+                                </a>
+                            </li>
+                            <li class="m-nav__separator">-</li>
+                            <li class="m-nav__item">
+                                <a href="" class="m-nav__link">
+                                    <span class="m-nav__link-text">订单列表</span>
+                                </a>
+                            </li>
+                        </ul>
                     </div>
                 </div>
             </div>
-        </div>
+            <div class="m-content">
+                <div class="m-portlet">
+                    <div class="m-portlet__head">
+                        <div class="m-portlet__head-caption">
+                            <div class="m-portlet__head-title">
+                                <h3 class="m-portlet__head-text">订单列表</h3>
+                            </div>
+                        </div>
+                        <div class="m-portlet__head-tools">
+                            <ul class="m-portlet__nav">
+                                <li class="m-portlet__nav-item">
+                                    <a href="{:url('createType')}"
+                                       class="btn btn-accent m-btn m-btn--custom m-btn--pill m-btn--icon m-btn--air">
+                                        <span>
+                                            <i class="la la-plus"></i>
+                                            <span>添加设备类型</span>
+                                        </span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="m-portlet__body">
+                        <div class="dataTables_wrapper">
+                            <table class="table table-striped- table-bordered table-hover table-checkable"
+                                   id="m_table_1">
+                                <thead>
+                                <tr>
+                                    <th>设备类型ID</th>
+                                    <th>设备类型名称</th>
+                                    <th>设备货道详情</th>
+                                    <th>类型创建时间</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {volist name="type_list" id="vo"}
+                                <tr>
+                                    <td>{$vo.type_id}</td>
+                                    <td class="am-text-middle">{$vo.type_name}</td>
+                                    <td class="am-text-middle">
+                                        <table>
+                                            <tr class="m-datatable__row">
+                                                <td class="m-datatable__cell"><span
+                                                        style="width: 110px;">设备货道开始序号</span></td>
+                                                <td data-field="Department" class="m-datatable__cell" style=""><span
+                                                        style="width: 133px;">
+                                                    {switch name="vo.type_channel_content.channel_start|default='0'"}
+                                                        {case value="1"}0{/case}
+                                                        {case value="2"}1{/case}
+                                                        {default}0
+                                                    {/switch}
+                                                </span></td>
+                                            </tr>
+                                            {switch name="vo.type_sort_type"}
+                                                {case value="2"}
+                                            <tr class="m-datatable__row">
+                                                <td class="m-datatable__cell"><span style="width: 110px;">设备层数</span>
+                                                </td>
+                                                <td data-field="Website" class="m-datatable__cell" style=""><span
+                                                        style="width: 119px;">{$vo.type_channel_content.channel_level}</span></td>
+                                            </tr>
+                                            <tr class="m-datatable__row">
+                                                <td class="m-datatable__cell"><span
+                                                        style="width: 110px;">单层货道数</span></td>
+                                                <td data-field="TotalPayment" class="m-datatable__cell" style=""><span
+                                                        style="width: 110px;">{$vo.type_channel_content.channel_list}</span></td>
+                                            </tr>
+                                            <tr class="m-datatable__row">
+                                                <td class="m-datatable__cell"><span style="width: 110px;">单个货道容量</span>
+                                                </td>
+                                                <td data-field="TotalPayment" class="m-datatable__cell" style=""><span
+                                                        style="width: 110px;">{$vo.type_channel_content.channel_capacity}</span></td>
+                                            </tr>
+                                                {/case}
+                                                {case value="1"}
+                                            <tr class="m-datatable__row">
+                                                <td class="m-datatable__cell"><span style="width: 110px;">设备货道总数</span>
+                                                </td>
+                                                <td data-field="Website" class="m-datatable__cell" style=""><span
+                                                        style="width: 119px;">{$vo.type_channel_content.channel_total}</span></td>
+                                            </tr>
+                                            <tr class="m-datatable__row">
+                                                <td class="m-datatable__cell"><span
+                                                        style="width: 110px;">单个货道容量</span></td>
+                                                <td data-field="TotalPayment" class="m-datatable__cell" style=""><span
+                                                        style="width: 110px;">{$vo.type_channel_content.channel_capacity}</span></td>
+                                            </tr>
+                                            {/case}
+                                            {/switch}
+                                        </table>
+                                    </td>
+                                    <td class="am-text-middle">{$vo.type_createTime}</td>
+                                </tr>
+                                {/volist}
+                                </tbody>
+                            </table>
+                            <div class="dataTables_pager">
+                                <div class="dataTables_paginate paging_simple_numbers">{$type_list->render()}</div>
+                            </div>
+                        </div>
+                    </div>
 
+                </div>
+            </div>
+        </div>
     </div>
-    {include file="common/footer"/}
+    <!-- end:: Body -->
+    <!-- begin::Footer -->
+    {include file="../application/common/view/web/footer.html"}
+    <!-- end::Footer -->
+</div>
+<!-- end:: Page -->
+{include file="../application/common/view/web/foot.html"}
 </body>
+<!-- end::Body -->
 </html>
+<script>
+    nav_url = "{:url('Machinetype/index')}";
+</script>
