@@ -7,7 +7,6 @@ namespace machine;
 
 
 use think\Config;
-use think\Env;
 
 class Machine
 {
