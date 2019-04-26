@@ -21,7 +21,7 @@
         "topthink/think-captcha": "1.*",
         "topthink/think-image": "^1.0",
         "topthink/think-testing": "1.*",
-        "overtrue/wechat": "~4.0"
+        "overtrue/wechat": "^4.1"
     },
     "autoload": {
         "psr-4": {

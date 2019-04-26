@@ -15,13 +15,7 @@ use think\Model;
 class ConfModel extends Model
 {
 
-    protected $table = 'config';
-
-    public function __construct($data = [])
-    {
-        parent::__construct($data);
-        $this->table = Config::get('database.prefix').$this->table;
-    }
+    protected $table = 'nvwa_config';
 
     /**
      * 获取配置信息
@@ -31,6 +25,7 @@ class ConfModel extends Model
             'conf_name' => $name
         ])->value('conf_content');
         if($value) $value = unserialize($value);
+        if(!$value) return [];
         return $value;
     }
 

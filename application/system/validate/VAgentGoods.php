@@ -11,13 +11,14 @@ namespace app\system\validate;
 
 use think\Validate;
 
-class VGoods extends Validate
+class VAgentGoods extends Validate
 {
 
     protected $rule =   [
         'goods_name'   => 'require',
         'goods_type' => 'require',
         'goods_pic' => 'require',
+        'goods_recommend_price'  => 'require|float',
         'goods_price'  => 'require|float',
         'goods_desc'  => 'require',
         'goods_supplier_id'  => 'require',
@@ -27,15 +28,15 @@ class VGoods extends Validate
         'goods_name.require'      => '请输入商品名称',
         'goods_type.require'       => '请输入备注',
         'goods_pic.require'       => '请上传商品图',
-        'goods_price.require'       => '请输入建议价格',
+        'goods_recommend_price.require'       => '请输入建议价格',
+        'goods_price.require'       => '请输入加盟商价格',
         'goods_price.float'       => '建议价格只能为数字',
         'goods_desc.require'        => '请输入商品描述',
         'goods_supplier_id.require'        => '请选择供货商',
     ];
 
     protected $scene = [
-        'create'  =>  ['goods_name','goods_price','goods_pic','goods_supplier_id'],
-        'edit'  =>  ['goods_name','goods_price','goods_supplier_id'],
+        'edit'  =>  ['goods_name','goods_price'],
     ];
 
 }

@@ -2,6 +2,8 @@
 <html lang="zh">
 <head>
     {include file="../application/common/view/web/head.html" title=" - 微信管理"}
+    <link rel="stylesheet" type="text/css" href="/resource/webUpload/webuploader.css">
+    <script src="/resource/web/assets/app/js/toastr.js"></script>
 </head>
 <!-- begin::Body -->
 <body class="m-page--fluid m--skin- m-content--skin-light2 m-header--fixed m-header--fixed-mobile m-aside-left--enabled m-aside-left--skin-dark m-aside-left--fixed m-aside-left--offcanvas m-footer--push m-aside--offcanvas-default">
@@ -51,35 +53,60 @@
                             </div>
                         </div>
                     </div>
-                    <div class="m-portlet__body">
+                    <div class="m-portlet__body" id="m-portlet__body">
                         <form class="m-form m-form--fit m-form--label-align-right" action="{:url('')}" method="post" id="form">
-                            <div class="m-portlet__body">
-                                <div class="form-group m-form__group row">
-                                    <label for="keyword_title" class="col-form-label col-lg-3 col-md-3 col-sm-12">关键字</label>
-                                    <div class="col-lg-9 col-md-9 col-sm-12">
-                                        <input class="form-control" type="text" id="keyword_title" name="keyword_title"  value="" placeholder="请输入关键字" required>
+                            <div class="form-group m-form__group row">
+                                <label for="keyword_title" class="col-form-label col-lg-3 col-md-3 col-sm-12">关键字</label>
+                                <div class="col-lg-9 col-md-9 col-sm-12">
+                                    <input class="form-control" type="text" id="keyword_title" name="keyword_title"  value="" placeholder="请输入关键字" required>
+                                </div>
+                            </div>
+                            <div class="form-group m-form__group row">
+                                <label class="col-form-label col-lg-3 col-md-3 col-sm-12">回复类型</label>
+                                <div class="col-lg-9 col-md-9 col-sm-12">
+                                    <div class="m-radio-inline">
+                                        <label class="m-radio"><input type="radio" class="" value="1" name="keyword_responseType"> 文字<span></span></label>
+                                        <label class="m-radio"><input type="radio" class="" value="2" name="keyword_responseType" checked> 图文<span></span></label>
                                     </div>
                                 </div>
-                                <div class="form-group m-form__group row">
-                                    <label for="keyword_reply" class="col-form-label col-lg-3 col-md-3 col-sm-12">回复内容</label>
-                                    <div class="col-lg-9 col-md-9 col-sm-12">
-                                        <input class="form-control" type="text" id="keyword_reply" name="keyword_reply"  value="" placeholder="请输入回复内容" required>
+                            </div>
+                            <div class="form-group m-form__group row keyword_responseType_2">
+                                <label class="col-form-label col-lg-3 col-md-3 col-sm-12">图片</label>
+                                <div class="col-lg-9 col-md-9 col-sm-12">
+                                    <div class="form-group m-form__group row am-form-file">
+                                        <div class="tpl-form-file-img">
+                                            <img alt="" id="myImg">
+                                        </div>
+                                        <div id="uploaderPic">
+                                            <!--用来存放item-->
+                                            <input type="hidden" id="imgPath" name="keyword_pic">
+                                            <input type="hidden" id="imgSize" name="keyword_pic_size">
+                                            <div id="fileList" class="uploader-list"></div>
+                                            <div id="filePicker">选择图片</div>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="form-group m-form__group row">
-                                    <label for="keyword_url" class="col-form-label col-lg-3 col-md-3 col-sm-12">链接地址</label>
-                                    <div class="col-lg-9 col-md-9 col-sm-12">
-                                        <input class="form-control" type="text" id="keyword_url" name="keyword_url"  value="" placeholder="请输入链接地址">
-                                    </div>
+                            </div>
+                            <script>
+                                $('input[name="keyword_responseType"]').change(function () {
+                                    let value = $(this).val();
+                                    if(value == 2){
+                                        $('.keyword_responseType_2').show();
+                                    }else{
+                                        $('.keyword_responseType_2').hide();
+                                    }
+                                });
+                            </script>
+                            <div class="form-group m-form__group row">
+                                <label for="keyword_reply" class="col-form-label col-lg-3 col-md-3 col-sm-12">回复内容</label>
+                                <div class="col-lg-9 col-md-9 col-sm-12">
+                                    <input class="form-control" type="text" id="keyword_reply" name="keyword_reply"  value="" placeholder="请输入回复内容" required>
                                 </div>
-                                <div class="form-group m-form__group row">
-                                    <label for="keyword_responseType" class="col-form-label col-lg-3 col-md-3 col-sm-12">回复类型</label>
-                                    <div class="col-lg-9 col-md-9 col-sm-12">
-                                        <select name="keyword_responseType" class="form-control" id="keyword_responseType">
-                                            <option value="1">文字</option>
-                                            <!--<option value="2">图片</option>-->
-                                        </select>
-                                    </div>
+                            </div>
+                            <div class="form-group m-form__group row">
+                                <label for="keyword_url" class="col-form-label col-lg-3 col-md-3 col-sm-12">链接地址</label>
+                                <div class="col-lg-9 col-md-9 col-sm-12">
+                                    <input class="form-control" type="text" id="keyword_url" name="keyword_url"  value="" placeholder="请输入链接地址">
                                 </div>
                             </div>
                             <div class="m-portlet__foot m-portlet__foot--fit">
@@ -107,6 +134,7 @@
 </body>
 <!-- end::Body -->
 </html>
+<script type="text/javascript" src="/resource/webUpload/webuploader.js"></script>
 <script>
     nav_url = "{:url('wxkeyword/index')}";
     $('#sub').click(function () {
@@ -132,4 +160,131 @@
             }
         });
     });
+    imgUpload();
+    function imgUpload(){
+        // 图片上传
+        jQuery(function() {
+            var $ = jQuery,
+                $list = $('#fileList'),
+                // 优化retina, 在retina下这个值是2
+                ratio = window.devicePixelRatio || 1,
+
+                // 缩略图大小
+                thumbnailWidth = 100 * ratio,
+                thumbnailHeight = 100 * ratio,
+
+                // Web Uploader实例
+                uploader;
+
+            // 初始化Web Uploader
+            uploader = WebUploader.create({
+
+                // 自动上传。
+                auto: true,
+
+                // swf文件路径
+                swf: '/resource/webUpload/js/Uploader.swf',
+
+                // 文件接收服务端。
+                server: '{:url("goodsUpload")}',
+
+                fileNumLimit: 1,
+                // 选择文件的按钮。可选。
+                // 内部根据当前运行是创建，可能是input元素，也可能是flash.
+                pick: {
+                    id: '#filePicker',
+                    multiple:false,
+                    label: '选择图片'
+                },
+
+                // 只允许选择文件，可选。
+                accept: {
+                    title: 'Images',
+                    extensions: 'gif,jpg,jpeg,bmp,png',
+                    mimeTypes: 'image/*'
+                }
+            });
+
+            uploader.on('beforeFileQueued', function (file) {
+                console.log('before',file);
+                uploader.reset();
+            });
+
+            // 当有文件添加进来的时候
+            uploader.on( 'fileQueued', function( file ) {
+                if(file.id != 'WU_FILE_0'){
+                    $("#WU_FILE_0").find(".info").text(file.name);
+                    $img = $("#WU_FILE_0").find('img');
+                }else {
+                    var $li = $(
+                        '<div id="WU_FILE_0" class="file-item thumbnail">' +
+                        '<img>' +
+                        '<div class="info">' + file.name + '</div>' +
+                        '</div>'
+                        ),
+                        $img = $li.find('img');
+
+                    $list.append($li);
+                }
+                // 创建缩略图
+                uploader.makeThumb(file, function (error, src) {
+                    if (error) {
+                        $img.replaceWith('<span>不能预览</span>');
+                        return;
+                    }
+
+                    $img.attr('src', src);
+                }, thumbnailWidth, thumbnailHeight);
+            });
+
+            // 文件上传过程中创建进度条实时显示。
+            uploader.on( 'uploadProgress', function( file, percentage ) {
+                var $li = $( '#WU_FILE_0' ),
+                    $percent = $li.find('.progress span');
+
+                // 避免重复创建
+                if ( !$percent.length ) {
+                    $percent = $('<p class="progress"><span></span></p>')
+                        .appendTo( $li )
+                        .find('span');
+                }
+
+                $percent.css( 'width', percentage * 100 + '%' );
+            });
+
+            // 文件上传成功，给item添加成功class, 用样式标记上传成功。
+            uploader.on( 'uploadSuccess', function( file ,response) {
+                // $( '#WU_FILE_0' ).addClass('upload-state-done');
+                console.log("fileName", response);
+                if (response["state"] == 200) {
+                    // $('#WU_FILE_0').find('p.state').text('已上传');
+                    $("#imgPath").val(response["data"]["filePath"]);
+                    $("#imgSize").val(response["data"]["fileSize"]);
+
+                    toastr.success(response["msg"]);
+                } else {
+                    $('#WU_FILE_0').find('p.state').text('上传失败');
+                    toastr.warning(response["msg"]);
+                }
+            });
+
+            // 文件上传失败，现实上传出错。
+            uploader.on( 'uploadError', function( file ) {
+                var $li = $( '#WU_FILE_0' ),
+                    $error = $li.find('div.error');
+
+                // 避免重复创建
+                if ( !$error.length ) {
+                    $error = $('<div class="error"></div>').appendTo( $li );
+                }
+
+                $error.text('上传失败');
+            });
+
+            // 完成上传完了，成功或者失败，先删除进度条。
+            uploader.on( 'uploadComplete', function( file ) {
+                $( '#WU_FILE_0' ).find('.progress').remove();
+            });
+        });
+    }
 </script>

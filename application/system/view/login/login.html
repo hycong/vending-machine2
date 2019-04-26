@@ -104,9 +104,11 @@
         var password = $("#userPassword").val();
         $.ajax({
             url:"{:url('check')}",
-            data:{captcha:captcha,username:username,password:password},
             type:"post",
+            dataType:'json',
+            data:{captcha:captcha,username:username,password:password},
             success:function (data) {
+                console.log(data.state)
                 if(data.state == 200){
                     console.log(data);
                     location.href = "{:url('index/index')}";

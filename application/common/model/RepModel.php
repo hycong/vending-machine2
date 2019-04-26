@@ -12,5 +12,5 @@ use think\Model;
 
 class RepModel extends Model
 {
-    protected $table = 'rep';
+    protected $table = 'nvwa_rep';
 }

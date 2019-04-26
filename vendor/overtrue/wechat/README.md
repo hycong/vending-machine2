@@ -12,7 +12,7 @@
 [![Total Downloads](https://poser.pugx.org/overtrue/wechat/downloads)](https://packagist.org/packages/overtrue/wechat) 
 [![License](https://poser.pugx.org/overtrue/wechat/license)](https://packagist.org/packages/overtrue/wechat) 
 
-[![EasyWechat  898X200](https://user-images.githubusercontent.com/1472352/54258820-c728cd00-459e-11e9-989f-407178c4d47a.jpg)](https://e.coding.net/?utm_source=easywechat)
+[![image](https://user-images.githubusercontent.com/1472352/55847298-4fd56180-5b7b-11e9-99ef-8727a4ddcbe2.png)](https://e.coding.net/?utm_source=easywechat)
 
 ## Requirement
 
@@ -76,6 +76,12 @@ $server->serve()->send();
 This project exists thanks to all the people who contribute. [[Contribute](CONTRIBUTING.md)].
 <a href="https://github.com/overtrue/wechat/graphs/contributors"><img src="https://opencollective.com/wechat/contributors.svg?width=890" /></a>
 
+
+## PHP 扩展包开发
+
+> 想知道如何从零开始构建 PHP 扩展包？
+>
+> 请关注我的实战课程，我会在此课程中分享一些扩展开发经验 —— [《PHP 扩展包实战教程 - 从入门到发布》](https://learnku.com/courses/creating-package)
 
 
 ## License

@@ -172,7 +172,9 @@ return [
         // 日志保存目录
         'path'  => LOG_PATH,
         // 日志记录级别
-        'level' => [],
+        'level' => ['info','sql','data','error'],
+        // error和sql日志单独记录
+        'apart_level' => ['info','sql','data','error'],
     ],
 
     // +----------------------------------------------------------------------

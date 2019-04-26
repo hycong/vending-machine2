@@ -3,6 +3,7 @@ new Vue({
     data:{
         rightTitle:'',
         url:'',
+        type:'',
         dataIndex:[0,0,null],
         operationShow: true,
         urlShow: true,
@@ -19,14 +20,16 @@ new Vue({
             {num:-1}
         ],
         menuObj:{
-            "button": data,
+            "button": data ? data : [],
         },
         buttonObj:{
+            "type": "view",
             "name": "新建菜单",
             "url": "",
             "sub_button": []
         },
         subObj:{
+            "type": "view",
             "name": "新建子菜单",
             "url": ""
         }
@@ -58,7 +61,8 @@ new Vue({
             this.menuIndex[index].isActive=true;
             let menu_name=this.menuObj.button[index].name;
             let menu_url=this.menuObj.button[index].url;
-            this.getInfo(menu_name,menu_url);
+            let menu_type=this.menuObj.button[index].type;
+            this.getInfo(menu_name,menu_url,menu_type);
             this.urlWindow(index);
 
             this.dataIndex.splice(0,1,index);
@@ -75,13 +79,15 @@ new Vue({
                     if(sub_button.length>0){
                         this.subBtnIndex[index].num=sub_button.length-2;
                         this.menuObj.button[i].url='';//增加子菜单，清空一级菜单url
+                        if(this.menuObj.button[i].type) delete(this.menuObj.button[i].type);// 增加子菜单，清空一级菜单type
                     }
                     this.subBtnIndex[index].num++;//子菜单选中状态
                 }
             }
             let sub_name=this.menuObj.button[index].sub_button[this.subBtnIndex[index].num].name;
             let sub_url=this.menuObj.button[index].sub_button[this.subBtnIndex[index].num].url;
-            this.getInfo(sub_name,sub_url);
+            let sub_type=this.menuObj.button[index].sub_button[this.subBtnIndex[index].num].type;
+            this.getInfo(sub_name,sub_url,sub_type);
             this.urlWindow(index,true);
 
             this.dataIndex.splice(0,1,index);
@@ -97,7 +103,8 @@ new Vue({
             this.menuIndex[index].isActive=true;
             let menu_name=this.menuObj.button[index].name;
             let menu_url=this.menuObj.button[index].url;
-            this.getInfo(menu_name,menu_url);
+            let menu_type=this.menuObj.button[index].type;
+            this.getInfo(menu_name,menu_url,menu_type);
             this.urlWindow(index);
 
             this.dataIndex.splice(0,1,index);
@@ -112,7 +119,8 @@ new Vue({
             this.subBtnIndex[index].num=subIndex;
             let sub_name=this.menuObj.button[index].sub_button[subIndex].name;
             let sub_url=this.menuObj.button[index].sub_button[subIndex].url;
-            this.getInfo(sub_name,sub_url);
+            let sub_type = this.menuObj.button[index].sub_button[subIndex].type;
+            this.getInfo(sub_name,sub_url,sub_type);
             this.urlWindow(index,true);
 
             this.dataIndex.splice(0,1,index);
@@ -141,9 +149,14 @@ new Vue({
             isUrl?this.isUrl=false:this.isUrl=true;
             z==0?this.setmenu(x):this.setSubmenu(x,y);
         },
-        getInfo: function(name,url){//显示name，url
+        getInfo: function(name,url,type){//显示name，url
             this.rightTitle=name;
             this.url=url;
+            if(type) {
+                this.type = type;
+            }else{
+                this.type = '';
+            }
         },
         setmenu: function(x){
             this.menuObj.button[x].name=JSON.parse(JSON.stringify(this.rightTitle));//必须用JSON.parse(JSON.stringify(value)
@@ -162,29 +175,36 @@ new Vue({
         },
         save: function(){
             let button=this.menuObj.button;
+            // console.log(button);
+            // return false;
             for(let i=0;i<button.length;i++){//验证url是否为空
                 if(button[i].sub_button.length==0){
                     if(button[i].url=='' || button[i].name==''){
-                        alert('一级菜单内容不能为空');
+                        Swal.fire({
+                            title: '一级菜单内容不能为空',
+                            type:'error',
+                        });
                         return;
                     }
                 }else{
                     for(let j=0;j<button[i].sub_button.length;j++){
                         if(button[i].sub_button[j].url=='' || button[i].sub_button[j].name==''){
-                            alert('二级菜单内容不能为空');
+                            Swal.fire({
+                                title: '二级菜单内容不能为空',
+                                type:'error',
+                            });
                             return;
                         }
                     }
                 }
             }
             //ajax保存至后台
-            alert('保存成功！！！')
-            console.log(this.menuObj.button);
+            // console.log(this.menuObj.button);
             $.post('/system/conf/wechat_menu.html',{conf_content:this.menuObj.button},function (data) {
                 console.log(data);
                 if(data.state == 200){
                     Swal.fire({
-                        title: res.msg,
+                        title: data.msg,
                         type:'success',
                         timer: 2000,
                         onClose: () => {
@@ -193,7 +213,7 @@ new Vue({
                     });
                 }else{
                     Swal.fire({
-                        title: res.msg,
+                        title: data.msg,
                         type:'error',
                         timer: 2000,
                     });

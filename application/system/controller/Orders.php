@@ -8,6 +8,9 @@
 
 namespace app\system\controller;
 
+use cache\GetCache;
+use EasyWeChat\Factory;
+use payment\Payment;
 use think\Db;
 use think\db\Where;
 
@@ -185,6 +188,35 @@ class Orders extends Common
             'o_pay_status' => 1,
             'o_out_status' => ['in',[2,3]],
         ])->find();
+        $o_refund_no = $orders_info['o_refund_no'] ? $orders_info['o_refund_no'] : Payment::genRefundNo();
+        if($orders_info){
+            if(time() - strtotime($orders_info['o_pay_notify_time']) < 60*5) return returnState(100,'订单支付在5分钟内，不可退款！');
+            $wechat_option = GetCache::getCache('wechat');
+            $config = [
+                // 必要配置
+                'app_id'             => $wechat_option['app_id'],
+                'mch_id'             => $wechat_option['mch_id'],
+                'key'                => $wechat_option['key'],   // API 密钥
+                // 如需使用敏感接口（如退款、发送红包等）需要配置 API 证书路径(登录商户平台下载 API 证书)
+                'cert_path'          => './cert/apiclient_cert.pem', // XXX: 绝对路径！！！！
+                'key_path'           => './cert/apiclient_key',      // XXX: 绝对路径！！！！
+                'notify_url'         => url('system/payment/refund_notify','','',true),     // 你也可以在下单时单独设置来想覆盖它
+            ];
+            Db::name('orders')->where(['o_id' => $orders_id,])->update(['o_refund_no' => $o_refund_no]);
+            $app = Factory::payment($config);
+            $result = $app->refund->byOutTradeNumber($orders_info['o_trade_no'], $o_refund_no, $orders_info['o_money']*100, $orders_info['o_money']*100, [
+                // 可在此处传入其他参数，详细参数见微信支付文档
+                'refund_desc' => '订单退款',
+            ]);
+            if($result['return_code'] != 'SUCCESS'){
+                return returnState(100,$result['return_msg']);
+            }
+            if($result['result_code'] != 'SUCCESS'){
+                return returnState(100,$result['err_code_des	']);
+            }
+            return returnState(200,'退款申请已提交。');
+        }
+
     }
 
 

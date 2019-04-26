@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh">
 <head>
-    {include file="../application/common/view/web/head.html" title=" - 系统管理"}
+    {include file="../application/common/view/web/head.html" title=" - 加盟商管理"}
 </head>
 <!-- begin::Body -->
 <body class="m-page--fluid m--skin- m-content--skin-light2 m-header--fixed m-header--fixed-mobile m-aside-left--enabled m-aside-left--skin-dark m-aside-left--fixed m-aside-left--offcanvas m-footer--push m-aside--offcanvas-default">
@@ -19,7 +19,7 @@
             <div class="m-subheader ">
                 <div class="d-flex align-items-center">
                     <div class="mr-auto">
-                        <h3 class="m-subheader__title m-subheader__title--separator">系统管理</h3>
+                        <h3 class="m-subheader__title m-subheader__title--separator">加盟商管理</h3>
                         <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
                             <li class="m-nav__item m-nav__item--home">
                                 <a href="{:url('Index/index')}" class="m-nav__link m-nav__link--icon">
@@ -28,14 +28,14 @@
                             </li>
                             <li class="m-nav__separator">-</li>
                             <li class="m-nav__item">
-                                <a href="{:url('Index/index')}" class="m-nav__link">
-                                    <span class="m-nav__link-text">系统管理</span>
+                                <a href="{:url('Agent/index')}" class="m-nav__link">
+                                    <span class="m-nav__link-text">加盟商管理</span>
                                 </a>
                             </li>
                             <li class="m-nav__separator">-</li>
                             <li class="m-nav__item">
                                 <a href="" class="m-nav__link">
-                                    <span class="m-nav__link-text">修改密码</span>
+                                    <span class="m-nav__link-text">加盟商列表</span>
                                 </a>
                             </li>
                         </ul>
@@ -47,29 +47,42 @@
                     <div class="m-portlet__head">
                         <div class="m-portlet__head-caption">
                             <div class="m-portlet__head-title">
-                                <h3 class="m-portlet__head-text">修改密码</h3>
+                                <h3 class="m-portlet__head-text">修改加盟商</h3>
                             </div>
                         </div>
                     </div>
                     <div class="m-portlet__body">
                         <form class="m-form m-form--fit m-form--label-align-right" action="{:url('')}" method="post" id="form">
                             <div class="m-portlet__body">
+                                <input type="hidden" name="agent_id" value="{$info.agent_id}">
                                 <div class="form-group m-form__group row">
-                                    <label for="old_password" class="col-form-label col-lg-3 col-md-3 col-sm-12">旧密码</label>
-                                    <div class="col-lg-9 col-md-9 col-sm-12">
-                                        <input class="form-control" type="text" id="old_password" name="old_password" placeholder="请输入您的旧密码" required>
+                                    <label for="agent_name" class="col-form-label col-lg-2 col-md-2 col-sm-12">加盟商名称</label>
+                                    <div class="col-lg-10 col-md-10 col-sm-12">
+                                        <input class="form-control" type="text" id="agent_name" name="agent_name" placeholder="请输入加盟商名称" value="{$info.agent_name}" required>
                                     </div>
                                 </div>
                                 <div class="form-group m-form__group row">
-                                    <label for="password" class="col-form-label col-lg-3 col-md-3 col-sm-12">新密码</label>
-                                    <div class="col-lg-9 col-md-9 col-sm-12">
-                                        <input class="form-control" type="text" id="password" name="password" placeholder="设置一个新的密码" required>
+                                    <label for="agent_contacts" class="col-form-label col-lg-2 col-md-2 col-sm-12">加盟商联系人</label>
+                                    <div class="col-lg-10 col-md-10 col-sm-12">
+                                        <input class="form-control" type="text" id="agent_contacts" name="agent_contacts" placeholder="请输入加盟商联系人" value="{$info.agent_contacts}" required>
                                     </div>
                                 </div>
                                 <div class="form-group m-form__group row">
-                                    <label for="re_password" class="col-form-label col-lg-3 col-md-3 col-sm-12">再确认</label>
-                                    <div class="col-lg-9 col-md-9 col-sm-12">
-                                        <input class="form-control" type="text" id="re_password" name="re_password" placeholder="请再次输入新的密码" required>
+                                    <label for="agent_mobile" class="col-form-label col-lg-2 col-md-2 col-sm-12">加盟商联系人电话</label>
+                                    <div class="col-lg-10 col-md-10 col-sm-12">
+                                        <input class="form-control" type="text" id="agent_mobile" name="agent_mobile" placeholder="加盟商联系人电话" value="{$info.agent_mobile}" required>
+                                    </div>
+                                </div>
+                                <div class="form-group m-form__group row">
+                                    <label for="agent_username" class="col-form-label col-lg-2 col-md-2 col-sm-12">加盟商登录账号</label>
+                                    <div class="col-lg-10 col-md-10 col-sm-12">
+                                        <input class="form-control" type="text" id="agent_username" name="agent_username" placeholder="请输入加盟商登录账号" value="{$info.agent_username}" required>
+                                    </div>
+                                </div>
+                                <div class="form-group m-form__group row">
+                                    <label for="agent_password" class="col-form-label col-lg-2 col-md-2 col-sm-12">加盟商登录密码</label>
+                                    <div class="col-lg-10 col-md-10 col-sm-12">
+                                        <input class="form-control" type="text" id="agent_password" name="agent_password" placeholder="请输入加盟商登录密码" required>
                                     </div>
                                 </div>
                             </div>
@@ -99,6 +112,7 @@
 <!-- end::Body -->
 </html>
 <script>
+    nav_url = "{:url('Agent/index')}";
     $('#sub').click(function () {
         submit_form({
             url: '{:url("")}',
