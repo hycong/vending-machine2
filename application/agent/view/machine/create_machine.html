@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh">
 <head>
-    {include file="../application/common/view/web/head.html" title=" - 首页"}
+    {include file="../application/common/view/web/agent/head.html" title=" - 首页"}
     <!--begin::Page Vendors Styles -->
     <link href="/resource/web/assets/vendors/custom/fullcalendar/fullcalendar.bundle.css" rel="stylesheet"
           type="text/css"/>
@@ -15,7 +15,7 @@
 <div class="m-grid m-grid--hor m-grid--root m-page">
 
     <!-- BEGIN: Header -->
-    {include file="../application/common/view/web/header.html"}
+    {include file="../application/common/view/web/agent/header.html"}
 
     <!-- END: Header -->
 
@@ -23,7 +23,7 @@
     <div class="m-grid__item m-grid__item--fluid m-grid m-grid--ver-desktop m-grid--desktop m-body">
 
         <!-- BEGIN: Left Aside -->
-        {include file="../application/common/view/web/left.html"}
+        {include file="../application/common/view/web/agent/left.html"}
 
         <!-- END: Left Aside -->
         <div class="m-grid__item m-grid__item--fluid m-wrapper">
@@ -32,7 +32,7 @@
                 <div class="m-subheader ">
                     <div class="d-flex align-items-center">
                         <div class="mr-auto">
-                            <h3 class="m-subheader__title m-subheader__title--separator">广告管理</h3>
+                            <h3 class="m-subheader__title m-subheader__title--separator">设备管理</h3>
                             <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
                                 <li class="m-nav__item m-nav__item--home">
                                     <a href="{:url('Index/index')}" class="m-nav__link m-nav__link--icon">
@@ -41,14 +41,14 @@
                                 </li>
                                 <li class="m-nav__separator">-</li>
                                 <li class="m-nav__item">
-                                    <a href="{:url('Adver/index')}" class="m-nav__link">
-                                        <span class="m-nav__link-text">广告管理</span>
+                                    <a href="{:url('Machine/index')}" class="m-nav__link">
+                                        <span class="m-nav__link-text">设备管理</span>
                                     </a>
                                 </li>
                                 <li class="m-nav__separator">-</li>
                                 <li class="m-nav__item">
                                     <a href="javascript:void(0);" class="m-nav__link">
-                                        <span class="m-nav__link-text">上传素材</span>
+                                        <span class="m-nav__link-text">添加设备</span>
                                     </a>
                                 </li>
                             </ul>
@@ -66,7 +66,7 @@
                         <div class="m-portlet__head-caption">
                             <div class="m-portlet__head-title">
                                 <h3 class="m-portlet__head-text">
-                                    素材上传
+                                    添加设备
                                 </h3>
                             </div>
                         </div>
@@ -77,72 +77,39 @@
 
                         <div class="m-portlet__body">
                             <div class="form-group m-form__group row">
-                                <label class="col-form-label col-lg-3 col-sm-12">素材名称</label>
-                                <div class="col-lg-4 col-md-9 col-sm-12">
-                                    <input type="text" class="form-control m-input" id="fileName" name="fileName"  placeholder="请输入素材名称">
+                                <label class="col-form-label col-lg-3 col-sm-12">设备型号</label>
+                                <div class="m-radio-line" style="line-height: 40px;">
+                                    <select class="form-control m-input" name="machine_type_id">
+                                        {volist name="type_list" id="type"}
+                                        <option value="{$type.type_id}">{$type.type_name}</option>
+                                        {/volist}
+                                    </select>
                                 </div>
                             </div>
                         </div>
-
                         <div class="m-portlet__body">
                             <div class="form-group m-form__group row">
-                                <label class="col-form-label col-lg-3 col-sm-12">投放类型</label>
+                                <label class="col-form-label col-lg-3 col-sm-12">设备号（唯一编号）</label>
                                 <div class="m-radio-line" style="line-height: 40px;">
-
-                                    <label class="m-radio m-radio--solid m-radio--success" style="line-height: 1.85em;margin-right: 2em;">
-                                        <input type="radio" name="advType" value="1" checked> 不分屏
-                                        <span></span>
-                                    </label>
-                                    <label class="m-radio m-radio--solid m-radio--success" style="line-height: 1.85em">
-                                        <input type="radio" name="advType" value="2"> 分屏
-                                        <span></span>
-                                    </label>
+                                    <input type="text" class="form-control m-input" id="machine_code" name="machine_code" placeholder="请输入设备号">
                                 </div>
                             </div>
                         </div>
-
-                        <div class="m-portlet__body" id="fileType">
+                        <div class="m-portlet__body">
                             <div class="form-group m-form__group row">
-                                <label class="col-form-label col-lg-3 col-sm-12">素材类型</label>
+                                <label class="col-form-label col-lg-3 col-sm-12">投放地址</label>
                                 <div class="m-radio-line" style="line-height: 40px;">
-
-                                    <label class="m-radio m-radio--solid m-radio--success" style="line-height: 1.85em;margin-right: 2em;">
-                                        <input type="radio" name="fileType" value="1" checked> 图片
-                                        <span></span>
-                                    </label>
-                                    <label class="m-radio m-radio--solid m-radio--success" style="line-height: 1.85em">
-                                        <input type="radio" name="fileType" value="2"> 视频
-                                        <span></span>
-                                    </label>
+                                    <input type="text" class="form-control m-input" id="machine_address" name="machine_address"  placeholder="请输入投放地址">
                                 </div>
                             </div>
                         </div>
-
-                        <div class="m-portlet__body" id="filePic">
+                        <div class="m-portlet__body">
                             <div class="form-group m-form__group row">
-                                <label class="col-form-label col-lg-3 col-sm-12">上传图片</label>
-                                <div class="col-lg-4 col-md-9 col-sm-12">
-                                    <div id="uploaderPic">
-                                        <!--用来存放item-->
-                                        <input type="hidden" id="imgPath" name="imgPath">
-                                        <input type="hidden" id="imgSize" name="imgSize">
-                                        <div id="fileList" class="uploader-list"></div>
-                                        <div id="filePicker">选择图片</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="m-portlet__body" style="display: none" id="fileVideo">
-                            <div class="form-group m-form__group row">
-                                <label class="col-form-label col-lg-3 col-sm-12">上传视频</label>
-                                <div class="col-lg-4 col-md-9 col-sm-12">
-                                    <input type="hidden" id="videoPath" name="videoPath">
-                                    <input type="hidden" id="videoSize" name="videoSize">
-                                    <div id="uploader">
-                                        <div id="thelist" class="uploader-list"></div>
-                                        <div id="picker"><i class="fa fa-cloud-upload"></i> 上传</div>
-                                    </div>
+                                <label class="col-form-label col-lg-3 col-sm-12">加盟商</label>
+                                <div class="m-radio-line" style="line-height: 40px;">
+                                    <select class="form-control m-input" name="machine_agent_id">
+                                        <option value="0">暂无</option>
+                                    </select>
                                 </div>
                             </div>
                         </div>
@@ -168,7 +135,7 @@
     <!-- end:: Body -->
 
     <!-- begin::Footer -->
-    {include file="../application/common/view/web/footer.html"}
+    {include file="../application/common/view/web/agent/footer.html"}
     <!-- end::Footer -->
 </div>
 
@@ -514,302 +481,12 @@
 </div>
 
 <!-- end::Scroll Top -->
+
 <script>
-    nav_url = "{:url('adver/index')}";
-    $("input:radio[name='advType']").change(function () {
-        //当div标签属性display为none时，初始化上传插件会失败
-        $("#fileType").show();
-        var advType = $("input:radio[name='advType']:checked").val();
-        if(advType == 1){
-            var advType = $("input:radio[name='fileType']:checked").val();
-            if(advType == 1){
-                $("#fileVideo").hide();
-                $("#filePic").show();
-                imgUpload();
-            }else if(advType == 2){
-                $("#fileVideo").show();
-                $("#filePic").hide();
-                videoUpload();
-            }
-
-        }else if(advType == 2){
-            $("#fileType").hide();
-            $("#fileVideo").show();
-            $("#filePic").show();
-            videoUpload();
-            imgUpload();
-            // 文件上传
-        }
-    });
-    $("input:radio[name='fileType']").change(function () {
-        //当div标签属性display为none时，初始化上传插件会失败
-        var advType = $("input:radio[name='fileType']:checked").val();
-        if(advType == 1){
-            $("#fileVideo").hide();
-            $("#filePic").show();
-            imgUpload();
-        }else if(advType == 2){
-            $("#fileVideo").show();
-            $("#filePic").hide();
-            videoUpload();
-        }
-    });
-    imgUpload();
-    function imgUpload(){
-        // 图片上传
-        jQuery(function() {
-            var $ = jQuery,
-                $list = $('#fileList'),
-                // 优化retina, 在retina下这个值是2
-                ratio = window.devicePixelRatio || 1,
-
-                // 缩略图大小
-                thumbnailWidth = 100 * ratio,
-                thumbnailHeight = 100 * ratio,
-
-                // Web Uploader实例
-                uploader;
-
-            // 初始化Web Uploader
-            uploader = WebUploader.create({
-
-                // 自动上传。
-                auto: true,
-
-                // swf文件路径
-                swf: '/resource/webUpload/js/Uploader.swf',
-
-                // 文件接收服务端。
-                server: '{:url("webUpload")}',
-
-                fileNumLimit: 1,
-                // 选择文件的按钮。可选。
-                // 内部根据当前运行是创建，可能是input元素，也可能是flash.
-                pick: {
-                    id: '#filePicker',
-                    multiple:false,
-                    label: '选择图片'
-                },
-
-                // 只允许选择文件，可选。
-                accept: {
-                    title: 'Images',
-                    extensions: 'gif,jpg,jpeg,bmp,png',
-                    mimeTypes: 'image/*'
-                }
-            });
-
-            uploader.on('beforeFileQueued', function (file) {
-                console.log('before',file);
-                uploader.reset();
-            });
-
-            // 当有文件添加进来的时候
-            uploader.on( 'fileQueued', function( file ) {
-                console.log('fileQueued',file);
-                var checkImg = 'gif,jpg,jpeg,bmp,png';
-                if(!checkImg.search(file.ext)){
-                    // 包含
-                    return false;
-                }
-                if(file.id != 'WU_FILE_0'){
-                    $(" #WU_FILE_0").find(".info").text(file.name);
-                    $img = $("#WU_FILE_0").find('img');
-                }else {
-                    var $li = $(
-                        '<div id="WU_FILE_0" class="file-item thumbnail">' +
-                        '<img>' +
-                        '<div class="info">' + file.name + '</div>' +
-                        '</div>'
-                        ),
-                        $img = $li.find('img');
-
-                    $list.append($li);
-                }
-                // 创建缩略图
-                uploader.makeThumb(file, function (error, src) {
-                    if (error) {
-                        $img.replaceWith('<span>不能预览</span>');
-                        return;
-                    }
-
-                    $img.attr('src', src);
-                }, thumbnailWidth, thumbnailHeight);
-            });
-
-            // 文件上传过程中创建进度条实时显示。
-            uploader.on( 'uploadProgress', function( file, percentage ) {
-                var $li = $( '#WU_IMG_0' ),
-                    $percent = $li.find('.progress span');
-
-                // 避免重复创建
-                if ( !$percent.length ) {
-                    $percent = $('<p class="progress"><span></span></p>')
-                        .appendTo( $li )
-                        .find('span');
-                }
-
-                $percent.css( 'width', percentage * 100 + '%' );
-            });
-
-            // 文件上传成功，给item添加成功class, 用样式标记上传成功。
-            uploader.on( 'uploadSuccess', function( file ,response) {
-                // $( '#WU_FILE_0' ).addClass('upload-state-done');
-                console.log("fileName", response);
-                if (response["state"] == 200) {
-                    // $('#WU_FILE_0').find('p.state').text('已上传');
-                    $("#imgPath").val(response["data"]["filePath"]);
-                    $("#imgSize").val(response["data"]["fileSize"]);
-                    toastr.success(response["msg"]);
-                } else {
-                    $('#WU_IMG_0').find('p.state').text('上传失败');
-                    toastr.warning(response["msg"]);
-                }
-            });
-
-            // 文件上传失败，现实上传出错。
-            uploader.on( 'uploadError', function( file ) {
-                var $li = $('#fileList #WU_IMG_0' ),
-                    $error = $li.find('div.error');
-
-                // 避免重复创建
-                if ( !$error.length ) {
-                    $error = $('<div class="error"></div>').appendTo( $li );
-                }
-
-                $error.text('上传失败');
-            });
-
-            // 完成上传完了，成功或者失败，先删除进度条。
-            uploader.on( 'uploadComplete', function( file ) {
-                $('#fileList #WU_IMG_0' ).find('.progress').remove();
-            });
-        });
-    }
-    function videoUpload(){
-        // 文件上传
-        jQuery(function () {
-            var $ = jQuery,
-                $list = $('#thelist'),
-                $btn = $('#ctlBtn'),
-                state = 'pending',
-                uploader;
-            uploader = WebUploader.create({
-
-                // 不压缩image
-                resize: false,
-
-                // swf文件路径
-                swf: '/resource/webUpload/js/Uploader.swf',
-
-                // 文件接收服务端。
-                server: '{:url("webUpload")}',
-
-                // 选择文件的按钮。可选。
-                // 内部根据当前运行是创建，可能是input元素，也可能是flash.
-                pick: {
-                    id: '#picker',
-                    multiple:false,
-                    label: '选择视频'
-                },
-                // pick: '#picker',
-                fileNumLimit: 1,
-                auto: true,
-                accept: {
-                    title: 'video',
-                    extensions: 'mp4,rmvb',
-                    mimeTypes: 'video/*'
-                }
-                // duplicate :true
-            });
-
-            uploader.on('beforeFileQueued', function (file) {
-                console.log('before',file);
-                uploader.reset();
-            });
-            // 当有文件添加进来的时候
-            uploader.on('fileQueued', function (file) {
-                // $("#picker").on("click",function () {
-                //     uploader.removeFile(file);
-                // });
-                // console.log('file',file);
-                $list.empty();
-                $list.append('<div id="WU_FILE_0" class="item">' +
-                    '<h4 class="info">' + file.name + '</h4>' +
-                    '<p class="state">等待上传...</p>' +
-                    '</div>');
-                uploader.refresh();
-            });
-
-            // 文件上传过程中创建进度条实时显示。
-            uploader.on('uploadProgress', function (file, percentage) {
-                var $li = $('#thelist #WU_FILE_0'),
-                    $percent = $li.find('.progress .progress-bar');
-
-                // 避免重复创建
-                if (!$percent.length) {
-                    $percent = $('<div class="progress progress-striped active">' +
-                        '<div class="progress-bar" role="progressbar" style="width: 0%">' +
-                        '</div>' +
-                        '</div>').appendTo($li).find('.progress-bar');
-                }
-
-                $li.find('p.state').text('上传中');
-
-                $percent.css('width', percentage * 100 + '%');
-            });
-
-            uploader.on('uploadSuccess', function (file, response) {
-                console.log("videoName", response);
-                if (response["state"] == 200) {
-                    $('#thelist #WU_FILE_0').find('p.state').text('已上传');
-                    $("#videoPath").val(response["data"]["filePath"]);
-                    $("#videoSize").val(response["data"]["fileSize"]);
-
-                    toastr.success(response["msg"]);
-                } else {
-                    $('#thelist #WU_FILE_0').find('p.state').text('上传失败');
-                    toastr.warning(response["msg"]);
-                }
-            });
-
-            uploader.on('uploadError', function (file) {
-                $('#thelist #WU_FILE_0').find('p.state').text('上传出错');
-            });
-
-            uploader.on('uploadComplete', function (file) {
-                $('#thelist #WU_FILE_0').find('.progress').fadeOut();
-            });
-
-            uploader.on('all', function (type) {
-                if (type === 'startUpload') {
-                    state = 'uploading';
-                } else if (type === 'stopUpload') {
-                    state = 'paused';
-                } else if (type === 'uploadFinished') {
-                    state = 'done';
-                }
-
-                if (state === 'uploading') {
-                    $btn.text('暂停上传');
-                } else {
-                    $btn.text('开始上传');
-                }
-            });
-
-            $btn.on('click', function () {
-                console.log("click",'click');
-                if (state === 'uploading') {
-                    uploader.stop();
-                } else {
-                    uploader.upload();
-                }
-
-            });
-        });
-    }
+    nav_url = "{:url('Machine/index')}";
 </script>
 <!--end::Page Scripts -->
 </body>
+
 <!-- end::Body -->
 </html>

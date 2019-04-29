@@ -22,12 +22,13 @@ function p($row = [],$isExit = true){
  * @param string $url
  * @return array
  */
-function returnState($code = 100,$msg = '',$data = [],$url = ''){
+function returnState($code = 100,$msg = '',$data = [],$url = '',$isJson = true){
     $data = [
         'state' => $code,
         'msg' => $msg,
         'data' => $data,
         'url' => $url,
     ];
-    exit(json_encode($data));
+    if($isJson == true) return json($data);
+    return $data;
 }

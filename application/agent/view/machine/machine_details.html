@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="zh">
+<head>
+    {include file="common/head" title="- 设备管理"/}
+</head>
+<body data-type="widgets">
+<div class="tpl-page-container tpl-page-header-fixed">
+    {include file="common/header"/}
+    {include file="common/left"/}
+    <!-- 内容区域 -->
+    <div class="tpl-content-wrapper">
+        <div class="tpl-content-page-title">
+            设备管理
+        </div>
+        <ol class="am-breadcrumb">
+            <li><a href="{:url('index/index')}" class="am-icon-home">首页</a></li>
+            <li><a href="{:url('index')}" class="am-icon-sitemap">设备管理</a></li>
+            <li class="am-active">设备列表</li>
+        </ol>
+        <div class="tpl-portlet-components">
+            <div class="portlet-title">
+                <div class="caption font-green bold">设备详情</div>
+            </div>
+            <div class="am-g">
+                <form action="{:url('')}" method="post">
+                    <table class="am-table am-table-striped am-table-hover table-main  am-table-radius am-table-bordered nth1-width">
+                        <tr>
+                            <td class="am-text-right">设备名称</td>
+                            <td class="">{$info.machine_name}</td>
+                        </tr>
+                        <tr>
+                            <td class="am-text-right">设备序列号</td>
+                            <td class="">{$info.machine_code}</td>
+                        </tr>
+                        <tr>
+                            <td class="am-text-right">设备地址</td>
+                            <td class="">{$info.machine_address}</td>
+                        </tr>
+                        <tr>
+                            <td class="am-text-right">品牌方</td>
+                            <td class="">{if condition="$info.machine_agent_id == -1"}主平台{else}{$info.agent_name}{/if}</td>
+                        </tr>
+                        <tr>
+                            <td class="am-text-right">补货员</td>
+                            <td class="">{$info.rep_name|default="/"}</td>
+                        </tr>
+                        <tr>
+                            <td class="am-text-right">是否在线</td>
+                            <td class="">
+                                {switch name="$info.machine_online"}
+                                {case value="1"}<span style="color: #19a97b">在线</span>{/case}
+                                {case value="2"}<span style="color: red;">离线</span>{/case}
+                                {/switch}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="am-text-right">设备状态</td>
+                            <td class="">
+                                {switch name="$info.machine_status"}
+                                {case value="1"}<span style="color: #19a97b">正在使用</span>{/case}
+                                {case value="2"}<span style="color: #666">已禁用</span>{/case}
+                                {/switch}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="am-text-right">总销售额</td>
+                            <td class="">{$info.machine_total|floatval}</td>
+                        </tr>
+                        <tr>
+                            <td class="am-text-right">创建时间</td>
+                            <td class="">{$info.machine_createTime}</td>
+                        </tr>
+                    </table>
+                </form>
+            </div>
+        </div>
+    </div>
+    {include file="common/footer"/}
+</div>
+</body>
+</html>
+<script>
+    new_url = '{:url("index")}';
+</script>

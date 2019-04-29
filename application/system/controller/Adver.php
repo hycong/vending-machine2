@@ -44,7 +44,7 @@ class Adver extends Common
                 $data["resource_adver_type"] = 3;
                 $data["resource_img_path"] = $input["imgPath"];
                 $data["resource_video_path"] = $input["videoPath"];
-                $data["resource_video_path"] = $input["videoSize"];
+                $data["resource_video_size"] = $input["videoSize"];
             } else {
                 if ($input["fileType"] == 1) {
                     $data["resource_img_path"] = $input["imgPath"];
@@ -76,7 +76,7 @@ class Adver extends Common
     {
         $id = input("post.id");
         if (intval($id) <= 0) {
-            return json(returnState(100, '请提交素材ID'));
+            return returnState(100, '请提交素材ID');
         }
         $type = input("post.type");
         switch ($type){
@@ -99,10 +99,10 @@ class Adver extends Common
         try {
             Db::name("adver_resource")->where("resource_id", $id)->setField("resource_status", 2);
             Db::commit();
-            return json(returnState(200, '素材下架成功'));
+            return returnState(200, '素材下架成功');
         } catch (\PDOException $e) {
             Db::rollback();
-            return json(returnState(100, '素材下架失败，网络异常'));
+            return returnState(100, '素材下架失败，网络异常');
         }
     }
 
@@ -116,10 +116,10 @@ class Adver extends Common
         try {
             Db::name("adver_resource")->where("resource_id", $id)->setField("resource_status", 1);
             Db::commit();
-            return json(returnState(200, '素材上架成功'));
+            return returnState(200, '素材上架成功');
         } catch (\PDOException $e) {
             Db::rollback();
-            return json(returnState(100, '素材上架失败，网络异常'));
+            return returnState(100, '素材上架失败，网络异常');
         }
     }
 
@@ -136,11 +136,11 @@ class Adver extends Common
     {
         $id = input("post.id");
         if (intval($id) <= 0) {
-            return json(returnState(100, '请提交素材ID'));
+            return returnState(100, '请提交素材ID');
         }
         $adver = Db::name("adver_resource")->where("resource_id",$id)->find();
         if(!$adver){
-            return json(returnState(100, '未找到该素材'));
+            return returnState(100, '未找到该素材');
         }
         Db::startTrans();
         try {
@@ -172,10 +172,10 @@ class Adver extends Common
                 }
             }
             Db::commit();
-            return json(returnState(100, '素材删除成功'));
+            return returnState(100, '素材删除成功');
         } catch (\PDOException $e) {
             Db::rollback();
-            return json(returnState(100, '素材删除失败，网络异常'));
+            return returnState(100, '素材删除失败，网络异常');
         }
     }
 
@@ -188,19 +188,20 @@ class Adver extends Common
         $file = request()->file("file");
 //        print_r($file);
         if ($file) {
-            $info = $file->move(ROOT_PATH . 'public' . DS . '/uploads/adver/');
+            $info = $file->validate(['ext'=>'jpg,png,gif,mp4,rmvb'])
+                ->move(ROOT_PATH . 'public' . DS . '/uploads/adver/');
             if ($info) {
                 // 成功上传后 获取上传信息
                 $data = [
                     'filePath' => '/uploads/adver/' . $info->getSaveName(),
                     'fileSize' => $info->getInfo()["size"]
                 ];
-                return json(returnState(200, '上传成功', $data));
+                return returnState(200, '上传成功', $data);
             } else {
                 // 上传失败获取错误信息
-                return json(returnState(100, '上传失败', $file->getError()));
+                return returnState(100, '上传失败', $file->getError());
             }
         }
-        return json(returnState(100, '请上传文件'));
+        return returnState(100, '请上传文件');
     }
 }

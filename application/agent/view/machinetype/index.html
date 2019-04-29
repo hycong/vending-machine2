@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh">
 <head>
-    {include file="../application/common/view/web/head.html" title=" - 订单管理"}
+    {include file="../application/common/view/web/agent/head.html" title=" - 订单管理"}
     <style>
         input[type=text].show-mch-no {
             border: none;
@@ -19,12 +19,12 @@
 <!-- begin:: Page -->
 <div class="m-grid m-grid--hor m-grid--root m-page">
     <!-- BEGIN: Header -->
-    {include file="../application/common/view/web/header.html"}
+    {include file="../application/common/view/web/agent/header.html"}
     <!-- END: Header -->
     <!-- begin::Body -->
     <div class="m-grid__item m-grid__item--fluid m-grid m-grid--ver-desktop m-grid--desktop m-body">
         <!-- BEGIN: Left Aside -->
-        {include file="../application/common/view/web/left.html"}
+        {include file="../application/common/view/web/agent/left.html"}
         <!-- END: Left Aside -->
         <div class="m-grid__item m-grid__item--fluid m-wrapper">
             <div class="m-subheader ">
@@ -64,13 +64,7 @@
                         <div class="m-portlet__head-tools">
                             <ul class="m-portlet__nav">
                                 <li class="m-portlet__nav-item">
-                                    <a href="{:url('createType')}"
-                                       class="btn btn-accent m-btn m-btn--custom m-btn--pill m-btn--icon m-btn--air">
-                                        <span>
-                                            <i class="la la-plus"></i>
-                                            <span>添加设备类型</span>
-                                        </span>
-                                    </a>
+
                                 </li>
                             </ul>
                         </div>
@@ -161,11 +155,11 @@
     </div>
     <!-- end:: Body -->
     <!-- begin::Footer -->
-    {include file="../application/common/view/web/footer.html"}
+    {include file="../application/common/view/web/agent/footer.html"}
     <!-- end::Footer -->
 </div>
 <!-- end:: Page -->
-{include file="../application/common/view/web/foot.html"}
+{include file="../application/common/view/web/agent/foot.html"}
 </body>
 <!-- end::Body -->
 </html>
