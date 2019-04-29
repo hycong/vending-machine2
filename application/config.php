@@ -243,6 +243,14 @@ return [
         'list_rows' => 15,
     ],
 
+    'captcha' => [
+        'length'      => '4',
+        'codeSet'      => '0123456789',
+        'fontSize'      => '16',
+        'imageW'        => 110,
+        'imageH'        => 40,
+    ],
+
     'employ_config' => [
         'wechat_refund' => 1, // 是否开启微信退款   1 开启， 2 关闭
     ],
