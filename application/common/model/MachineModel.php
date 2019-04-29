@@ -13,11 +13,7 @@ use think\Model;
 
 class MachineModel extends Model
 {
-    protected $table = 'machine';
 
-    public function getAgent(){
-//        hasOne('关联模型名','外键名','主键名',['模型别名定义'],'join类型');
-        return $this->hasOne('agent','a','agent_id');
-    }
+    protected $table = 'nvwa_machine';
 
 }

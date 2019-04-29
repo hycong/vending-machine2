@@ -1,10 +1,9 @@
 <!DOCTYPE html>
 <html lang="zh">
 <head>
-    {include file="../application/common/view/web/head.html" title=" - 微信管理"}
-    <!--begin::Page Vendors Styles -->
-    <link href="/resource/web/assets/vendors/custom/fullcalendar/fullcalendar.bundle.css" rel="stylesheet"
-          type="text/css"/>
+    {include file="../application/common/view/web/head.html" title=" - 供货商管理"}
+    <link rel="stylesheet" type="text/css" href="/resource/webUpload/webuploader.css">
+    <script src="/resource/web/assets/app/js/toastr.js"></script>
 </head>
 <!-- begin::Body -->
 <body class="m-page--fluid m--skin- m-content--skin-light2 m-header--fixed m-header--fixed-mobile m-aside-left--enabled m-aside-left--skin-dark m-aside-left--fixed m-aside-left--offcanvas m-footer--push m-aside--offcanvas-default">
@@ -22,7 +21,7 @@
             <div class="m-subheader ">
                 <div class="d-flex align-items-center">
                     <div class="mr-auto">
-                        <h3 class="m-subheader__title m-subheader__title--separator">微信管理</h3>
+                        <h3 class="m-subheader__title m-subheader__title--separator">供货商管理</h3>
                         <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
                             <li class="m-nav__item m-nav__item--home">
                                 <a href="{:url('Index/index')}" class="m-nav__link m-nav__link--icon">
@@ -31,14 +30,14 @@
                             </li>
                             <li class="m-nav__separator">-</li>
                             <li class="m-nav__item">
-                                <a href="{:url('Index/index')}" class="m-nav__link">
-                                    <span class="m-nav__link-text">微信管理</span>
+                                <a href="{:url('Goods/index')}" class="m-nav__link">
+                                    <span class="m-nav__link-text">供货商管理</span>
                                 </a>
                             </li>
                             <li class="m-nav__separator">-</li>
                             <li class="m-nav__item">
                                 <a href="" class="m-nav__link">
-                                    <span class="m-nav__link-text">微信关注回复</span>
+                                    <span class="m-nav__link-text">供货商列表</span>
                                 </a>
                             </li>
                         </ul>
@@ -50,29 +49,43 @@
                     <div class="m-portlet__head">
                         <div class="m-portlet__head-caption">
                             <div class="m-portlet__head-title">
-                                <h3 class="m-portlet__head-text">微信关注回复</h3>
+                                <h3 class="m-portlet__head-text">添加供货商</h3>
                             </div>
                         </div>
                     </div>
-                    <form class="m-form m-form--fit m-form--label-align-right" action="{:url('')}" method="post" enctype="multipart/form-data" id="form">
-                        <div class="m-portlet__body">
-                            <div class="form-group m-form__group row">
-                                <label class="col-form-label col-lg-3 col-md-3 col-sm-12">关注回复</label>
-                                <div class="col-lg-9 col-md-9 col-sm-12">
-                                    <input class="form-control" type="text" name="conf_content[content]" value="{$info.content|default=''}" placeholder="请输入关注回复(默认：您好！欢迎关注我！)">
+                    <div class="m-portlet__body">
+                        <form class="m-form m-form--fit m-form--label-align-right" action="{:url('')}" method="post" id="form">
+                            <div class="m-portlet__body">
+                                <div class="form-group m-form__group row">
+                                    <label for="supplier_name" class="col-form-label col-lg-2 col-md-2 col-sm-12">供货商名称</label>
+                                    <div class="col-lg-10 col-md-10 col-sm-12">
+                                        <input class="form-control" type="text" id="supplier_name" name="supplier_name" placeholder="请输入供货商名称" required>
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
-                        <div class="m-portlet__foot m-portlet__foot--fit">
-                            <div class="m-form__actions m-form__actions">
-                                <div class="row">
-                                    <div class="col-lg-9 ml-lg-auto">
-                                        <button type="button" id="sub" class="btn btn-info">保存设置</button>
+                                <div class="form-group m-form__group row">
+                                    <label for="supplier_mobile" class="col-form-label col-lg-2 col-md-2 col-sm-12">供货商手机号</label>
+                                    <div class="col-lg-10 col-md-10 col-sm-12">
+                                        <input class="form-control" type="text" id="supplier_mobile" name="supplier_mobile" placeholder="请输入供货商手机号" required>
+                                    </div>
+                                </div>
+                                <div class="form-group m-form__group row">
+                                    <label for="supplier_password" class="col-form-label col-lg-2 col-md-2 col-sm-12">密码</label>
+                                    <div class="col-lg-10 col-md-10 col-sm-12">
+                                        <input class="form-control" type="text" id="supplier_password" name="supplier_password" placeholder="请输入密码" required>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </form>
+                            <div class="m-portlet__foot m-portlet__foot--fit">
+                                <div class="m-form__actions m-form__actions">
+                                    <div class="row">
+                                        <div class="col-lg-9 ml-lg-auto">
+                                            <button type="button" id="sub" class="btn btn-info">确认并保存</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
@@ -87,8 +100,9 @@
 </body>
 <!-- end::Body -->
 </html>
+<script type="text/javascript" src="/resource/webUpload/webuploader.js"></script>
 <script>
-    nav_url = "{:url('conf/wechat_reply')}";
+    nav_url = "{:url('Supplier/index')}";
     $('#sub').click(function () {
         submit_form({
             url: '{:url("")}',
@@ -100,7 +114,7 @@
                         type:'success',
                         timer: 2000,
                         onClose: () => {
-                            window.location.reload();
+                            window.location.href = '{:url("index")}';
                         }
                     });
                 }else{

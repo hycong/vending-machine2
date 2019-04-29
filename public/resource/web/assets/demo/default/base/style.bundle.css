@@ -24319,7 +24319,7 @@ button:active, button:focus {
 }
 
 .btn.btn-danger {
-    color: #fff
+    color: #fff !important;
 }
 
 .btn.btn-danger.active, .btn.btn-danger.focus, .btn.btn-danger:focus, .btn.btn-danger:hover:not(:disabled) {

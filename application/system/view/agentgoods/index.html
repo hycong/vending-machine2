@@ -57,12 +57,12 @@
                 <div class="m-portlet">
                     <div class="m-portlet__head">
                         <div class="m-portlet__head-caption">
-                            <a href="{:url('create_goods')}" class="btn btn-info m-btn m-btn--icon m-btn--wide m-btn--sm m--margin-right-10">
-                                <span>
-                                    <i class="fa fa-plus"></i>
-                                    <span>创建商品</span>
-                                </span>
-                            </a>
+<!--                            <a href="{:url('create_goods')}" class="btn btn-info m-btn m-btn&#45;&#45;icon m-btn&#45;&#45;wide m-btn&#45;&#45;sm m&#45;&#45;margin-right-10">-->
+<!--                                <span>-->
+<!--                                    <i class="fa fa-plus"></i>-->
+<!--                                    <span>创建商品</span>-->
+<!--                                </span>-->
+<!--                            </a>-->
                         </div>
                         <div class="m-portlet__head-tools">
                             <form action="" method="get" class="form-inline ">
@@ -103,7 +103,7 @@
                                         <span style="color: red">({$vo.goods_type})</span>
                                         {/eq}
                                     </td>
-                                    <td class="text-middle text-center"><img src="{$vo.goods_pic}" alt="{$vo.goods_name}" width="30px" height="30px"></td>
+                                    <td class="text-middle text-center"><img src="{$vo.goods_pic}" alt="商品图" width="30px" height="30px"></td>
                                     <td class="text-middle">{$vo.goods_price}</td>
                                     <td class="text-middle">{$vo.goods_desc}</td>
                                     <td class="text-middle text-center">
@@ -164,7 +164,7 @@
 <!-- end::Body -->
 </html>
 <script>
-    nav_url = "{:url('Goods/index')}";
+    nav_url = "{:url('agentgoods/index')}";
 
     /**
      * 下架
@@ -222,7 +222,7 @@
 
 
     /**
-     * 下架
+     * 删除
      */
     function del_goods(id) {
         Swal.fire({

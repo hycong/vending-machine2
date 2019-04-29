@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh">
 <head>
-    {include file="../application/common/view/web/head.html" title=" - 商品管理"}
+    {include file="../application/common/view/web/head.html" title=" - 加盟商管理"}
     <style>
         input[type=text].show-mch-no {
             border: none;
@@ -30,7 +30,7 @@
             <div class="m-subheader ">
                 <div class="d-flex align-items-center">
                     <div class="mr-auto">
-                        <h3 class="m-subheader__title m-subheader__title--separator">商品管理</h3>
+                        <h3 class="m-subheader__title m-subheader__title--separator">加盟商管理</h3>
                         <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
                             <li class="m-nav__item m-nav__item--home">
                                 <a href="{:url('Index/index')}" class="m-nav__link m-nav__link--icon">
@@ -39,14 +39,14 @@
                             </li>
                             <li class="m-nav__separator">-</li>
                             <li class="m-nav__item">
-                                <a href="{:url('Orders/index')}" class="m-nav__link">
-                                    <span class="m-nav__link-text">商品管理</span>
+                                <a href="{:url('Agent/index')}" class="m-nav__link">
+                                    <span class="m-nav__link-text">加盟商管理</span>
                                 </a>
                             </li>
                             <li class="m-nav__separator">-</li>
                             <li class="m-nav__item">
                                 <a href="" class="m-nav__link">
-                                    <span class="m-nav__link-text">商品库列表</span>
+                                    <span class="m-nav__link-text">加盟商列表</span>
                                 </a>
                             </li>
                         </ul>
@@ -57,20 +57,37 @@
                 <div class="m-portlet">
                     <div class="m-portlet__head">
                         <div class="m-portlet__head-caption">
-                            <a href="{:url('create_goods')}" class="btn btn-info m-btn m-btn--icon m-btn--wide m-btn--sm m--margin-right-10">
+                            <a href="{:url('createAgent')}" class="btn btn-info m-btn m-btn--icon m-btn--wide m-btn--sm m--margin-right-10">
                                 <span>
                                     <i class="fa fa-plus"></i>
-                                    <span>创建商品</span>
+                                    <span>创建加盟商</span>
                                 </span>
                             </a>
                         </div>
                         <div class="m-portlet__head-tools">
                             <form action="" method="get" class="form-inline ">
+
                                 <div class="form-group mr-2">
-                                    <input type="text" class="form-control form-control-sm" name="goods_name" value="{$Think.get.goods_name}" placeholder="商品名称">
+                                    <input type="text" name="name" id="name" class="form-control form-control-sm"  value="{$Think.get.name}" placeholder="加盟商呢称">
                                 </div>
                                 <div class="form-group mr-2">
-                                    <input type="text" class="form-control form-control-sm" name="goods_id" value="{$Think.get.goods_id}" placeholder="商品ID">
+                                    <input type="text" name="username" id="username" class="form-control form-control-sm"  value="{$Think.get.username}" placeholder="加盟商登录名称">
+                                </div>
+                                <div class="form-group mr-2">
+                                    <select class="form-control form-control-sm" id="status" name="status">
+                                        <option value="0">状态</option>
+                                        <option value="1" {if condition="$Think.get.status == 1"}selected{/if}>使用中</option>
+                                        <option value="2" {if condition="$Think.get.status == 2"}selected{/if}>已禁用</option>
+                                    </select>
+                                </div>
+                                <div class="form-group mr-2" style="display: none;">
+                                    <select class="form-control form-control-sm" id="level" name="level">
+                                        <option value="0">级别</option>
+                                        <option value="1" {if condition="$Think.get.level == 1"}selected{/if}>品牌方</option>
+                                        <option value="2" {if condition="$Think.get.level == 2"}selected{/if}>省</option>
+                                        <option value="3" {if condition="$Think.get.level == 3"}selected{/if}>市</option>
+                                        <option value="4" {if condition="$Think.get.level == 4"}selected{/if}>区</option>
+                                    </select>
                                 </div>
                                 <div class="form-group">
                                     <input type="submit" class="btn btn-info btn-sm" name="supplier_mobile" value="搜索">
@@ -83,60 +100,54 @@
                             <table class="table table-striped- table-bordered table-hover table-checkable" id="m_table_1">
                                 <thead>
                                 <tr>
-                                    <th class="text-center">商品ID</th>
-                                    <th class="text-center">商品名称</th>
-                                    <th class="text-center">商品图片</th>
-                                    <th class="text-center">商品价格</th>
-                                    <th class="text-center">商品描述</th>
+                                    <th class="text-center">ID</th>
+                                    <th class="text-center">加盟商名称</th>
+                                    <th class="text-center">联系人</th>
+                                    <th class="text-center">联系人电话</th>
+                                    <th class="text-center">登录账号</th>
+<!--                                    <th class="text-center">等级</th>-->
                                     <th class="text-center">状态</th>
                                     <th class="text-center">创建时间</th>
                                     <th class="text-center">操作</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                {volist name="$goods_list" id="vo"}
+                                {volist name="$agent_list" id="vo"}
                                 <tr class="">
-                                    <td class="text-middle text-center">{$vo.goods_id}</td>
-                                    <td class="text-middle">{$vo.goods_name}
-                                        {eq name="$vo.goods_type" value=""}
-                                        {else/}
-                                        <span style="color: red">({$vo.goods_type})</span>
-                                        {/eq}
-                                    </td>
-                                    <td class="text-middle text-center"><img src="{$vo.goods_pic}" alt="{$vo.goods_name}" width="30px" height="30px"></td>
-                                    <td class="text-middle">{$vo.goods_price}</td>
-                                    <td class="text-middle">{$vo.goods_desc}</td>
-                                    <td class="text-middle text-center">
-                                        {switch name="$vo.goods_status"}
-                                        {case value="1"}<span class="text-success">在售</span>{/case}
-                                        {case value="2"}<span class="text-danger">已下架</span>{/case}
+                                    <td class="text-middle text-center">{$vo.agent_id}</td>
+                                    <td class="text-middle">{$vo.agent_name}</td>
+                                    <td class="text-middle">{$vo.agent_contacts}</td>
+                                    <td class="text-middle">{$vo.agent_mobile}</td>
+                                    <td class="text-middle">{$vo.agent_username}</td>
+                                    <td class="text-middle text-center" style="display: none">
+                                        {switch name="$vo.agent_level"}
+                                        {case value="1"}品牌方{/case}
+                                        {case value="2"}省{/case}
+                                        {case value="3"}市{/case}
+                                        {case value="4"}区{/case}
                                         {/switch}
                                     </td>
-                                    <td class="text-middle">{$vo.goods_createTime}</td>
-                                    <td class="text-middle">
+                                    <td class="text-middle text-center">
+                                        {switch name="$vo.agent_status"}
+                                        {case value="1"}<span class="text-success">使用中</span>{/case}
+                                        {case value="2"}<span class="text-danger">已禁用</span>{/case}
+                                        {/switch}
+                                    </td>
+                                    <td class="text-middle text-center">{$vo.agent_createTime}</td>
+                                    <td>
                                         <div class="btn-toolbar">
                                             <div class="btn-group btn-group-sm">
-                                                <a href="{:url('edit_goods',['goods_id'=>$vo['goods_id']])}"
-                                                   class="btn btn-info">
-                                                    <span class="fa fa-pencil-square-o"></span> 编辑
-                                                </a>
-                                                {switch name="$vo.goods_status"}
+                                                <a href="{:url('editAgent',['agent_id'=>$vo.agent_id])}" class="btn btn-info"><span class="fa fa-pencil-square-o"></span> 编辑</a>
+                                                {switch name="$vo.agent_status"}
                                                 {case value="1"}
-                                                <a onclick="down_goods('{$vo.goods_id}')"
-                                                   class="btn btn-warning">
-                                                    <span class="fa fa-cloud-download text-danger"></span> 下架
-                                                </a>{/case}
+                                                <a onclick="delAgentStatus('{$vo.agent_id}')" class="btn btn-warning"><i class="fa fa-ban text-danger"></i> 禁用</a>
+                                                {/case}
                                                 {case value="2"}
-                                                <a onclick="up_goods('{$vo.goods_id}')"
-                                                   class="btn btn-warning">
-                                                    <span class="fa fa-cloud-upload"></span> 上架
-                                                </a>
-                                                <a onclick="del_goods('{$vo.goods_id}')"
-                                                   class="btn btn-danger">
-                                                    <span class="fa fa-trash-o"></span> 删除
-                                                </a>
+                                                <a onclick="changeAgentStatus('{$vo.agent_id}')" class="btn btn-warning"><span class="fa fa-ban"></span> 恢复</a>
+                                                <a onclick="delAgent('{$vo.agent_id}')" class="btn btn-danger"><span class="fa fa-trash-o"></span> 删除</a>
                                                 {/case}
                                                 {/switch}
+<!--                                                <a href="{:url('index',['parent_id'=>$vo.agent_id])}" class="btn btn-primary">下级</a>-->
                                             </div>
                                         </div>
                                     </td>
@@ -145,7 +156,7 @@
                                 </tbody>
                             </table>
                             <div class="dataTables_pager">
-                                <div class="dataTables_paginate paging_simple_numbers">{$goods_list->render()}</div>
+                                <div class="dataTables_paginate paging_simple_numbers">{$agent_list->render()}</div>
                             </div>
                         </div>
                     </div>
@@ -164,15 +175,15 @@
 <!-- end::Body -->
 </html>
 <script>
-    nav_url = "{:url('Goods/index')}";
+    nav_url = "{:url('agent/index')}";
 
     /**
-     * 下架
+     * 禁用
      */
-    function down_goods(id) {
+    function delAgentStatus(id) {
         submit_form({
-            url: '{:url("downGoods")}',
-            data: {goods_id:id},
+            url: '{:url("delAgentStatus")}',
+            data: {agent_id:id},
             fun: function (res) {
                 if(res.state == 200){
                     Swal.fire({
@@ -194,12 +205,12 @@
     }
 
     /**
-     * 上架
+     * 恢复
      */
-    function up_goods(id) {
+    function changeAgentStatus(id) {
         submit_form({
-            url: '{:url("upGoods")}',
-            data: {goods_id:id},
+            url: '{:url("changeAgentStatus")}',
+            data: {agent_id:id},
             fun: function (res) {
                 if(res.state == 200){
                     Swal.fire({
@@ -222,9 +233,9 @@
 
 
     /**
-     * 下架
+     * 删除
      */
-    function del_goods(id) {
+    function delAgent(id) {
         Swal.fire({
             title: '你确定要删除吗?',
             text: "删除后无法恢复！",
@@ -237,8 +248,8 @@
         }).then((result) => {
             if (result.value) {
                 submit_form({
-                    url: '{:url("delGoods")}',
-                    data: {goods_id:id},
+                    url: '{:url("delAgent")}',
+                    data: {agent_id:id},
                     fun: function (res) {
                         if(res.state == 200){
                             Swal.fire({

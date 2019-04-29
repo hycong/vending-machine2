@@ -19,30 +19,62 @@
         {include file="../application/common/view/web/left.html"}
         <!-- END: Left Aside -->
         <div class="m-grid__item m-grid__item--fluid m-wrapper">
-            <!-- BEGIN: Subheader -->
-            <div class="m-subheader ">
-                <div class="d-flex align-items-center">
-                    <div class="mr-auto">
-                        <h3 class="m-subheader__title ">Dashboard</h3>
-                    </div>
-                    <div>
-                        <span class="m-subheader__daterange" id="m_dashboard_daterangepicker">
-                            <span class="m-subheader__daterange-label">
-                                <span class="m-subheader__daterange-title"></span>
-                                <span class="m-subheader__daterange-date m--font-brand"></span>
-                            </span>
-                            <a href="#"
-                               class="btn btn-sm btn-brand m-btn m-btn--icon m-btn--icon-only m-btn--custom m-btn--pill">
-                                <i class="la la-angle-down"></i>
-                            </a>
-                        </span>
-                    </div>
-                </div>
-            </div>
             <!-- END: Subheader -->
             <div class="m-content">
                 <!--Begin::Section-->
                 <div class="row">
+                    <div class="col-lg-3">
+                        <div class="m-portlet">
+                            <div class="m-portlet__head text-center">
+                                <div class="m-portlet__head-caption">
+                                    <div class="m-portlet__head-title">
+                                        <span class="m-portlet__head-icon"></span>
+                                        <h3 class="m-portlet__head-text">机器总数</h3>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="m-portlet__body  m--padding-20 text-center" style="font-size: 3rem;">{$machine_sum|default="0"}</div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="m-portlet">
+                            <div class="m-portlet__head text-center">
+                                <div class="m-portlet__head-caption">
+                                    <div class="m-portlet__head-title">
+                                        <span class="m-portlet__head-icon"></span>
+                                        <h3 class="m-portlet__head-text">在线机器</h3>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="m-portlet__body  m--padding-20 text-center" style="font-size: 3rem;">{$machine_onLine_sum|default="0"}</div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="m-portlet">
+                            <div class="m-portlet__head text-center">
+                                <div class="m-portlet__head-caption">
+                                    <div class="m-portlet__head-title">
+                                        <span class="m-portlet__head-icon"></span>
+                                        <h3 class="m-portlet__head-text">今日销售</h3>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="m-portlet__body  m--padding-20 text-center" style="font-size: 3rem;">{$machine_market_sum|default="0.00"}</div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="m-portlet">
+                            <div class="m-portlet__head text-center">
+                                <div class="m-portlet__head-caption">
+                                    <div class="m-portlet__head-title">
+                                        <span class="m-portlet__head-icon"></span>
+                                        <h3 class="m-portlet__head-text">今日销售</h3>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="m-portlet__body  m--padding-20 text-center" style="font-size: 3rem;">{$machine_market_sum|default="0.00"}</div>
+                        </div>
+                    </div>
                     <div class="col-xl-4">
                         <!--begin:: Widgets/Top Products-->
                         <div class="m-portlet m-portlet--bordered-semi m-portlet--full-height ">

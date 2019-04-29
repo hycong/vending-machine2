@@ -3,6 +3,14 @@
 <!-- begin::Head -->
 <head>
     {include file="../application/common/view/web/head.html" title=" - 首页"}
+    <style>
+        #captcha {
+            width: calc(100% - 110px);
+            float: left;
+            border-top-right-radius: 0;
+            border-bottom-right-radius: 0;
+        }
+    </style>
 </head>
 <!-- end::Head -->
 <!-- begin::Body -->
@@ -56,6 +64,10 @@
                             <input class="form-control m-input m-login__form-input--last" type="password" id="userPassword"
                                    placeholder="密码" name="password">
                         </div>
+                        <div class="form-group m-form__group">
+                            <input type="text" class="form-control m-input m-login__form-input--last" name="captcha" placeholder="请输入验证码" id="captcha" autocomplete="off">
+                            <img id="verify_img" src="{:captcha_src()}" alt="验证码" onclick="this.src='{:captcha_src()}'" style="margin-top: 1.3rem;">
+                        </div>
                     </form>
 
                     <!--end::Form-->
@@ -104,9 +116,11 @@
         var password = $("#userPassword").val();
         $.ajax({
             url:"{:url('check')}",
-            data:{captcha:captcha,username:username,password:password},
             type:"post",
+            dataType:'json',
+            data:{captcha:captcha,username:username,password:password},
             success:function (data) {
+                console.log(data.state)
                 if(data.state == 200){
                     console.log(data);
                     location.href = "{:url('index/index')}";

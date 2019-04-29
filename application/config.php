@@ -172,7 +172,9 @@ return [
         // 日志保存目录
         'path'  => LOG_PATH,
         // 日志记录级别
-        'level' => [],
+        'level' => ['info','sql','data','error'],
+        // error和sql日志单独记录
+        'apart_level' => ['info','sql','data','error'],
     ],
 
     // +----------------------------------------------------------------------
@@ -239,6 +241,14 @@ return [
         'type'      => 'bootstrap1',
         'var_page'  => 'page',
         'list_rows' => 15,
+    ],
+
+    'captcha' => [
+        'length'      => '4',
+        'codeSet'      => '0123456789',
+        'fontSize'      => '16',
+        'imageW'        => 110,
+        'imageH'        => 40,
     ],
 
     'employ_config' => [
