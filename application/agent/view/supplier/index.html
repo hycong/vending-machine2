@@ -30,7 +30,7 @@
             <div class="m-subheader ">
                 <div class="d-flex align-items-center">
                     <div class="mr-auto">
-                        <h3 class="m-subheader__title m-subheader__title--separator">订单管理</h3>
+                        <h3 class="m-subheader__title m-subheader__title--separator">供货商管理</h3>
                         <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
                             <li class="m-nav__item m-nav__item--home">
                                 <a href="{:url('Index/index')}" class="m-nav__link m-nav__link--icon">
@@ -39,8 +39,8 @@
                             </li>
                             <li class="m-nav__separator">-</li>
                             <li class="m-nav__item">
-                                <a href="{:url('Orders/index')}" class="m-nav__link">
-                                    <span class="m-nav__link-text">订单管理</span>
+                                <a href="{:url('Supplier/index')}" class="m-nav__link">
+                                    <span class="m-nav__link-text">供货商管理</span>
                                 </a>
                             </li>
                             <li class="m-nav__separator">-</li>
@@ -59,7 +59,7 @@
                         <div class="m-portlet__head-caption">
                             <div class="m-portlet__head-title">
                                 <h3 class="m-portlet__head-text">
-                                    加盟商列表
+                                    供货商列表
                                 </h3>
                             </div>
                         </div>
@@ -124,25 +124,25 @@
                                    id="m_table_1">
                                 <thead>
                                 <tr>
-                                    <th class="text-center">ID</th>
-                                    <th class="text-center">名称</th>
-                                    <th class="text-center">手机号</th>
-                                    <th class="text-center">状态</th>
-                                    <th class="text-center">操作</th>
+                                    <th class="text-center text-middle">ID</th>
+                                    <th class="text-center text-middle">名称</th>
+                                    <th class="text-center text-middle">手机号</th>
+                                    <th class="text-center text-middle">状态</th>
+                                    <th class="text-center text-middle">操作</th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                 {volist name="supplierList" id="vo"}
                                 <tr>
-                                    <td class="text-center">{$vo.supplier_id}</td>
-                                    <td class="text-center">{$vo.supplier_name}</td>
-                                    <td class="text-center">{$vo.supplier_mobile}</td>
-                                    <td class="text-center"> {switch name='vo.supplier_status'}
+                                    <td class="text-center text-middle">{$vo.supplier_id}</td>
+                                    <td class="text-center text-middle">{$vo.supplier_name}</td>
+                                    <td class="text-center text-middle">{$vo.supplier_mobile}</td>
+                                    <td class="text-center text-middle"> {switch name='vo.supplier_status'}
                                         {case value="1"}<span class="m-badge  m-badge--success m-badge--wide">在线</span> {/case}
                                         {case value="2"}<span class="m-badge  m-badge--metal m-badge--wide">离线</span>  {/case}
                                         {/switch}
                                     </td>
-                                    <td class="text-center">
+                                    <td class="text-center text-middle">
                                         <div class="am-btn-toolbar">
                                             <div class="am-btn-group am-btn-group-xs">
                                                 <a href="{:url('editSupplier',['supplier_id'=>$vo.supplier_id])}"
@@ -178,7 +178,7 @@
 <!-- end:: Page -->
 {include file="../application/common/view/web/agent/foot.html"}
 <script>
-    nav_url = "{:url('Goods/index')}";
+    nav_url = "{:url('Supplier/index')}";
     function restPassword(id) {
         Swal.fire({
             title: '重置供货商密码',
@@ -191,20 +191,8 @@
             cancelButtonText: '取消',
             showLoaderOnConfirm: true,
             preConfirm: (password) => {
-                // toastr.success(password);
-                // console.log("passowrd",password);
-                // $.ajax({
-                //     url:'{:url("restPassword")}',
-                //     data:{supplier_id:id,supplier_password:password},
-                //     type:"post",
-                //     success:function (data) {
-                //         if (data.state == 200) {
-                //             toastr.success(data.msg);
-                //         } else {
-                //             toastr.danger(data.msg);
-                //         }
-                //     }
-                // });
+
+
             },
             allowOutsideClick: () => !Swal.isLoading()
         }).then((result) => {

@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    {include file="../application/common/view/web/agent/head.html" title=" - 商品管理"}
+    <link rel="stylesheet" type="text/css" href="/resource/webUpload/webuploader.css">
+    <script src="/resource/web/assets/app/js/toastr.js"></script>
+</head>
+<!-- begin::Body -->
+<body class="m-page--fluid m--skin- m-content--skin-light2 m-header--fixed m-header--fixed-mobile m-aside-left--enabled m-aside-left--skin-dark m-aside-left--fixed m-aside-left--offcanvas m-footer--push m-aside--offcanvas-default">
+<!-- begin:: Page -->
+<div class="m-grid m-grid--hor m-grid--root m-page">
+    <!-- BEGIN: Header -->
+    {include file="../application/common/view/web/agent/header.html"}
+    <!-- END: Header -->
+    <!-- begin::Body -->
+    <div class="m-grid__item m-grid__item--fluid m-grid m-grid--ver-desktop m-grid--desktop m-body">
+        <!-- BEGIN: Left Aside -->
+        {include file="../application/common/view/web/agent/left.html"}
+        <!-- END: Left Aside -->
+        <div class="m-grid__item m-grid__item--fluid m-wrapper">
+            <div class="m-subheader ">
+                <div class="d-flex align-items-center">
+                    <div class="mr-auto">
+                        <h3 class="m-subheader__title m-subheader__title--separator">商品管理</h3>
+                        <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
+                            <li class="m-nav__item m-nav__item--home">
+                                <a href="{:url('Index/index')}" class="m-nav__link m-nav__link--icon">
+                                    <i class="m-nav__link-icon la la-home"></i>
+                                </a>
+                            </li>
+                            <li class="m-nav__separator">-</li>
+                            <li class="m-nav__item">
+                                <a href="{:url('Orders/index')}" class="m-nav__link">
+                                    <span class="m-nav__link-text">商品管理</span>
+                                </a>
+                            </li>
+                            <li class="m-nav__separator">-</li>
+                            <li class="m-nav__item">
+                                <a href="" class="m-nav__link">
+                                    <span class="m-nav__link-text">商品库列表</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="m-content">
+                <div class="m-portlet">
+                    <div class="m-portlet__head">
+                        <div class="m-portlet__head-caption">
+                            <div class="m-portlet__head-title">
+                                <h3 class="m-portlet__head-text">添加商品</h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="m-portlet__body">
+                        <form class="m-form m-form--fit m-form--label-align-right" action="{:url('')}" method="post" id="form">
+                            <div class="m-portlet__body">
+                                <div class="form-group m-form__group row">
+                                    <label for="goods_name" class="col-form-label col-lg-2 col-md-2 col-sm-12">供货商</label>
+                                    <div class="col-lg-10 col-md-10 col-sm-12">
+                                        <select name="goods_supplier_id" class="form-control">
+                                            {volist name="$supplier_list" id="vo"}
+                                            <option value="{$vo.supplier_id}">{$vo.supplier_name}</option>
+                                            {/volist}
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group m-form__group row">
+                                    <label for="goods_name" class="col-form-label col-lg-2 col-md-2 col-sm-12">商品名称</label>
+                                    <div class="col-lg-10 col-md-10 col-sm-12">
+                                        <input class="form-control" type="text" id="goods_name" name="goods_name" placeholder="请输入名称">
+                                    </div>
+                                </div>
+                                <div class="form-group m-form__group row">
+                                    <label for="goods_name" class="col-form-label col-lg-2 col-md-2 col-sm-12">商品标签</label>
+                                    <div class="col-lg-10 col-md-10 col-sm-12">
+                                        <input class="form-control" type="text" id="goods_type" name="goods_type" placeholder="请输入商品标签">
+                                    </div>
+                                </div>
+                                <div class="form-group m-form__group row">
+                                    <label  class="col-form-label col-lg-2 col-md-2 col-sm-12">商品图片</label>
+                                    <div class="col-lg-10 col-md-10 col-sm-12">
+                                        <div class="form-group m-form__group row am-form-file">
+                                            <div class="tpl-form-file-img">
+                                                <img alt="" id="myImg">
+                                            </div>
+                                            <div id="uploaderPic">
+                                                <!--用来存放item-->
+                                                <input type="hidden" id="imgPath" name="goods_pic">
+                                                <input type="hidden" id="imgSize" name="goods_pic_size">
+                                                <div id="fileList" class="uploader-list"></div>
+                                                <div id="filePicker">选择图片</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group m-form__group row">
+                                    <label for="goods_price" class="col-form-label col-lg-2 col-md-2 col-sm-12">建议价格</label>
+                                    <div class="col-lg-10 col-md-10 col-sm-12">
+                                        <input class="form-control" type="text" id="goods_price" name="goods_price" placeholder="请输入建议价格">
+                                    </div>
+                                </div>
+                                <div class="form-group m-form__group row">
+                                    <label for="goods_desc" class="col-form-label col-lg-2 col-md-2 col-sm-12">商品描述</label>
+                                    <div class="col-lg-10 col-md-10 col-sm-12">
+                                        <textarea class="form-control" rows="5" id="goods_desc" name="goods_desc" placeholder="请输入商品描述"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="m-portlet__foot m-portlet__foot--fit">
+                                <div class="m-form__actions m-form__actions">
+                                    <div class="row">
+                                        <div class="col-lg-9 ml-lg-auto">
+                                            <button type="button" id="sub" class="btn btn-info">保存设置</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- end:: Body -->
+    <!-- begin::Footer -->
+    {include file="../application/common/view/web/agent/footer.html"}
+    <!-- end::Footer -->
+</div>
+<!-- end:: Page -->
+{include file="../application/common/view/web/agent/foot.html"}
+</body>
+<!-- end::Body -->
+</html>
+<script type="text/javascript" src="/resource/webUpload/webuploader.js"></script>
+<script>
+    nav_url = "{:url('goods/index')}";
+    {if condition="!$supplier_list"}
+    toastr.success('没有可用供货商，请先创建供货商！');
+    {/if}
+
+    $('#sub').click(function () {
+        if($('select[name="goods_supplier_id"]').val() <= 0){
+            toastr.success('没有可用供货商，请先创建供货商！');
+            return false;
+        }
+        submit_form({
+            url: '{:url("")}',
+            data: $('#form').serialize(),
+            fun: function (res) {
+                if(res.state == 200){
+                    Swal.fire({
+                        title: res.msg,
+                        type:'success',
+                        timer: 2000,
+                        onClose: () => {
+                            window.location.href = '{:url("index")}';
+                        }
+                    });
+                }else{
+                    Swal.fire({
+                        title: res.msg,
+                        type:'error',
+                    });
+                }
+            }
+        });
+    });
+    imgUpload();
+    function imgUpload(){
+        // 图片上传
+        jQuery(function() {
+            var $ = jQuery,
+                $list = $('#fileList'),
+                // 优化retina, 在retina下这个值是2
+                ratio = window.devicePixelRatio || 1,
+
+                // 缩略图大小
+                thumbnailWidth = 100 * ratio,
+                thumbnailHeight = 100 * ratio,
+
+                // Web Uploader实例
+                uploader;
+
+            // 初始化Web Uploader
+            uploader = WebUploader.create({
+
+                // 自动上传。
+                auto: true,
+
+                // swf文件路径
+                swf: '/resource/webUpload/js/Uploader.swf',
+
+                // 文件接收服务端。
+                server: '{:url("goodsUpload")}',
+
+                fileNumLimit: 1,
+                // 选择文件的按钮。可选。
+                // 内部根据当前运行是创建，可能是input元素，也可能是flash.
+                pick: {
+                    id: '#filePicker',
+                    multiple:false,
+                    label: '选择图片'
+                },
+
+                // 只允许选择文件，可选。
+                accept: {
+                    title: 'Images',
+                    extensions: 'gif,jpg,jpeg,bmp,png',
+                    mimeTypes: 'image/*'
+                }
+            });
+
+            uploader.on('beforeFileQueued', function (file) {
+                console.log('before',file);
+                uploader.reset();
+            });
+
+            // 当有文件添加进来的时候
+            uploader.on( 'fileQueued', function( file ) {
+                if(file.id != 'WU_FILE_0'){
+                    $("#WU_FILE_0").find(".info").text(file.name);
+                    $img = $("#WU_FILE_0").find('img');
+                }else {
+                    var $li = $(
+                        '<div id="WU_FILE_0" class="file-item thumbnail">' +
+                        '<img>' +
+                        '<div class="info">' + file.name + '</div>' +
+                        '</div>'
+                        ),
+                        $img = $li.find('img');
+
+                    $list.append($li);
+                }
+                // 创建缩略图
+                uploader.makeThumb(file, function (error, src) {
+                    if (error) {
+                        $img.replaceWith('<span>不能预览</span>');
+                        return;
+                    }
+
+                    $img.attr('src', src);
+                }, thumbnailWidth, thumbnailHeight);
+            });
+
+            // 文件上传过程中创建进度条实时显示。
+            uploader.on( 'uploadProgress', function( file, percentage ) {
+                var $li = $( '#WU_FILE_0' ),
+                    $percent = $li.find('.progress span');
+
+                // 避免重复创建
+                if ( !$percent.length ) {
+                    $percent = $('<p class="progress"><span></span></p>')
+                        .appendTo( $li )
+                        .find('span');
+                }
+
+                $percent.css( 'width', percentage * 100 + '%' );
+            });
+
+            // 文件上传成功，给item添加成功class, 用样式标记上传成功。
+            uploader.on( 'uploadSuccess', function( file ,response) {
+                // $( '#WU_FILE_0' ).addClass('upload-state-done');
+                console.log("fileName", response);
+                if (response["state"] == 200) {
+                    // $('#WU_FILE_0').find('p.state').text('已上传');
+                    $("#imgPath").val(response["data"]["filePath"]);
+                    $("#imgSize").val(response["data"]["fileSize"]);
+
+                    toastr.success(response["msg"]);
+                } else {
+                    $('#WU_FILE_0').find('p.state').text('上传失败');
+                    toastr.warning(response["msg"]);
+                }
+            });
+
+            // 文件上传失败，现实上传出错。
+            uploader.on( 'uploadError', function( file ) {
+                var $li = $( '#WU_FILE_0' ),
+                    $error = $li.find('div.error');
+
+                // 避免重复创建
+                if ( !$error.length ) {
+                    $error = $('<div class="error"></div>').appendTo( $li );
+                }
+
+                $error.text('上传失败');
+            });
+
+            // 完成上传完了，成功或者失败，先删除进度条。
+            uploader.on( 'uploadComplete', function( file ) {
+                $( '#WU_FILE_0' ).find('.progress').remove();
+            });
+        });
+    }
+</script>

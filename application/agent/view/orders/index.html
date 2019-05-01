@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    {include file="../application/common/view/web/agent/head.html" title=" - 订单管理"}
+    <style>
+        input[type=text].show-mch-no {
+            border: none;
+            background-color: transparent;
+            width: 83px;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
+
+    </style>
+</head>
+<!-- begin::Body -->
+<body class="m-page--fluid m--skin- m-content--skin-light2 m-header--fixed m-header--fixed-mobile m-aside-left--enabled m-aside-left--skin-dark m-aside-left--fixed m-aside-left--offcanvas m-footer--push m-aside--offcanvas-default">
+<!-- begin:: Page -->
+<div class="m-grid m-grid--hor m-grid--root m-page">
+    <!-- BEGIN: Header -->
+    {include file="../application/common/view/web/agent/header.html"}
+    <!-- END: Header -->
+    <!-- begin::Body -->
+    <div class="m-grid__item m-grid__item--fluid m-grid m-grid--ver-desktop m-grid--desktop m-body">
+        <!-- BEGIN: Left Aside -->
+        {include file="../application/common/view/web/agent/left.html"}
+        <!-- END: Left Aside -->
+        <div class="m-grid__item m-grid__item--fluid m-wrapper">
+            <div class="m-subheader ">
+                <div class="d-flex align-items-center">
+                    <div class="mr-auto">
+                        <h3 class="m-subheader__title m-subheader__title--separator">订单管理</h3>
+                        <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
+                            <li class="m-nav__item m-nav__item--home">
+                                <a href="{:url('Index/index')}" class="m-nav__link m-nav__link--icon">
+                                    <i class="m-nav__link-icon la la-home"></i>
+                                </a>
+                            </li>
+                            <li class="m-nav__separator">-</li>
+                            <li class="m-nav__item">
+                                <a href="{:url('Orders/index')}" class="m-nav__link">
+                                    <span class="m-nav__link-text">订单管理</span>
+                                </a>
+                            </li>
+                            <li class="m-nav__separator">-</li>
+                            <li class="m-nav__item">
+                                <a href="" class="m-nav__link">
+                                    <span class="m-nav__link-text">订单列表</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="m-content">
+                <div class="m-portlet">
+                    <div class="m-portlet__head">
+                        <div class="m-portlet__head-caption">
+                            
+                        </div>
+                        <div class="m-portlet__head-tools">
+                            <form action="" method="get" class="form-inline ">
+                                <input type="hidden" name="goodsType">
+                                <div class="form-group mr-2">
+                                    <input type="text" class="form-control form-control-sm m-input--solid" name="goods_name" value="{$machineCode}" placeholder="设备序号">
+                                </div>
+                                <div class="form-group mr-2">
+                                    <select name="goodsId"  class="form-control form-control-sm m-input--solid">
+                                        <option value="0">消费商品</option>
+                                        {volist name="goodsList" id="goods"}
+                                        <option value="{$goods.goods_id}">{$goods.goods_name}({$goods.goods_type})</option>
+                                        {/volist}
+                                    </select>
+                                </div>
+                                <div class="form-group mr-2">
+                                    <select name="payType" class="form-control form-control-sm m-input--solid">
+                                        <option value="0">支付类型</option>
+                                        <option value="1">微信支付</option>
+                                        <option value="2">支付宝支付</option>
+                                        <option value="3">VIP支付</option>
+                                        <option value="4">抽奖</option>
+                                        <option value="5">秘钥兑换</option>
+                                    </select>
+                                </div>
+                                <div class="form-group mr-2">
+                                    <select name="payStatus" class="form-control form-control-sm m-input--solid">
+                                        <option value="0">支付状态</option>
+                                        <option value="1">支付成功</option>
+                                        <option value="2">支付失败</option>
+                                        <option value="4">无需支付</option>
+                                        <option value="5">已退款</option>
+                                    </select>
+                                </div>
+                                <div class="form-group mr-2">
+                                    <select name="outStatus" class="form-control form-control-sm m-input--solid">
+                                        <option value="0">出货状态</option>
+                                        <option value="1">出货成功</option>
+                                        <option value="2">出货失败</option>
+                                        <option value="3">未出货</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <input type="submit" class="btn btn-info btn-sm" id="goodsSearch"  value="搜索">
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="m-portlet__body">
+                        <div class="dataTables_wrapper">
+                            <table class="table table-striped m-table table-hover" id="m_table_1">
+                                <thead>
+                                <tr>
+                                    <th class="text-center text-middle">订单ID</th>
+                                    <th class="text-center text-middle">设备序号</th>
+                                    <th class="text-center text-middle">货道</th>
+                                    <th class="text-center text-middle">消费用户</th>
+                                    <th class="text-center text-middle">消费商品</th>
+                                    <th class="text-center text-middle">消费金额</th>
+                                    <th class="text-center text-middle">支付类型</th>
+                                    <th class="text-center text-middle">支付订单</th>
+                                    <th class="text-center text-middle">商户订单号</th>
+                                    <th class="text-center text-middle">支付状态</th>
+                                    <th class="text-center text-middle">出货状态</th>
+                                    <th class="text-center text-middle">生成订单时间</th>
+                                    <th class="text-center text-middle">操作</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {volist name="$order_list" id="vo"}
+                                <tr class="">
+                                    <td class="text-center text-middle">{$vo.o_id}</td>
+                                    <td class="text-middle text-center">{$vo.o_machine}</td>
+                                    <td class="text-middle text-center">{$vo.o_channel}</td>
+                                    <td class="text-middle text-center">{$vo.o_user|default="--"}</td>
+                                    <td class="text-middle text-overflow" style="max-width: 100px;" title="{$vo.o_goods}">{$vo.o_goods}</td>
+                                    <td class="text-middle text-center">{$vo.o_money}</td>
+                                    <td class="text-middle text-center">
+                                        {switch name="$vo.o_pay_type"}
+                                        {case value="1"}<span class="m-badge  m-badge--success m-badge--wide">微信支付</span>{/case}
+                                        {case value="2"}<span class="m-badge  m-badge--info m-badge--wide">支付宝支付</span>{/case}
+                                        {case value="3"}<span class="m-badge  m-badge--danger m-badge--wide">VIP支付</span>{/case}
+                                        {case value="4"}<span class="m-badge  m-badge--primary m-badge--wide">抽奖</span>{/case}
+                                        {case value="5"}<span class="m-badge  m-badge--accent m-badge--wide">秘钥兑换</span>{/case}
+                                        {/switch}
+                                    </td>
+                                    <td class="text-middle text-center">{$vo.o_trade_no}</td>
+                                    <td class="text-middle text-center"><input type="text" class="show-mch-no" value="{$so.o_mch_no|default='--'}"></td>
+                                    <td class="text-middle text-center">
+                                        {switch name="$vo.o_pay_status"}
+                                        {case value="1"}<span class="m-badge  m-badge--success m-badge--wide" title="{$vo.o_error_remark}">支付成功</span>{/case}
+                                        {case value="2"}<span class="m-badge  m-badge--danger m-badge--wide" title="{$vo.o_error_remark}">支付失败</span>{/case}
+                                        {case value="4"}<span class="m-badge  m-badge--accent m-badge--wide" title="{$vo.o_error_remark}">无需支付</span>{/case}
+                                        {case value="5"}<span class="m-badge  m-badge--metal m-badge--wide" title="{$vo.o_error_remark}">已退款</span>{/case}
+                                        {/switch}
+                                    </td>
+                                    <td class="text-middle text-center">
+                                        {switch name="$vo.o_out_status"}
+                                        {case value="1"}<span class="m-badge  m-badge--success m-badge--wide">出货成功</span>{/case}
+                                        {case value="2"}<span class="m-badge  m-badge--danger m-badge--wide">出货失败</span>{/case}
+                                        {case value="3"}<span class="m-badge  m-badge--metal m-badge--wide">未出货</span>{/case}
+                                        {/switch}
+                                        {if condition="$vo.o_error_remark != ''"}
+                                        <i class="am-icon-warning" title="{$so.o_error_remark}"></i>
+                                        {/if}
+                                    </td>
+                                    <td class="text-middle text-center">{$vo.o_createTime}</td>
+                                    <td class="text-center text-middle">
+                                        {if condition="$Think.config.employ_config.wechat_refund == 1"}
+                                        {if condition="$vo.o_pay_status == 1 && in_array($vo.o_out_status,[2,3])"}<a class="btn btn-sm btn-info" href="{:url('wechat_refund',['o_id'=>$vo.o_id])}"><i class="fa fa-refresh"></i> 退款</a>{/if}
+                                        {/if}
+                                    </td>
+                                </tr>
+                                {/volist}
+                                </tbody>
+                            </table>
+                            <div class="dataTables_pager">
+                                <div class="dataTables_paginate paging_simple_numbers">{$order_list->render()}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- end:: Body -->
+    <!-- begin::Footer -->
+    {include file="../application/common/view/web/agent/footer.html"}
+    <!-- end::Footer -->
+</div>
+<!-- end:: Page -->
+{include file="../application/common/view/web/agent/foot.html"}
+<script>
+    nav_url = "{:url('orders/index')}";
+    $("select[name='goodsId']").val("{$goodsId}");
+    $("select[name='payType']").val("{$payType}");
+    $("select[name='payStatus']").val("{$payStatus}");
+    $("select[name='outStatus']").val("{$outStatus}");
+
+</script>
+</body>
+<!-- end::Body -->
+</html>
