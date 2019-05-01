@@ -85,6 +85,33 @@
                                         <input class="form-control" type="text" id="agent_password" name="agent_password" placeholder="请输入加盟商登录密码" required>
                                     </div>
                                 </div>
+                                <div class="border p-5">
+                                    <label class="col-md-12 text-center">收益比例</label>
+                                    <div class="form-group m-form__group row">
+                                        <label for="conf_platform" class="col-form-label col-lg-2 col-md-2 col-sm-12">总平台</label>
+                                        <div class="col-lg-10 col-md-10 col-sm-12">
+                                            <input class="form-control" type="text" id="conf_platform" name="conf_platform" placeholder="请输入总平台比例" value="{$info.conf_platform|default='0'}" required>
+                                        </div>
+                                    </div>
+                                    <div class="form-group m-form__group row">
+                                        <label for="conf_agent1" class="col-form-label col-lg-2 col-md-2 col-sm-12">一级加盟商比例</label>
+                                        <div class="col-lg-10 col-md-10 col-sm-12">
+                                            <input class="form-control" type="text" id="conf_agent1" name="conf_agent1" placeholder="一级加盟商比例" value="{$info.conf_agent1|default='0'}" required>
+                                        </div>
+                                    </div>
+                                    <div class="form-group m-form__group row">
+                                        <label for="conf_agent2" class="col-form-label col-lg-2 col-md-2 col-sm-12">二级加盟商比例</label>
+                                        <div class="col-lg-10 col-md-10 col-sm-12">
+                                            <input class="form-control" type="text" id="conf_agent2" name="conf_agent2" placeholder="二级加盟商比例" value="{$info.conf_agent2|default='0'}" required>
+                                        </div>
+                                    </div>
+                                    <div class="form-group m-form__group row">
+                                        <label for="conf_agent3" class="col-form-label col-lg-2 col-md-2 col-sm-12">三级加盟商比例</label>
+                                        <div class="col-lg-10 col-md-10 col-sm-12">
+                                            <input class="form-control" type="text" id="conf_agent3" name="conf_agent3" placeholder="三级加盟商比例" value="{$info.conf_agent3|default='0'}" required>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                             <div class="m-portlet__foot m-portlet__foot--fit">
                                 <div class="m-form__actions m-form__actions">

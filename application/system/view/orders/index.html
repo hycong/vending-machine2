@@ -6,7 +6,7 @@
         input[type=text].show-mch-no {
             border: none;
             background-color: transparent;
-            width: 83px;
+            width: 60px;
             overflow: hidden;
             white-space: nowrap;
             text-overflow: ellipsis;
@@ -56,13 +56,51 @@
             <div class="m-content">
                 <div class="m-portlet">
                     <div class="m-portlet__head">
-                        <div class="m-portlet__head-caption">
-                            <div class="m-portlet__head-title">
-                                <h3 class="m-portlet__head-text">订单列表</h3>
-                            </div>
-                        </div>
                         <div class="m-portlet__head-tools">
-                            <ul class="m-portlet__nav"></ul>
+                            <form action="" method="get" class="form-inline ">
+                                <input type="hidden" name="goodsType">
+                                <div class="form-group mr-2">
+                                    <input type="text" class="form-control form-control-sm m-input--solid" name="machineCode" value="{$Think.get.machineCode}" placeholder="设备序号">
+                                </div>
+                                <div class="form-group mr-2">
+                                    <select name="goodsId"  class="form-control form-control-sm m-input--solid">
+                                        <option value="0">消费商品</option>
+                                        {volist name="goodsList" id="goods"}
+                                        <option value="{$goods.goods_id}">{$goods.goods_name}({$goods.goods_type})</option>
+                                        {/volist}
+                                    </select>
+                                </div>
+                                <div class="form-group mr-2">
+                                    <select name="payType" class="form-control form-control-sm m-input--solid">
+                                        <option value="0">支付类型</option>
+                                        <option value="1">微信支付</option>
+                                        <option value="2">支付宝支付</option>
+                                        <option value="3">VIP支付</option>
+                                        <option value="4">抽奖</option>
+                                        <option value="5">秘钥兑换</option>
+                                    </select>
+                                </div>
+                                <div class="form-group mr-2">
+                                    <select name="payStatus" class="form-control form-control-sm m-input--solid">
+                                        <option value="0">支付状态</option>
+                                        <option value="1">支付成功</option>
+                                        <option value="2">支付失败</option>
+                                        <option value="4">无需支付</option>
+                                        <option value="5">已退款</option>
+                                    </select>
+                                </div>
+                                <div class="form-group mr-2">
+                                    <select name="outStatus" class="form-control form-control-sm m-input--solid">
+                                        <option value="0">出货状态</option>
+                                        <option value="1">出货成功</option>
+                                        <option value="2">出货失败</option>
+                                        <option value="3">未出货</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <input type="submit" class="btn btn-info btn-sm" id="goodsSearch"  value="搜索">
+                                </div>
+                            </form>
                         </div>
                     </div>
                     <div class="m-portlet__body">
@@ -79,8 +117,8 @@
                                     <th>支付类型</th>
                                     <th>支付订单</th>
                                     <th>商户订单号</th>
-                                    <th>支付状态</th>
-                                    <th>出货状态</th>
+                                    <th class="text-center">支付状态</th>
+                                    <th class="text-center">出货状态</th>
                                     <th>生成订单时间</th>
                                     <th class="text-center">操作</th>
                                 </tr>
@@ -103,22 +141,22 @@
                                         {case value="5"}<span style="color: red">秘钥兑换</span>{/case}
                                         {/switch}
                                     </td>
-                                    <td class="text-middle">{$vo.o_trade_no}</td>
+                                    <td class="text-middle"><input type="text" class="show-mch-no" value="{$vo.o_trade_no}"></td>
                                     <td class="text-middle"><input type="text" class="show-mch-no" value="{$so.o_mch_no|default='--'}"></td>
-                                    <td class="text-middle">
+                                    <td class="text-middle text-center">
                                         {switch name="$vo.o_pay_status"}
-                                        {case value="1"}<span style="color: #19a97b;" title="{$vo.o_error_remark}">支付成功</span>{/case}
-                                        {case value="2"}<span style="color: red;" title="{$vo.o_error_remark}">支付失败</span>{/case}
-                                        {case value="3"}<span style="color: #666;" title="{$vo.o_error_remark}">未支付</span>{/case}
-                                        {case value="4"}<span style="color: #666;" title="{$vo.o_error_remark}">无需支付</span>{/case}
-                                        {case value="5"}<span style="color: red;" title="{$vo.o_error_remark}">已退款</span>{/case}
+                                        {case value="1"}<span class="m-badge m-badge--success m-badge--wide" title="{$vo.o_error_remark}">支付成功</span>{/case}
+                                        {case value="2"}<span class="m-badge m-badge--danger m-badge--wide" title="{$vo.o_error_remark}">支付失败</span>{/case}
+                                        {case value="3"}<span class="m-badge m-badge--metal m-badge--wide" title="{$vo.o_error_remark}">未支付</span>{/case}
+                                        {case value="4"}<span class="m-badge m-badge--brand m-badge--wide" title="{$vo.o_error_remark}">无需支付</span>{/case}
+                                        {case value="5"}<span class="m-badge m-badge--danger m-badge--wide" title="{$vo.o_error_remark}">已退款</span>{/case}
                                         {/switch}
                                     </td>
-                                    <td class="text-middle">
+                                    <td class="text-middle text-center">
                                         {switch name="$vo.o_out_status"}
-                                        {case value="1"}<span style="color: #19a97b">出货成功</span>{/case}
-                                        {case value="2"}<span style="color: red">出货失败</span>{/case}
-                                        {case value="3"}<span style="color: #666">未出货</span>{/case}
+                                        {case value="1"}<span class="m-badge m-badge--success m-badge--wide">出货成功</span>{/case}
+                                        {case value="2"}<span class="m-badge m-badge--danger m-badge--wide">出货失败</span>{/case}
+                                        {case value="3"}<span class="m-badge m-badge--metal m-badge--wide">未出货</span>{/case}
                                         {/switch}
                                         {if condition="$vo.o_error_remark != ''"}
                                         <i class="am-icon-warning" title="{$so.o_error_remark}"></i>

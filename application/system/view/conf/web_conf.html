@@ -1,9 +1,13 @@
 <!DOCTYPE html>
 <html lang="zh">
 <head>
-    {include file="../application/common/view/web/head.html" title=" - 商品管理"}
+    {include file="../application/common/view/web/head.html" title=" - 系统管理"}
+    <!--begin::Page Vendors Styles -->
+    <link href="/resource/web/assets/vendors/custom/fullcalendar/fullcalendar.bundle.css" rel="stylesheet"
+          type="text/css"/>
+
     <link rel="stylesheet" type="text/css" href="/resource/webUpload/webuploader.css">
-    <script src="/resource/web/assets/app/js/toastr.js"></script>
+    <script type="text/javascript" src="/resource/webUpload/webuploader.js"></script>
 </head>
 <!-- begin::Body -->
 <body class="m-page--fluid m--skin- m-content--skin-light2 m-header--fixed m-header--fixed-mobile m-aside-left--enabled m-aside-left--skin-dark m-aside-left--fixed m-aside-left--offcanvas m-footer--push m-aside--offcanvas-default">
@@ -21,7 +25,7 @@
             <div class="m-subheader ">
                 <div class="d-flex align-items-center">
                     <div class="mr-auto">
-                        <h3 class="m-subheader__title m-subheader__title--separator">商品管理</h3>
+                        <h3 class="m-subheader__title m-subheader__title--separator">系统管理</h3>
                         <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
                             <li class="m-nav__item m-nav__item--home">
                                 <a href="{:url('Index/index')}" class="m-nav__link m-nav__link--icon">
@@ -30,14 +34,14 @@
                             </li>
                             <li class="m-nav__separator">-</li>
                             <li class="m-nav__item">
-                                <a href="{:url('Orders/index')}" class="m-nav__link">
-                                    <span class="m-nav__link-text">商品管理</span>
+                                <a href="{:url('Index/index')}" class="m-nav__link">
+                                    <span class="m-nav__link-text">系统管理</span>
                                 </a>
                             </li>
                             <li class="m-nav__separator">-</li>
                             <li class="m-nav__item">
                                 <a href="" class="m-nav__link">
-                                    <span class="m-nav__link-text">商品列表</span>
+                                    <span class="m-nav__link-text">网站设置</span>
                                 </a>
                             </li>
                         </ul>
@@ -49,77 +53,52 @@
                     <div class="m-portlet__head">
                         <div class="m-portlet__head-caption">
                             <div class="m-portlet__head-title">
-                                <h3 class="m-portlet__head-text">添加商品</h3>
+                                <h3 class="m-portlet__head-text">网站设置</h3>
                             </div>
                         </div>
                     </div>
-                    <div class="m-portlet__body">
-                        <form class="m-form m-form--fit m-form--label-align-right" action="{:url('')}" method="post" id="form">
-                            <div class="m-portlet__body">
-                                <div class="form-group m-form__group row">
-                                    <label for="goods_name" class="col-form-label col-lg-2 col-md-2 col-sm-12">供货商</label>
-                                    <div class="col-lg-10 col-md-10 col-sm-12">
-                                        <select name="goods_supplier_id" class="form-control">
-                                            <option value="-1">总平台</option>
-                                            {volist name="$supplier_list" id="vo"}
-                                            <option value="{$vo.supplier_id}">{$vo.supplier_name}</option>
-                                            {/volist}
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="form-group m-form__group row">
-                                    <label for="goods_name" class="col-form-label col-lg-2 col-md-2 col-sm-12">商品名称</label>
-                                    <div class="col-lg-10 col-md-10 col-sm-12">
-                                        <input class="form-control" type="text" id="goods_name" name="goods_name" placeholder="请输入名称">
-                                    </div>
-                                </div>
-                                <div class="form-group m-form__group row">
-                                    <label for="goods_name" class="col-form-label col-lg-2 col-md-2 col-sm-12">商品标签</label>
-                                    <div class="col-lg-10 col-md-10 col-sm-12">
-                                        <input class="form-control" type="text" id="goods_type" name="goods_type" placeholder="请输入商品标签">
-                                    </div>
-                                </div>
-                                <div class="form-group m-form__group row">
-                                    <label  class="col-form-label col-lg-2 col-md-2 col-sm-12">商品图片</label>
-                                    <div class="col-lg-10 col-md-10 col-sm-12">
-                                        <div class="form-group m-form__group row am-form-file">
-                                            <div class="tpl-form-file-img">
-                                                <img alt="" id="myImg">
-                                            </div>
-                                            <div id="uploaderPic">
-                                                <!--用来存放item-->
-                                                <input type="hidden" id="imgPath" name="goods_pic">
-                                                <input type="hidden" id="imgSize" name="goods_pic_size">
-                                                <div id="fileList" class="uploader-list"></div>
-                                                <div id="filePicker">选择图片</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-group m-form__group row">
-                                    <label for="goods_price" class="col-form-label col-lg-2 col-md-2 col-sm-12">建议价格</label>
-                                    <div class="col-lg-10 col-md-10 col-sm-12">
-                                        <input class="form-control" type="text" id="goods_price" name="goods_price" placeholder="请输入建议价格">
-                                    </div>
-                                </div>
-                                <div class="form-group m-form__group row">
-                                    <label for="goods_desc" class="col-form-label col-lg-2 col-md-2 col-sm-12">商品描述</label>
-                                    <div class="col-lg-10 col-md-10 col-sm-12">
-                                        <textarea class="form-control" rows="5" id="goods_desc" name="goods_desc" placeholder="请输入商品描述"></textarea>
-                                    </div>
+                    <form class="m-form m-form--fit m-form--label-align-right" action="{:url('')}" method="post" enctype="multipart/form-data" id="form">
+                        <div class="m-portlet__body">
+                            <div class="form-group m-form__group row">
+                                <label class="col-form-label col-lg-3 col-md-3 col-sm-12">页面主标题</label>
+                                <div class="col-lg-9 col-md-9 col-sm-12">
+                                    <input class="form-control" type="text" name="conf_content[title]" value="{$info.title|default=''}" placeholder="页面主标题">
                                 </div>
                             </div>
-                            <div class="m-portlet__foot m-portlet__foot--fit">
-                                <div class="m-form__actions m-form__actions">
-                                    <div class="row">
-                                        <div class="col-lg-9 ml-lg-auto">
-                                            <button type="button" id="sub" class="btn btn-info">保存设置</button>
+                            <div class="form-group m-form__group row">
+                                <label class="col-form-label col-lg-3 col-md-3 col-sm-12">底部标题</label>
+                                <div class="col-lg-9 col-md-9 col-sm-12">
+                                    <input class="form-control" type="text" name="conf_content[bottomTitle]" value="{$info.bottomTitle|default=''}" placeholder="底部标题">
+                                </div>
+                            </div>
+                            <div class="form-group m-form__group row">
+                                <label class="col-form-label col-lg-3 col-md-3 col-sm-12">logo</label>
+                                <div class="col-lg-9 col-md-9 col-sm-12">
+                                    <div class="form-group m-form__group row am-form-file">
+                                        <div class="tpl-form-file-img">
+                                            <img alt="" id="myImg">
+                                        </div>
+                                        <div id="uploaderPic">
+                                            <!--用来存放item-->
+                                            <input type="hidden" id="imgPath" name="goods_pic">
+                                            <input type="hidden" id="imgSize" name="goods_pic_size">
+                                            <div id="fileList" class="uploader-list"></div>
+                                            <div id="filePicker">选择图片</div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </form>
-                    </div>
+                        </div>
+                        <div class="m-portlet__foot m-portlet__foot--fit">
+                            <div class="m-form__actions m-form__actions">
+                                <div class="row">
+                                    <div class="col-lg-9 ml-lg-auto">
+                                        <button type="button" id="sub" class="btn btn-info">保存设置</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
@@ -134,18 +113,10 @@
 </body>
 <!-- end::Body -->
 </html>
-<script type="text/javascript" src="/resource/webUpload/webuploader.js"></script>
 <script>
-    nav_url = "{:url('goods/index')}";
-    {if condition="!$supplier_list"}
-    toastr.success('没有可用供货商，请先创建供货商！');
-    {/if}
+    nav_url = "{:url('conf/wechat_pay')}";
 
     $('#sub').click(function () {
-        if($('select[name="goods_supplier_id"]').val() <= 0){
-            toastr.success('没有可用供货商，请先创建供货商！');
-            return false;
-        }
         submit_form({
             url: '{:url("")}',
             data: $('#form').serialize(),
@@ -156,7 +127,7 @@
                         type:'success',
                         timer: 2000,
                         onClose: () => {
-                            window.location.href = '{:url("index")}';
+                            window.location.reload();
                         }
                     });
                 }else{
@@ -168,6 +139,7 @@
             }
         });
     });
+
     imgUpload();
     function imgUpload(){
         // 图片上传
@@ -194,7 +166,7 @@
                 swf: '/resource/webUpload/js/Uploader.swf',
 
                 // 文件接收服务端。
-                server: '{:url("goodsUpload")}',
+                server: '{:url("logoUpload")}',
 
                 fileNumLimit: 1,
                 // 选择文件的按钮。可选。
@@ -202,13 +174,13 @@
                 pick: {
                     id: '#filePicker',
                     multiple:false,
-                    label: '选择图片'
+                    label: '选择logo'
                 },
 
                 // 只允许选择文件，可选。
                 accept: {
                     title: 'Images',
-                    extensions: 'gif,jpg,jpeg,bmp,png',
+                    extensions: 'png',
                     mimeTypes: 'image/*'
                 }
             });

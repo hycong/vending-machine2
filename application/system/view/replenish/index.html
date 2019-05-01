@@ -108,10 +108,10 @@
                                     <td>{$vo.rep_name}</td>
                                     <td>{$vo.rep_username}</td>
                                     <td>{$vo.agent_name}</td>
-                                    <td>
+                                    <td class="text-center">
                                         {switch name="$vo.rep_status"}
-                                        {case value="1"}<span style="color: #19a97b">正在使用</span>{/case}
-                                        {case value="2"}<span style="color: #666">已禁用</span>{/case}
+                                        {case value="1"}<span class="m-badge m-badge--success m-badge--wide">正在使用</span>{/case}
+                                        {case value="2"}<span class="m-badge m-badge--danger m-badge--wide">已禁用</span>{/case}
                                         {/switch}
                                     </td>
                                     <td>{$vo.agent_createTime}</td>

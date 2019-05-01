@@ -42,8 +42,12 @@ class Orders extends Common
             ->field('o.*,a.agent_name')
             ->order('o.o_id DESC')
             ->paginate($this->pageNum, false, ['query' => request()->param()]);
+        $goodsList = Db::name("goods")
+            ->field("goods_id,goods_name,goods_type")
+            ->select();
         return $this->fetch('',[
-            'order_list' => $order_list
+            'order_list' => $order_list,
+            'goodsList' => $goodsList,
         ]);
     }
 

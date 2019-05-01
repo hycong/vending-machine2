@@ -9,6 +9,7 @@
 namespace app\agent\controller;
 
 
+use cache\GetCache;
 use think\Controller;
 use think\Request;
 
@@ -29,5 +30,6 @@ class Common extends Controller
         $this->assign('agentId',$this->agentId);
         $this->assign('agentNickname',$this->agentNickname);
         $this->request = Request::instance();
+        $this->assign('webconfig',GetCache::getCache('webconfig'));
     }
 }

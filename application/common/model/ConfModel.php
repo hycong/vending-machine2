@@ -23,18 +23,17 @@ class ConfModel extends Model
     public static function getConf($name = ''){
         $value = self::where([
             'conf_name' => $name
-        ])->value('conf_content');
+        ])->order('conf_id desc')->value('conf_content');
         if($value) $value = unserialize($value);
-        if(!$value) return [];
         return $value;
     }
 
     /**
      * 设置配置信息
      */
-    public static function setConf($name = '',$value = []){
-        $value = serialize($value);
-        if(self::getConf($name)){
+    public static function setConf($name = '',$value = ''){
+        if($value) $value = serialize($value);
+        if(self::where(['conf_name'=>$name])->find()){
             self::where([
                 'conf_name' => $name
             ])->update(['conf_content'=>$value]);

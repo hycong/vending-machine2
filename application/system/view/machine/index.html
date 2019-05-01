@@ -124,17 +124,17 @@
                                 <tbody>
                                 {volist name="machine_list" id="vo"}
                                 <tr>
-                                    <td class="text-center">{$vo.machine_id}</td>
-                                    <td class="text-center">{$vo.machine_name}</td>
-                                    <td class="text-center">{$vo.machine_code}</td>
-                                    <td class="text-center">{$vo.agent_name|default='暂无'}</td>
-                                    <td class="text-center">{$vo.machine_address}</td>
-                                    <td class="text-center"> {switch name='vo.machine_online'}
+                                    <td class="text-middle text-center">{$vo.machine_id}</td>
+                                    <td class="text-middle text-center">{$vo.machine_name}</td>
+                                    <td class="text-middle text-center">{$vo.machine_code}</td>
+                                    <td class="text-middle text-center">{$vo.agent_name|default='暂无'}</td>
+                                    <td class="text-middle text-center">{$vo.machine_address}</td>
+                                    <td class="text-middle text-center"> {switch name='vo.machine_online'}
                                         {case value="1"}<span class="m-badge  m-badge--success m-badge--wide">在线</span> {/case}
                                         {case value="2"}<span class="m-badge  m-badge--metal m-badge--wide">离线</span>  {/case}
                                         {/switch}
                                     </td>
-                                    <td class="text-center">{$vo.machine_createTime}</td>
+                                    <td class="text-middle text-center">{$vo.machine_createTime}</td>
                                     <td class="text-center">
                                         <div class="am-btn-toolbar">
                                             <div class="am-btn-group am-btn-group-xs">

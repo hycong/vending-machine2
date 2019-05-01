@@ -5,6 +5,9 @@
     <!--begin::Page Vendors Styles -->
     <link href="/resource/web/assets/vendors/custom/fullcalendar/fullcalendar.bundle.css" rel="stylesheet"
           type="text/css"/>
+
+    <link rel="stylesheet" type="text/css" href="/resource/webUpload/webuploader.css">
+    <script type="text/javascript" src="/resource/webUpload/webuploader.js"></script>
 </head>
 <!-- begin::Body -->
 <body class="m-page--fluid m--skin- m-content--skin-light2 m-header--fixed m-header--fixed-mobile m-aside-left--enabled m-aside-left--skin-dark m-aside-left--fixed m-aside-left--offcanvas m-footer--push m-aside--offcanvas-default">
@@ -54,7 +57,7 @@
                             </div>
                         </div>
                     </div>
-                    <form class="m-form m-form--fit m-form--label-align-right" action="{:url('')}" method="post" enctype="multipart/form-data">
+                    <form class="m-form m-form--fit m-form--label-align-right" action="{:url('')}" method="post" enctype="multipart/form-data" id="form">
                         <div class="m-portlet__body">
                             <div class="form-group m-form__group row">
                                 <label class="col-form-label col-lg-3 col-md-3 col-sm-12">开发者ID（appid）</label>
@@ -83,13 +86,31 @@
                             <div class="form-group m-form__group row">
                                 <label class="col-form-label col-lg-3 col-md-3 col-sm-12">CERT文件</label>
                                 <div class="col-lg-9 col-md-9 col-sm-12">
-                                    <input class="form-control" type="file" name="apiclient_cert"  placeholder="微信支付cert文件"  >
+<!--                                    <input class="form-control" type="file" name="apiclient_cert"  placeholder="微信支付cert文件"  >-->
+                                    <div class="tpl-form-file-img">
+                                        <img alt="" id="myImg">
+                                    </div>
+                                    <div id="uploaderPic">
+                                        <!--用来存放item-->
+                                        <div id="uploader">
+                                            <div id="thelist" class="uploader-list"></div>
+                                            <div id="picker"><i class="fa fa-cloud-upload"></i> 上传</div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                             <div class="form-group m-form__group row">
                                 <label class="col-form-label col-lg-3 col-md-3 col-sm-12">key文件</label>
                                 <div class="col-lg-9 col-md-9 col-sm-12">
-                                    <input class="form-control" type="file" name="apiclient_key" placeholder="微信支付key文件" >
+<!--                                    <input class="form-control" type="file" name="apiclient_key" placeholder="微信支付key文件" >-->
+
+                                    <div id="uploaderPics">
+                                        <!--用来存放item-->
+                                        <div id="uploaders">
+                                            <div id="thelists" class="uploader-list"></div>
+                                            <div id="keyUpload"><i class="fa fa-cloud-upload"></i> 上传</div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -97,7 +118,7 @@
                             <div class="m-form__actions m-form__actions">
                                 <div class="row">
                                     <div class="col-lg-9 ml-lg-auto">
-                                        <button type="submit" id="subs" class="btn btn-info">保存设置</button>
+                                        <button type="button" id="sub" class="btn btn-info">保存设置</button>
                                     </div>
                                 </div>
                             </div>
@@ -119,4 +140,271 @@
 </html>
 <script>
     nav_url = "{:url('conf/wechat_pay')}";
+
+    $('#sub').click(function () {
+        submit_form({
+            url: '{:url("")}',
+            data: $('#form').serialize(),
+            fun: function (res) {
+                if(res.state == 200){
+                    Swal.fire({
+                        title: res.msg,
+                        type:'success',
+                        timer: 2000,
+                        onClose: () => {
+                            window.location.reload();
+                        }
+                    });
+                }else{
+                    Swal.fire({
+                        title: res.msg,
+                        type:'error',
+                    });
+                }
+            }
+        });
+    });
+
+    certUpload();
+    keyUpload();
+    function certUpload(){
+        // 文件上传
+        jQuery(function () {
+            var $ = jQuery,
+                $list = $('#thelist'),
+                $btn = $('#ctlBtn'),
+                state = 'pending',
+                uploader;
+            uploader = WebUploader.create({
+
+                // 不压缩image
+                resize: false,
+
+                // swf文件路径
+                swf: '/resource/webUpload/js/Uploader.swf',
+
+                // 文件接收服务端。
+                server: '{:url("payUpload")}',
+
+                // 选择文件的按钮。可选。
+                // 内部根据当前运行是创建，可能是input元素，也可能是flash.
+                pick: {
+                    id: '#picker',
+                    multiple:false,
+                    label: '选择CERT文件'
+                },
+                // pick: '#picker',
+                fileNumLimit: 1,
+                auto: true,
+                accept: {
+                    title: 'TXT',
+                    extensions: 'pem',
+                    mimeTypes: 'pem/*'
+                }
+                // duplicate :true
+            });
+
+            uploader.on('beforeFileQueued', function (file) {
+                console.log('before',file);
+                uploader.reset();
+            });
+            // 当有文件添加进来的时候
+            uploader.on('fileQueued', function (file) {
+                // $("#picker").on("click",function () {
+                //     uploader.removeFile(file);
+                // });
+                // console.log('file',file);
+                $list.empty();
+                $list.append('<div id="WU_FILE_0" class="item">' +
+                    '<h4 class="info">' + file.name + '</h4>' +
+                    '<p class="state">等待上传...</p>' +
+                    '</div>');
+                uploader.refresh();
+            });
+
+            // 文件上传过程中创建进度条实时显示。
+            uploader.on('uploadProgress', function (file, percentage) {
+                var $li = $('#thelist #WU_FILE_0'),
+                    $percent = $li.find('.progress .progress-bar');
+
+                // 避免重复创建
+                if (!$percent.length) {
+                    $percent = $('<div class="progress progress-striped active">' +
+                        '<div class="progress-bar" role="progressbar" style="width: 0%">' +
+                        '</div>' +
+                        '</div>').appendTo($li).find('.progress-bar');
+                }
+
+                $li.find('p.state').text('上传中');
+
+                $percent.css('width', percentage * 100 + '%');
+            });
+
+            uploader.on('uploadSuccess', function (file, response) {
+                console.log("videoName", response);
+                if (response["state"] == 200) {
+                    $('#thelist #WU_FILE_0').find('p.state').text('已上传');
+
+                    toastr.success(response["msg"]);
+                } else {
+                    $('#thelist #WU_FILE_0').find('p.state').text('上传失败');
+                    toastr.warning(response["msg"]);
+                }
+            });
+
+            uploader.on('uploadError', function (file) {
+                $('#thelist #WU_FILE_0').find('p.state').text('上传出错');
+            });
+
+            uploader.on('uploadComplete', function (file) {
+                $('#thelist #WU_FILE_0').find('.progress').fadeOut();
+            });
+
+            uploader.on('all', function (type) {
+                if (type === 'startUpload') {
+                    state = 'uploading';
+                } else if (type === 'stopUpload') {
+                    state = 'paused';
+                } else if (type === 'uploadFinished') {
+                    state = 'done';
+                }
+
+                if (state === 'uploading') {
+                    $btn.text('暂停上传');
+                } else {
+                    $btn.text('开始上传');
+                }
+            });
+
+            $btn.on('click', function () {
+                console.log("click",'click');
+                if (state === 'uploading') {
+                    uploader.stop();
+                } else {
+                    uploader.upload();
+                }
+
+            });
+        });
+    }
+    function keyUpload(){
+        // 文件上传
+        jQuery(function () {
+            var $ = jQuery,
+                $list = $('#thelists'),
+                $btn = $('#ctlBtn'),
+                state = 'pending',
+                uploader;
+            uploader = WebUploader.create({
+
+                // 不压缩image
+                resize: false,
+
+                // swf文件路径
+                swf: '/resource/webUpload/js/Uploader.swf',
+
+                // 文件接收服务端。
+                server: '{:url("payUpload")}',
+
+                // 选择文件的按钮。可选。
+                // 内部根据当前运行是创建，可能是input元素，也可能是flash.
+                pick: {
+                    id: '#keyUpload',
+                    multiple:false,
+                    label: '选择key文件'
+                },
+                // pick: '#picker',
+                fileNumLimit: 1,
+                auto: true,
+                accept: {
+                    title: 'TXT',
+                    extensions: 'pem',
+                    mimeTypes: 'pem/*'
+                }
+                // duplicate :true
+            });
+
+            uploader.on('beforeFileQueued', function (file) {
+                console.log('before',file);
+                uploader.reset();
+            });
+            // 当有文件添加进来的时候
+            uploader.on('fileQueued', function (file) {
+                // $("#picker").on("click",function () {
+                //     uploader.removeFile(file);
+                // });
+                // console.log('file',file);
+                $list.empty();
+                $list.append('<div id="WU_FILE_01" class="item">' +
+                    '<h4 class="info">' + file.name + '</h4>' +
+                    '<p class="state">等待上传...</p>' +
+                    '</div>');
+                uploader.refresh();
+            });
+
+            // 文件上传过程中创建进度条实时显示。
+            uploader.on('uploadProgress', function (file, percentage) {
+                var $li = $('#thelists #WU_FILE_01'),
+                    $percent = $li.find('.progress .progress-bar');
+
+                // 避免重复创建
+                if (!$percent.length) {
+                    $percent = $('<div class="progress progress-striped active">' +
+                        '<div class="progress-bar" role="progressbar" style="width: 0%">' +
+                        '</div>' +
+                        '</div>').appendTo($li).find('.progress-bar');
+                }
+
+                $li.find('p.state').text('上传中');
+
+                $percent.css('width', percentage * 100 + '%');
+            });
+
+            uploader.on('uploadSuccess', function (file, response) {
+                console.log("videoName", response);
+                if (response["state"] == 200) {
+                    $('#thelists #WU_FILE_01').find('p.state').text('已上传');
+
+                    toastr.success(response["msg"]);
+                } else {
+                    $('#thelists #WU_FILE_01').find('p.state').text('上传失败');
+                    toastr.warning(response["msg"]);
+                }
+            });
+
+            uploader.on('uploadError', function (file) {
+                $('#thelists #WU_FILE_01').find('p.state').text('上传出错');
+            });
+
+            uploader.on('uploadComplete', function (file) {
+                $('#thelists #WU_FILE_01').find('.progress').fadeOut();
+            });
+
+            uploader.on('all', function (type) {
+                if (type === 'startUpload') {
+                    state = 'uploading';
+                } else if (type === 'stopUpload') {
+                    state = 'paused';
+                } else if (type === 'uploadFinished') {
+                    state = 'done';
+                }
+
+                if (state === 'uploading') {
+                    $btn.text('暂停上传');
+                } else {
+                    $btn.text('开始上传');
+                }
+            });
+
+            $btn.on('click', function () {
+                console.log("click",'click');
+                if (state === 'uploading') {
+                    uploader.stop();
+                } else {
+                    uploader.upload();
+                }
+
+            });
+        });
+    }
 </script>

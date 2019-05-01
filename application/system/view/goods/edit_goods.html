@@ -37,7 +37,7 @@
                             <li class="m-nav__separator">-</li>
                             <li class="m-nav__item">
                                 <a href="" class="m-nav__link">
-                                    <span class="m-nav__link-text">商品库列表</span>
+                                    <span class="m-nav__link-text">商品列表</span>
                                 </a>
                             </li>
                         </ul>
@@ -61,6 +61,7 @@
                                     <label for="goods_name" class="col-form-label col-lg-2 col-md-2 col-sm-12">供货商</label>
                                     <div class="col-lg-10 col-md-10 col-sm-12">
                                         <select name="goods_supplier_id" class="form-control">
+                                            <option value="-1" {if condition="$info.goods_supplier_id == -1"}selected{/if}>总平台</option>
                                             {volist name="$supplier_list" id="vo"}
                                             <option value="{$vo.supplier_id}" {if condition="$info.goods_supplier_id == $vo.supplier_id"}selected{/if}>{$vo.supplier_name}</option>
                                             {/volist}

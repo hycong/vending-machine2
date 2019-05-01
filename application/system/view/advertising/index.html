@@ -105,17 +105,17 @@
                                 <tbody>
                                 {volist name="putAdverList" id="put"}
                                 <tr>
-                                    <td class="text-center">{$put.put_id}</td>
-                                    <td class="text-center">{$put.resource_name}</td>
-                                    <td class="text-center">{$put.machine_name}</td>
-                                    <td class="text-center">{$put.machine_code}</td>
-                                    <td class="text-center">{switch name='put.put_type'}
+                                    <td class="text-middle text-center">{$put.put_id}</td>
+                                    <td class="text-middle text-center">{$put.resource_name}</td>
+                                    <td class="text-middle text-center">{$put.machine_name}</td>
+                                    <td class="text-middle text-center">{$put.machine_code}</td>
+                                    <td class="text-middle text-center">{switch name='put.put_type'}
                                         {case value="1"}<span class="m-badge  m-badge--success m-badge--wide">不分屏</span> {/case}
                                         {case value="2"}<span class="m-badge  m-badge--metal m-badge--wide">分屏</span>  {/case}
                                         {/switch}</td>
-                                    <td class="text-center">{$put.put_start_datetime}</td>
-                                    <td class="text-center">{$put.put_end_datetime}</td>
-                                    <td class="text-center" id="status_{$put.put_id}"> {switch name='$put.put_status'}
+                                    <td class="text-middle text-center">{$put.put_start_datetime}</td>
+                                    <td class="text-middle text-center">{$put.put_end_datetime}</td>
+                                    <td class="text-middle text-center" id="status_{$put.put_id}"> {switch name='$put.put_status'}
                                         {case value="1"}<span class="m-badge  m-badge--info m-badge--wide">未开始</span> {/case}
                                         {case value="2"}<span class="m-badge  m-badge--success m-badge--wide">已进行</span>  {/case}
                                         {case value="3"}<span class="m-badge  m-badge--metal m-badge--wide">已下架</span> {/case}

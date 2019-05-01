@@ -46,7 +46,7 @@
                             <li class="m-nav__separator">-</li>
                             <li class="m-nav__item">
                                 <a href="" class="m-nav__link">
-                                    <span class="m-nav__link-text">商品库列表</span>
+                                    <span class="m-nav__link-text">商品列表</span>
                                 </a>
                             </li>
                         </ul>
@@ -108,8 +108,8 @@
                                     <td class="text-middle">{$vo.goods_desc}</td>
                                     <td class="text-middle text-center">
                                         {switch name="$vo.goods_status"}
-                                        {case value="1"}<span class="text-success">在售</span>{/case}
-                                        {case value="2"}<span class="text-danger">已下架</span>{/case}
+                                        {case value="1"}<span class="m-badge m-badge--success m-badge--wide">在售中</span>{/case}
+                                        {case value="2"}<span class="m-badge m-badge--danger m-badge--wide">已下架</span>{/case}
                                         {/switch}
                                     </td>
                                     <td class="text-middle">{$vo.goods_createTime}</td>
