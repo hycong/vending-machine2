@@ -18,24 +18,33 @@ class Orders extends Common
 {
     public function index()
     {
-        $machine_code = input('machine_code');
+        $machine_code = input('machineCode','');
+        $payType = input("payType",0);
+        $payStatus = input("payStatus",0);
+        $outStatus = input("outStatus",0);
+        $goods_id = input("goodsId",0);
         $start_time = input('start_time');
         $end_time = input('end_time');
-        $agent_name = input('agent_name');
-        $id = input('id');
         if ($start_time && $end_time) {
             $map['o.o_createTime'] = ['between', [$start_time, $end_time]];
         }
-        if ($agent_name) {
-            $map['a.agent_name'] = ['like', "%$agent_name%"];
+        if(intval($goods_id) > 0){
+            $map["o.o_goods_id"] = ['eq',$goods_id];
         }
-        if ($id) {
-            $map['a.o_agent'] = $id;
+        if(intval($payType) > 0){
+            $map["o.o_pay_type"] = ['eq',$payType];
+        }
+        if(intval($payStatus) > 0){
+            $map["o.o_pay_status"] = ['eq',$payStatus];
+        }else{
+            $map['o.o_pay_status'] = ['<>', 3];
+        }
+        if(intval($outStatus) > 0){
+            $map["o.o_out_status"] = ['eq',$outStatus];
         }
         if ($machine_code) {
-            $map['o.o_machine'] = $machine_code;
+            $map['o.o_machine'] = ["like","%$machine_code%"];
         }
-        $map['o.o_pay_status'] = ['<>', 3];
         $order_list = Db::name('orders')->alias('o')
             ->join('agent a', 'a.agent_id=o.o_agent_id', 'left')
             ->where($map)

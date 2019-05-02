@@ -1,29 +1,24 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Administrator
- * Date: 2019/4/8 0008
- * Time: 14:58
- */
+
 
 namespace app\system\controller;
 
 
 use think\Db;
 
-class Index extends Common
+class Presentation extends Common
 {
 
-    public function index(){
-        $yesterday = date('Y-m-d',mktime(0,0,0,date('m'),date('d')-1,date('Y')));
+    public function showdata(){
+        $input_date = input('date',date('Y-m-d',mktime(0,0,0,date('m'),date('d')-1,date('Y'))));
         $machine_sum = Db::name('machine')->where(['machine_status'=>['<>',3]])->count();
         $machine_onLine_sum = Db::name('machine')->where(['machine_status'=>['<>',3],'machine_online' => 1])->count();
-        $orders_count = Db::name('orders')->where(['o_date'=>date('Y-m-d'),'o_pay_status' => 1,'o_out_status' => 1])->count();
-        $machine_market_sum = Db::name('orders')->where(['o_date'=>date('Y-m-d'),'o_pay_status' => 1,'o_out_status' => 1])->sum('o_money');
-        $refund = Db::name('orders')->where(['o_date'=>date('Y-m-d'),'o_pay_status' => 5])->field('sum(o_money) as money,count(o_id) as count')->find();
+        $orders_count = Db::name('orders')->where(['o_date'=> $input_date,'o_pay_status' => 1,'o_out_status' => 1])->count();
+        $machine_market_sum = Db::name('orders')->where(['o_date'=>$input_date,'o_pay_status' => 1,'o_out_status' => 1])->sum('o_money');
+        $refund = Db::name('orders')->where(['o_date'=>$input_date,'o_pay_status' => 5])->field('sum(o_money) as money,count(o_id) as count')->find();
         $orders_data_list = [
-            'all' => Db::name('orders')->where(['o_date'=>date('Y-m-d'),'o_pay_status' => ['in',[1,4]],'o_out_status' => 1])->sum('o_money'),
-            'money' => Db::name('orders')->where(['o_date'=>date('Y-m-d'),'o_pay_status' => 1,'o_out_status' => 1])->sum('o_money'),
+            'all' => Db::name('orders')->where(['o_date'=>$input_date,'o_pay_status' => ['in',[1,4]],'o_out_status' => 1])->sum('o_money'),
+            'money' => Db::name('orders')->where(['o_date'=>$input_date,'o_pay_status' => 1,'o_out_status' => 1])->sum('o_money'),
             'refund_count' => $refund['count'] ? $refund['count'] : 0,
             'refund_money' => $refund['money'] ? $refund['money'] : 0,
         ];
@@ -39,16 +34,17 @@ class Index extends Common
         $goods_orders = Db::name('orders')->alias('o')
             ->join('goods g','o.o_goods_id = g.goods_id')
             ->where([
-                'o_date' => $yesterday,'o_pay_status' => ['in',[1,4,5]],'o_out_status' => 1
+                'o_date' => $input_date,'o_pay_status' => ['in',[1,4,5]],'o_out_status' => 1
             ])->field('o.o_money,g.goods_name,count(o.o_id) as count')
             ->group('o.o_goods_id')->order('count')->limit('50')->select();
         $agent_orders = Db::name('orders')->alias('o')
             ->join('agent g','o.o_agent_id = g.agent_id')
             ->where([
-                'o_date' => $yesterday,'o_pay_status' => ['in',[1,4,5]],'o_out_status' => 1
+                'o_date' => $input_date,'o_pay_status' => ['in',[1,4,5]],'o_out_status' => 1
             ])->field('g.agent_name,count(o.o_money) as count')
             ->group('o.o_agent_id')->order('count')->limit('50')->select();
         $fetch_data = [
+            'input_date' => $input_date,
             'machine_sum' => $machine_sum,
             'machine_onLine_sum' => $machine_onLine_sum,
             'orders_count' => $orders_count,
@@ -60,6 +56,7 @@ class Index extends Common
             'agent_orders' => $agent_orders,
         ];
         return $this->fetch('',$fetch_data);
+        return $this->fetch();
     }
 
 }
