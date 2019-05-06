@@ -143,7 +143,7 @@
                                         {/switch}
                                     </td>
                                     <td class="text-middle"><input type="text" class="show-mch-no" readonly value="{$vo.o_trade_no}"></td>
-                                    <td class="text-middle"><input type="text" class="show-mch-no" readonly value="{$so.o_mch_no|default='--'}"></td>
+                                    <td class="text-middle"><input type="text" class="show-mch-no" readonly value="{$vo.o_mch_no|default='--'}"></td>
                                     <td class="text-middle text-center">
                                         {switch name="$vo.o_pay_status"}
                                         {case value="1"}<span class="m-badge m-badge--success m-badge--wide" title="{$vo.o_error_remark}">支付成功</span>{/case}
@@ -160,7 +160,7 @@
                                         {case value="3"}<span class="m-badge m-badge--metal m-badge--wide">未出货</span>{/case}
                                         {/switch}
                                         {if condition="$vo.o_error_remark != ''"}
-                                        <i class="am-icon-warning" title="{$so.o_error_remark}"></i>
+                                        <i class="am-icon-warning" title="{$vo.o_error_remark}"></i>
                                         {/if}
                                     </td>
                                     <td class="text-middle">{$vo.o_createTime}</td>
