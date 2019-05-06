@@ -27,10 +27,13 @@ class Presentation extends Common
         $date = [];
         $date_data = [];
         for ($i=6;$i>=0;$i--){
-            $this_date = date('Y-m-d',mktime(0,0,0,date('m',strtotime($input_date)),date('d',strtotime($input_date))-$i,date('Y',strtotime($input_date))));
-            $date[] = $this_date;
+            $this_date = mktime(0,0,0,date('m',strtotime($input_date)),date('d',strtotime($input_date))-$i,date('Y',strtotime($input_date)));
+            $date[] = [
+                'this_date' => date('Y-m-d',$this_date),
+                'date' => date('m/d',$this_date),
+            ];
             $this_money = 0;
-            $this_money = Db::name('orders')->where(['o_date' => $this_date,'o_pay_status' => ['in',[1,4,5]],'o_out_status' => 1])->sum('o_money');
+            $this_money = Db::name('orders')->where(['o_date' => date('Y-m-d',$this_date),'o_pay_status' => ['in',[1,4,5]],'o_out_status' => 1])->sum('o_money');
             $date_data[] = $this_money ? $this_money : 0;
         }
         $goods_orders = Db::name('orders')->alias('o')

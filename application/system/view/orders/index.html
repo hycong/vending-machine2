@@ -142,8 +142,8 @@
                                         {case value="5"}<span style="color: red">秘钥兑换</span>{/case}
                                         {/switch}
                                     </td>
-                                    <td class="text-middle"><input type="text" class="show-mch-no" value="{$vo.o_trade_no}"></td>
-                                    <td class="text-middle"><input type="text" class="show-mch-no" value="{$so.o_mch_no|default='--'}"></td>
+                                    <td class="text-middle"><input type="text" class="show-mch-no" readonly value="{$vo.o_trade_no}"></td>
+                                    <td class="text-middle"><input type="text" class="show-mch-no" readonly value="{$so.o_mch_no|default='--'}"></td>
                                     <td class="text-middle text-center">
                                         {switch name="$vo.o_pay_status"}
                                         {case value="1"}<span class="m-badge m-badge--success m-badge--wide" title="{$vo.o_error_remark}">支付成功</span>{/case}
