@@ -261,6 +261,7 @@
                                             <td class="text-middle">{$vo.count}</td>
                                         </tr>
                                         {/volist}
+                                        {empty name="$goods_orders"} <tr><td colspan="4" class="noDataHeight" style="height: 297px;">没有数据</td></tr> {/empty}
                                         </tbody>
                                     </table>
                                 </div>
@@ -295,6 +296,7 @@
                                             <td class="text-middle">{$vo.count}</td>
                                         </tr>
                                         {/volist}
+                                        {empty name="$agent_orders"} <tr><td colspan="3" class="noDataHeight" style="height: 297px;">没有数据</td></tr> {/empty}
                                         </tbody>
                                     </table>
                                 </div>

@@ -56,7 +56,17 @@
                             </div>
                         </div>
                         <div class="m-portlet__head-tools">
-                            <ul class="m-portlet__nav"></ul>
+                            <form action="" method="get" class="form-inline ">
+                                <div class="form-group mr-2">
+                                    <input type="text" class="form-control form-control-sm" name="agent_name" value="{$Think.get.agent_name}" placeholder="代理名称">
+                                </div>
+                                <div class="form-group mr-2">
+                                    <input type="text" class="form-control form-control-sm" name="agent_id" value="{$Think.get.agent_id}" placeholder="代理ID">
+                                </div>
+                                <div class="form-group">
+                                    <input type="submit" class="btn btn-info btn-sm" name="supplier_mobile" value="搜索">
+                                </div>
+                            </form>
                         </div>
                     </div>
                     <div class="m-portlet__body">
@@ -84,7 +94,7 @@
                                     <td class="text-middle">{$vo.extract_name}</td>
                                     <td class="text-middle">{$vo.extract_bank}</td>
                                     <td class="text-middle">{$vo.extract_card}</td>
-                                    <td class="text-middle"><strong>￥{:floatval($vo.extract_money + $vo.extract_tax)} (申请：{$vo.extract_money|floatval} 税：{$vo.extract_tax|floatval})</strong></td>
+                                    <td class="text-middle"><strong>￥{:floatval($vo.extract_money + $vo.extract_tax)} (申请：￥{$vo.extract_money|floatval} 税：￥{$vo.extract_tax|floatval} 税比：{$vo.extract_tax|floatval}%)</strong></td>
                                     <td class="text-middle">{$vo.extract_time}</td>
                                     <td class="text-middle">{$vo.extract_deal_time|default="/"}</td>
                                     <td class="text-middle text-center">
@@ -123,7 +133,7 @@
                                                 <tr>
                                                     <td class="am-text-right">提现金额</td>
                                                     <td class="">￥{$vo.extract_money|floatval} <strong style="color: red;">(
-                                                        提现：￥{$vo.extract_money|floatval}，手续费：￥{$vo.extract_tax|floatval}
+                                                        提现：￥{$vo.extract_money|floatval}，手续费：￥{$vo.extract_tax|floatval}，税比：{$vo.extract_tax|floatval}%
                                                         )</strong></td>
                                                 </tr>
                                                 <tr>
@@ -202,6 +212,7 @@
                                     </td>
                                 </tr>
                                 {/volist}
+                                {empty name="$agent_record"} <tr><td colspan="10" class="noDataHeight">没有数据</td></tr> {/empty}
                                 </tbody>
                             </table>
                             <div class="dataTables_pager">

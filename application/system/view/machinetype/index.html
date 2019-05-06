@@ -147,6 +147,7 @@
                                     <td class="text-middle text-center">{$vo.type_createTime}</td>
                                 </tr>
                                 {/volist}
+                                {empty name="$type_list"} <tr><td colspan="4" class="noDataHeight">没有数据</td></tr> {/empty}
                                 </tbody>
                             </table>
                             <div class="dataTables_pager">

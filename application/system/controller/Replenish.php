@@ -10,6 +10,7 @@ namespace app\system\controller;
 
 
 use think\Db;
+use think\Request;
 
 class Replenish extends Common
 {
@@ -30,6 +31,22 @@ class Replenish extends Common
             ->paginate($this->pageNum,false,['query'=>request()->param()]);
         $this->assign('rep_list',$rep_list);
         return $this->fetch();
+    }
+
+
+    public function allocatingMachine(){
+        $rep_id = input('rep_id');
+        $info = Db::name('rep')->where(['rep_id'=>$rep_id])->find();
+        if(Request::instance()->isPost()){
+            $machine_id = input('machine_id/a');
+            Db::name('machine')->where(['machine_rep_id'=>$rep_id])->setField('machine_rep_id',0);
+            Db::name('machine')->where(['machine_id'=>['in',$machine_id]])->setField('machine_rep_id',$rep_id);
+            return returnState(200,'设置成功');
+        }
+        return $this->fetch('',[
+            'info' => $info,
+            'machineList' => Db::name('machine')->where(['machine_agent_id'=>$info['rep_agent_id']])->select(),
+        ]);
     }
 
 }

@@ -110,7 +110,7 @@
                                 <thead>
                                 <tr>
                                     <th>订单ID</th>
-                                    <th class="text-center">消费设备</th>
+                                    <th class="text-center">设备序号</th>
                                     <th>货道</th>
                                     <th>消费用户</th>
                                     <th>消费商品</th>
@@ -171,6 +171,7 @@
                                     </td>
                                 </tr>
                                 {/volist}
+                                {empty name="$order_list"} <tr><td colspan="13" class="noDataHeight">没有数据</td></tr> {/empty}
                                 </tbody>
                             </table>
                             <div class="dataTables_pager">

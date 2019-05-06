@@ -15,14 +15,14 @@ class Depost extends Common
 {
     public function index()
     {
-        $agent = input("agent");
-        $status = input("status");
+        $agentName = input("agent_name");
+        $agentId = input("agent_id");
         $map = [];
-        if(intval($agent) != 0){
-            $map["e.extract_agent_id"] = $agent;
+        if($agentName){
+            $map["ag.agent_name"] = $agentName;
         }
-        if(intval($status) != 0){
-            $map["e.extract_status"] = $status;
+        if(intval($agentId) != 0){
+            $map["ag.agent_id"] = $agentId;
         }
         $agent_record = Db::name("agent_extract")->alias('e')
             ->join("agent ag","ag.agent_id = e.extract_agent_id",'left')
