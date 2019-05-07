@@ -30,7 +30,7 @@ class VLogin extends Validate
     ];
 
     protected $scene = [
-        'login'  =>  ['username','password','captcha'],
+        'login'  =>  ['username','password'],
     ];
 
 }

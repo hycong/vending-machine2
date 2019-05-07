@@ -93,17 +93,26 @@
                                         {/switch}
                                     </td>
                                     <td class="text-middle text-center">{$vo.supplier_createTime}</td>
-                                    <td class="text-left">
-                                        <a class="btn btn-sm btn-info" href="{:url('edit_supplier',['supplier_id'=>$vo.supplier_id])}"><i class="fa fa-pencil-square-o"></i> 编辑</a>
-                                        {switch name="$vo.supplier_status"}
+                                    <td class="text-middle" nowrap="">
+                                        <span class="dropdown">
+                                            <a href="#" class="btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill" data-toggle="dropdown" aria-expanded="false">
+                                              <i class="la la-ellipsis-h"></i>
+                                            </a>
+                                            <div class="dropdown-menu dropdown-menu-right">
+                                                {switch name="$vo.supplier_status"}
                                         {case value="1"}
-                                        <a class="btn btn-sm btn-warning" onclick="disabledSupplier('{$vo.supplier_id}')" hrefs="{:url('disabled_supplier',['supplier_id'=>$vo.supplier_id])}"><i class="fa fa-refresh text-danger"></i> 禁用</a>
+                                        <a class="dropdown-item" onclick="disabledSupplier('{$vo.supplier_id}')"><i class="fa fa-refresh text-danger"></i> 禁用</a>
                                         {/case}
                                         {case value="2"}
-                                        <a class="btn btn-sm btn-warning" onclick="changeStatus('{$vo.supplier_id}')" hrefs="{:url('change_status',['supplier_id'=>$vo.supplier_id])}"><span class="fa fa-refresh"></span> 恢复</a>
-                                        <a class="btn btn-sm btn-danger" onclick="delSupplier('{$vo.supplier_id}')" hrefs="{:url('del_supplier',['supplier_id'=>$vo.supplier_id])}"><i class="fa fa-trash-o"></i> 删除</a>
+                                        <a class="dropdown-item" onclick="changeStatus('{$vo.supplier_id}')"><span class="fa fa-refresh"></span> 恢复</a>
+                                        <a class="dropdown-item" onclick="delSupplier('{$vo.supplier_id}')"><i class="fa fa-trash-o text-danger"></i> 删除</a>
                                         {/case}
                                         {/switch}
+                                            </div>
+                                        </span>
+                                        <a href="{:url('edit_supplier',['supplier_id'=>$vo.supplier_id])}" class="m-portlet__nav-link btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill" title="编辑">
+                                            <i class="la la-edit"></i>
+                                        </a>
                                     </td>
                                 </tr>
                                 {/volist}

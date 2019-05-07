@@ -63,6 +63,12 @@
                                 </div>
                             </div>
                             <div class="form-group m-form__group row">
+                                <label class="col-form-label col-lg-3 col-md-3 col-sm-12">税费(%)</label>
+                                <div class="col-lg-9 col-md-9 col-sm-12">
+                                    <input class="form-control" type="text" name="conf_content[extract_taxes_dues]" value="{$info.extract_taxes_dues|default=''}" placeholder="税费(%)">
+                                </div>
+                            </div>
+                            <div class="form-group m-form__group row">
                                 <label class="col-form-label col-lg-3 col-md-3 col-sm-12">最少提现</label>
                                 <div class="col-lg-9 col-md-9 col-sm-12">
                                     <input class="form-control" type="text" name="conf_content[min]" value="{$info.min|default=''}" placeholder="最少提现">

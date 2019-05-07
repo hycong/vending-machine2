@@ -53,20 +53,21 @@ class Depost extends Common
             if ($result) {   // 修改成功
                 $extract = Db::name('agent_extract')->where(['extract_id' => $extract_id])->find();
                 $agent_map['agent_id'] = ['eq',$extract['extract_agent_id']];
+                $money = $extract['extract_money'] + $extract['extract_tax_money'] + $extract['extract_taxes_dues_money'];
                 if($status == 1 ) {  //  已同意
-                    Db::name('agent')->where($agent_map)->setInc('agent_extract',$extract['extract_money'] + $extract['extract_tax']);  // 加上提现成功金额与手续费
+                    Db::name('agent')->where($agent_map)->setInc('agent_extract',$money);  // 加上提现成功金额与手续费
                 }else if($status == 2) {   // 已拒绝
                     $agent_info = Db::name('agent')->where($agent_map)->field('agent_balance')->find();
                     $insert_state['statement_agent_id'] = $extract['extract_agent_id'];
-                    $insert_state['statement_money'] = $extract['extract_money'] + $extract['extract_tax'];
+                    $insert_state['statement_money'] = $money;
                     $insert_state['statement_type'] = 1;
-                    $insert_state['statement_remark'] = '拒绝该申请，【提现申请】：'.$insert_state['statement_money'].'元，提现金额：'.$extract['extract_money'].'，代缴税收：'.$extract['extract_tax'];
+                    $insert_state['statement_remark'] = '拒绝该申请，【提现申请】：'.$insert_state['statement_money'].'元，提现金额：'.$extract['extract_money'].'，代缴手续费：'.$extract['extract_tax_money'].'，代缴税费：'.$extract['extract_taxes_dues_money'];
                     $insert_state['statement_before'] = $agent_info['agent_balance'];      //  拒绝申请前余额 agent_balancer
                     $insert_state['statement_time'] = date('Y-m-d H:i:s',time());
                     Db::name('agent_statement')->insert($insert_state);  // 插入用户提现处理流水信息
-                    Db::name('agent')->where($agent_map)->setInc('agent_balance',$extract['extract_money'] + $extract['extract_tax']);  // 返回提现金额
+                    Db::name('agent')->where($agent_map)->setInc('agent_balance',$money);  // 返回提现金额
                 }
-                Db::name('agent')->where($agent_map)->setDec('agent_frozen',$extract['extract_money'] + $extract['extract_tax']);  // 减去冻结金额
+                Db::name('agent')->where($agent_map)->setDec('agent_frozen',$money);  // 减去冻结金额
                 Db::commit();
                 return $this->success('处理成功');
             }else{

@@ -94,7 +94,11 @@
                                     <td class="text-middle">{$vo.extract_name}</td>
                                     <td class="text-middle">{$vo.extract_bank}</td>
                                     <td class="text-middle">{$vo.extract_card}</td>
-                                    <td class="text-middle"><strong>￥{:floatval($vo.extract_money + $vo.extract_tax)} (申请：￥{$vo.extract_money|floatval} 税：￥{$vo.extract_tax|floatval} 税比：{$vo.extract_tax|floatval}%)</strong></td>
+                                    <td class="text-middle">
+                                        <strong>
+                                            ￥{:floatval($vo.extract_money + $vo.extract_tax_money)}
+                                        </strong>
+                                    </td>
                                     <td class="text-middle">{$vo.extract_time}</td>
                                     <td class="text-middle">{$vo.extract_deal_time|default="/"}</td>
                                     <td class="text-middle text-center">
@@ -105,7 +109,9 @@
                                         {/switch}
                                     </td>
                                     <td class="text-middle">
-                                        <button class="btn btn-sm btn-info extract_btn" data-extract="{$vo.extract_id}" hrefs="{:url('depost',['extract_id'=>$vo.extract_id])}">详情</button>
+                                        <button class="btn btn-sm btn-info extract_btn" data-extract="{$vo.extract_id}" data-extract_status="{$vo.extract_status}" hrefs="{:url('depost',['extract_id'=>$vo.extract_id])}">
+                                            {if condition="$vo.extract_status == 0"}审核{else}详情{/if}
+                                        </button>
                                     </td>
                                 </tr>
                                 <tr class="extract_form extract_{$vo.extract_id}">
@@ -133,7 +139,11 @@
                                                 <tr>
                                                     <td class="am-text-right">提现金额</td>
                                                     <td class="">￥{$vo.extract_money|floatval} <strong style="color: red;">(
-                                                        提现：￥{$vo.extract_money|floatval}，手续费：￥{$vo.extract_tax|floatval}，税比：{$vo.extract_tax|floatval}%
+                                                        提现：￥{$vo.extract_money|floatval}，
+                                                        手续费：￥{$vo.extract_tax_money|floatval}，
+                                                        手续费百分比：{$vo.extract_tax|floatval}%，
+                                                        税费：￥{$vo.extract_taxes_dues_money|floatval}，
+                                                        税费百分比：{$vo.extract_tax|floatval}%
                                                         )</strong></td>
                                                 </tr>
                                                 <tr>
@@ -239,6 +249,8 @@
     nav_url = "{:url('depost/index')}";
     $('.extract_btn').click(function () {
         let id = $(this).data('extract');
+        let status = $(this).data('extract_status');
+        let text = '详情';
         if ($('.extract_' + id).css("display") == "none") {
             $('.extract_form').hide();
             $(this).text('隐藏');
@@ -246,7 +258,8 @@
             let top = $('.extract_' + id).offset().top;
             $("html,body").animate({scrollTop: top - 130}, 1000);
         } else {
-            $(this).text('详情');
+            if(status == 0) text = '审核';
+            $(this).text(text);
             $('.extract_' + id).hide();
         }
     });

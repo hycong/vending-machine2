@@ -66,7 +66,6 @@
                         </div>
                         <div class="m-portlet__head-tools">
                             <form action="" method="get" class="form-inline ">
-
                                 <div class="form-group mr-2">
                                     <input type="text" name="name" id="name" class="form-control form-control-sm"  value="{$Think.get.name}" placeholder="加盟商呢称">
                                 </div>
@@ -105,7 +104,7 @@
                                     <th class="text-center">联系人</th>
                                     <th class="text-center">联系人电话</th>
                                     <th class="text-center">登录账号</th>
-<!--                                    <th class="text-center">等级</th>-->
+                                    <th class="text-center">余额</th>
                                     <th class="text-center">状态</th>
                                     <th class="text-center">创建时间</th>
                                     <th class="text-center">操作</th>
@@ -119,6 +118,7 @@
                                     <td class="text-middle">{$vo.agent_contacts}</td>
                                     <td class="text-middle">{$vo.agent_mobile}</td>
                                     <td class="text-middle">{$vo.agent_username}</td>
+                                    <td class="text-middle">{$vo.agent_balance}</td>
                                     <td class="text-middle text-center" style="display: none">
                                         {switch name="$vo.agent_level"}
                                         {case value="1"}品牌方{/case}
@@ -134,22 +134,27 @@
                                         {/switch}
                                     </td>
                                     <td class="text-middle text-center">{$vo.agent_createTime}</td>
-                                    <td>
-                                        <div class="btn-toolbar">
-                                            <div class="btn-group btn-group-sm">
-                                                <a href="{:url('editAgent',['agent_id'=>$vo.agent_id])}" class="btn btn-info"><span class="fa fa-pencil-square-o"></span> 编辑</a>
+                                    <td class="text-middle" nowrap="">
+                                        <span class="dropdown">
+                                            <a href="#" class="btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill" data-toggle="dropdown" aria-expanded="false">
+                                              <i class="la la-ellipsis-h"></i>
+                                            </a>
+                                            <div class="dropdown-menu dropdown-menu-right">
                                                 {switch name="$vo.agent_status"}
                                                 {case value="1"}
-                                                <a onclick="delAgentStatus('{$vo.agent_id}')" class="btn btn-warning"><i class="fa fa-ban text-danger"></i> 禁用</a>
+                                                <a onclick="delAgentStatus('{$vo.agent_id}')" class="dropdown-item"><i class="fa fa-ban text-danger"></i> 禁用</a>
                                                 {/case}
                                                 {case value="2"}
-                                                <a onclick="changeAgentStatus('{$vo.agent_id}')" class="btn btn-warning"><span class="fa fa-ban"></span> 恢复</a>
-                                                <a onclick="delAgent('{$vo.agent_id}')" class="btn btn-danger"><span class="fa fa-trash-o"></span> 删除</a>
+                                                <a onclick="changeAgentStatus('{$vo.agent_id}')" class="dropdown-item"><i class="fa fa-ban"></i> 恢复</a>
+                                                <a onclick="delAgent('{$vo.agent_id}')" class="dropdown-item"><i class="fa fa-trash-o text-danger"></i> 删除</a>
                                                 {/case}
                                                 {/switch}
-<!--                                                <a href="{:url('index',['parent_id'=>$vo.agent_id])}" class="btn btn-primary">下级</a>-->
+<!--                                                <a href="{:url('index',['parent_id'=>$vo.agent_id])}" class="dropdown-item">下级</a>-->
                                             </div>
-                                        </div>
+                                        </span>
+                                        <a href="{:url('editAgent',['agent_id'=>$vo.agent_id])}" class="m-portlet__nav-link btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill" title="编辑">
+                                            <i class="la la-edit"></i>
+                                        </a>
                                     </td>
                                 </tr>
                                 {/volist}

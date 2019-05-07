@@ -113,32 +113,32 @@
                                         {/switch}
                                     </td>
                                     <td class="text-middle">{$vo.goods_createTime}</td>
-                                    <td class="text-middle">
-                                        <div class="btn-toolbar">
-                                            <div class="btn-group btn-group-sm">
-                                                <a href="{:url('edit_goods',['goods_id'=>$vo['goods_id']])}"
-                                                   class="btn btn-info">
-                                                    <span class="fa fa-pencil-square-o"></span> 编辑
-                                                </a>
+                                    <td class="text-middle" nowrap="">
+                                        <span class="dropdown">
+                                            <a href="#" class="btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill" data-toggle="dropdown" aria-expanded="false">
+                                              <i class="la la-ellipsis-h"></i>
+                                            </a>
+                                            <div class="dropdown-menu dropdown-menu-right">
                                                 {switch name="$vo.goods_status"}
                                                 {case value="1"}
-                                                <a onclick="down_goods('{$vo.goods_id}')"
-                                                   class="btn btn-warning">
-                                                    <span class="fa fa-cloud-download text-danger"></span> 下架
-                                                </a>{/case}
-                                                {case value="2"}
-                                                <a onclick="up_goods('{$vo.goods_id}')"
-                                                   class="btn btn-warning">
-                                                    <span class="fa fa-cloud-upload"></span> 上架
+                                                <a onclick="down_goods('{$vo.goods_id}')" class="dropdown-item">
+                                                    <i class="fa fa-cloud-download text-danger"></i> 下架
                                                 </a>
-                                                <a onclick="del_goods('{$vo.goods_id}')"
-                                                   class="btn btn-danger">
-                                                    <span class="fa fa-trash-o"></span> 删除
+                                                {/case}
+                                                {case value="2"}
+                                                <a onclick="up_goods('{$vo.goods_id}')" class="dropdown-item">
+                                                    <i class="fa fa-cloud-upload"></i> 上架
+                                                </a>
+                                                <a onclick="del_goods('{$vo.goods_id}')" class="dropdown-item">
+                                                    <i class="fa fa-trash-o text-danger"></i> 删除
                                                 </a>
                                                 {/case}
                                                 {/switch}
                                             </div>
-                                        </div>
+                                        </span>
+                                        <a href="{:url('edit_goods',['goods_id'=>$vo['goods_id']])}" class="m-portlet__nav-link btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill" title="编辑">
+                                            <i class="la la-edit"></i>
+                                        </a>
                                     </td>
                                 </tr>
                                 {/volist}
