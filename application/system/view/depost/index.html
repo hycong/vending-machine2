@@ -103,14 +103,14 @@
                                     <td class="text-middle">{$vo.extract_deal_time|default="/"}</td>
                                     <td class="text-middle text-center">
                                         {switch name="$vo.extract_status"}
-                                        {case value="0"}<span class="m-badge m-badge--metal m-badge--wide">未处理</span>{/case}
-                                        {case value="1"}<span class="m-badge m-badge--success m-badge--wide">已转账</span>{/case}
-                                        {case value="2"}<span class="m-badge m-badge--danger m-badge--wide">已拒绝</span>{/case}
+                                        {case value="1"}<span class="m-badge m-badge--metal m-badge--wide">未处理</span>{/case}
+                                        {case value="2"}<span class="m-badge m-badge--success m-badge--wide">已转账</span>{/case}
+                                        {case value="3"}<span class="m-badge m-badge--danger m-badge--wide">已拒绝</span>{/case}
                                         {/switch}
                                     </td>
                                     <td class="text-middle">
                                         <button class="btn btn-sm btn-info extract_btn" data-extract="{$vo.extract_id}" data-extract_status="{$vo.extract_status}" hrefs="{:url('depost',['extract_id'=>$vo.extract_id])}">
-                                            {if condition="$vo.extract_status == 0"}审核{else}详情{/if}
+                                            {if condition="$vo.extract_status == 1"}审核{else}详情{/if}
                                         </button>
                                     </td>
                                 </tr>
@@ -121,13 +121,13 @@
                                                 <tr>
                                                     <td class="am-text-right">提现状态</td>
                                                     {switch name="$vo.extract_status"}
-                                                    {case value="0"}
+                                                    {case value="1"}
                                                     <td style="background-color: #ccc">未处理</td>
                                                     {/case}
-                                                    {case value="1"}
+                                                    {case value="2"}
                                                     <td style="background-color: #0daf35;color: #fff;">已转账</td>
                                                     {/case}
-                                                    {case value="2"}
+                                                    {case value="3"}
                                                     <td style="background-color: #cc0c03;color: #fff;">已拒绝</td>
                                                     {/case}
                                                     {/switch}
@@ -184,7 +184,7 @@
                                                         {/switch}
                                                     </td>
                                                 </tr>
-                                                {if condition="$vo.extract_status == 0"}
+                                                {if condition="$vo.extract_status == 1"}
                                                 <tr>
                                                     <td class="am-text-right am-text-middle">处理结果</td>
                                                     <td class="am-form am-text-middle">
