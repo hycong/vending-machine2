@@ -63,5 +63,23 @@
         var nav_Dom = $('a[href="'+ nav_url +'"]');
         nav_Dom.parent('li').addClass('m-menu__item--active');
         nav_Dom.parent().parent().parent().parent().addClass('m-menu__item--open');
-    })
+    });
+
+    // 设置默认值
+    function setValue(name,value) {
+        let this_this = $('[name="'+ name +'"]');
+        let type = this_this.attr('type');
+        console.log(type);
+        switch (type) {
+            case 'checkbox':
+                $('[name="'+ name +'"][value="'+ value +'"]').attr('checked',true);
+                break;
+            case 'radio':
+                $('[name="'+ name +'"][value="'+ value +'"]').prop('checked',true);
+                break;
+            default:
+                this_this.val(value);
+                break;
+        }
+    }
 </script>
