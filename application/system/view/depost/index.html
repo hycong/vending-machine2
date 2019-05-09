@@ -96,7 +96,7 @@
                                     <td class="text-middle">{$vo.extract_card}</td>
                                     <td class="text-middle">
                                         <strong>
-                                            ￥{:floatval($vo.extract_money + $vo.extract_tax_money)}
+                                            ￥{$vo.extract_money|floatval}
                                         </strong>
                                     </td>
                                     <td class="text-middle">{$vo.extract_time}</td>
@@ -172,7 +172,7 @@
                                                 </tr>
                                                 <tr>
                                                     <td class="am-text-right">处理结果</td>
-                                                    <td class="">{$vo.extract_remark}</td>
+                                                    <td class="">{$vo.extract_result_remark}</td>
                                                 </tr>
                                                 <tr>
                                                     <td class="am-text-right">处理人</td>
@@ -191,11 +191,11 @@
                                                         <input type="hidden" name="extract_id" value="{$vo.extract_id}">
                                                         <div class="m-radio-inline">
                                                             <label class="m-radio">
-                                                                <input type="radio" name="extract_status" value="1"> 已转账
+                                                                <input type="radio" name="extract_status" value="2"> 已转账
                                                                 <span></span>
                                                             </label>
                                                             <label class="m-radio">
-                                                                <input type="radio" name="extract_status" value="2" checked> 已拒绝
+                                                                <input type="radio" name="extract_status" value="3" checked> 已拒绝
                                                                 <span></span>
                                                             </label>
                                                         </div>
@@ -273,14 +273,19 @@
             url : '{:url("depost")}',
             data : $('.depost_'+id).serialize(),
             fun : function (res) {
-                if(res.state = 200){
-                    layer.msg(res.msg,{},function () {
-                        window.location.reload();
+                if (res.state == 200) {
+                    Swal.fire({
+                        title: res.msg,
+                        type: 'success',
+                        timer: 2000,
+                        onClose: () => {
+                            window.location.reload();
+                        }
                     });
-                }else{
-                    layer.open({
-                        title:'审核提示',
-                        content:res.msg,
+                } else {
+                    Swal.fire({
+                        title: res.msg,
+                        type: 'error',
                     });
                 }
             }
