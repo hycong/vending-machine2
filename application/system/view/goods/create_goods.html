@@ -142,7 +142,7 @@
     {/if}
 
     $('#sub').click(function () {
-        if($('select[name="goods_supplier_id"]').val() <= 0){
+        if($('select[name="goods_supplier_id"]').val() == 0){
             toastr.success('没有可用供货商，请先创建供货商！');
             return false;
         }

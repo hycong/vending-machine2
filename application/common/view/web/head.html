@@ -69,7 +69,6 @@
     function setValue(name,value) {
         let this_this = $('[name="'+ name +'"]');
         let type = this_this.attr('type');
-        console.log(type);
         switch (type) {
             case 'checkbox':
                 $('[name="'+ name +'"][value="'+ value +'"]').attr('checked',true);

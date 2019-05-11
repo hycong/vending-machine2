@@ -26,7 +26,7 @@ class Replenish extends Common
         $rep_list = Db::name('rep')->alias('r')
             ->join('agent a','r.rep_agent_id=a.agent_id','left')
             ->order('r.rep_id DESC')
-            ->field('r.rep_id,r.rep_name,r.rep_username,r.rep_status,a.agent_name,a.agent_createTime')
+            ->field('r.*,a.agent_name')
             ->where($map)
             ->paginate($this->pageNum,false,['query'=>request()->param()]);
         $this->assign('rep_list',$rep_list);

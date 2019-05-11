@@ -98,14 +98,14 @@
                                     <td class="text-middle">{$vo.rep_id}</td>
                                     <td class="text-middle">{$vo.rep_name}</td>
                                     <td class="text-middle">{$vo.rep_username}</td>
-                                    <td class="text-middle">{$vo.agent_name}</td>
+                                    <td class="text-middle">{$vo.rep_name}</td>
                                     <td class="text-middle text-center">
                                         {switch name="$vo.rep_status"}
                                         {case value="1"}<span class="m-badge m-badge--success m-badge--wide">正在使用</span>{/case}
                                         {case value="2"}<span class="m-badge m-badge--danger m-badge--wide">已禁用</span>{/case}
                                         {/switch}
                                     </td>
-                                    <td class="text-middle">{$vo.agent_createTime}</td>
+                                    <td class="text-middle">{$vo.rep_create_time}</td>
                                     <td class="text-left">
                                         <a class="btn btn-sm btn-info" href="{:url('allocatingMachine',['rep_id'=>$vo.rep_id])}"><i class="fa fa-pencil-square-o"></i> 分配机器</a>
                                     </td>

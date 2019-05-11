@@ -67,25 +67,24 @@
                         <div class="m-portlet__head-tools">
                             <form action="" method="get" class="form-inline ">
                                 <div class="form-group mr-2">
-                                    <input type="text" name="name" id="name" class="form-control form-control-sm"  value="{$Think.get.name}" placeholder="加盟商呢称">
+                                    <input type="text" name="name" id="name" class="form-control form-control-sm" placeholder="加盟商呢称">
                                 </div>
                                 <div class="form-group mr-2">
-                                    <input type="text" name="username" id="username" class="form-control form-control-sm"  value="{$Think.get.username}" placeholder="加盟商登录名称">
+                                    <input type="text" name="username" id="username" class="form-control form-control-sm" placeholder="加盟商登录名称">
                                 </div>
                                 <div class="form-group mr-2">
                                     <select class="form-control form-control-sm" id="status" name="status">
-                                        <option value="0">状态</option>
-                                        <option value="1" {if condition="$Think.get.status == 1"}selected{/if}>使用中</option>
-                                        <option value="2" {if condition="$Think.get.status == 2"}selected{/if}>已禁用</option>
+                                        <option value="">状态</option>
+                                        <option value="1">使用中</option>
+                                        <option value="2">已禁用</option>
                                     </select>
                                 </div>
-                                <div class="form-group mr-2" style="display: none;">
+                                <div class="form-group mr-2">
                                     <select class="form-control form-control-sm" id="level" name="level">
-                                        <option value="0">级别</option>
-                                        <option value="1" {if condition="$Think.get.level == 1"}selected{/if}>品牌方</option>
-                                        <option value="2" {if condition="$Think.get.level == 2"}selected{/if}>省</option>
-                                        <option value="3" {if condition="$Think.get.level == 3"}selected{/if}>市</option>
-                                        <option value="4" {if condition="$Think.get.level == 4"}selected{/if}>区</option>
+                                        <option value="">选择级别</option>
+                                        <option value="1">省</option>
+                                        <option value="2">市</option>
+                                        <option value="3">区</option>
                                     </select>
                                 </div>
                                 <div class="form-group">
@@ -105,6 +104,7 @@
                                     <th class="text-center">联系人电话</th>
                                     <th class="text-center">登录账号</th>
                                     <th class="text-center">余额</th>
+                                    <th class="text-center">等级</th>
                                     <th class="text-center">状态</th>
                                     <th class="text-center">创建时间</th>
                                     <th class="text-center">操作</th>
@@ -119,12 +119,11 @@
                                     <td class="text-middle">{$vo.agent_mobile}</td>
                                     <td class="text-middle">{$vo.agent_username}</td>
                                     <td class="text-middle">{$vo.agent_balance}</td>
-                                    <td class="text-middle text-center" style="display: none">
+                                    <td class="text-middle text-center">
                                         {switch name="$vo.agent_level"}
-                                        {case value="1"}品牌方{/case}
-                                        {case value="2"}省{/case}
-                                        {case value="3"}市{/case}
-                                        {case value="4"}区{/case}
+                                        {case value="1"}省{/case}
+                                        {case value="2"}市{/case}
+                                        {case value="3"}区{/case}
                                         {/switch}
                                     </td>
                                     <td class="text-middle text-center">
@@ -134,7 +133,7 @@
                                         {/switch}
                                     </td>
                                     <td class="text-middle text-center">{$vo.agent_createTime}</td>
-                                    <td class="text-middle" nowrap="">
+                                    <td class="text-middle text-center" nowrap="">
                                         <span class="dropdown">
                                             <a href="#" class="btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill" data-toggle="dropdown" aria-expanded="false">
                                               <i class="la la-ellipsis-h"></i>
@@ -158,7 +157,7 @@
                                     </td>
                                 </tr>
                                 {/volist}
-                                {empty name="$agent_list"} <tr><td colspan="8" class="noDataHeight">没有数据</td></tr> {/empty}
+                                {empty name="$agent_list"} <tr><td colspan="10" class="noDataHeight">没有数据</td></tr> {/empty}
                                 </tbody>
                             </table>
                             <div class="dataTables_pager">
@@ -182,6 +181,13 @@
 </html>
 <script>
     nav_url = "{:url('agent/index')}";
+
+
+    setValue('name','{$Think.get.name}');
+    setValue('username','{$Think.get.username}');
+    setValue('status','{$Think.get.status}');
+    setValue('level','{$Think.get.level}');
+
 
     /**
      * 禁用
