@@ -72,7 +72,7 @@
                                 </div>
                             </div>
                             <div class="form-group m-form__group row">
-                                <label class="col-form-label col-lg-3 col-md-3 col-sm-12">logo</label>
+                                <label class="col-form-label col-lg-3 col-md-3 col-sm-12">logo(png格式)</label>
                                 <div class="col-lg-9 col-md-9 col-sm-12">
                                     <div class="form-group m-form__group row am-form-file">
                                         <div class="tpl-form-file-img">
@@ -114,7 +114,7 @@
 <!-- end::Body -->
 </html>
 <script>
-    nav_url = "{:url('conf/wechat_pay')}";
+    nav_url = "{:url('')}";
 
     $('#sub').click(function () {
         submit_form({
@@ -181,7 +181,7 @@
                 accept: {
                     title: 'Images',
                     extensions: 'png',
-                    mimeTypes: 'image/*'
+                    mimeTypes: 'image/png'
                 }
             });
 
