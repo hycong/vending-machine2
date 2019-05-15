@@ -24,9 +24,17 @@ class Adver extends Common
      */
     public function index()
     {
+        $name = input("name");
+        $type = input("type",0);
+        $map = [];
+        if(trim($name) != '') $map["resource_name"] = ["like","%$name%"];
+        if(intval($type) != 0) $map["resource_adver_type"] = ["eq",$type];
         $adver_list = Db::name("adver_resource")->order("resource_id DESC")
+            ->where($map)
             ->paginate($this->pageNum, false, ["query" => \request()->param()]);
         self::assign("adver_list", $adver_list);
+        self::assign("name",$name);
+        self::assign("type",$type);
         return self::fetch();
     }
 

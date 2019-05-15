@@ -17,14 +17,14 @@ function p($row = [],$isExit = true){
 
 /**
  * @param int $code
- * @param string $msg
+ * @param string $msgpp
  * @param array $data
  * @param string $url
  * @return array
  */
 function returnState($code = 100,$msg = '',$data = [],$url = '',$isJson = true){
     $data = [
-        'state' => $code,
+        'state'=> $code,
         'msg' => $msg,
         'data' => $data,
         'url' => $url,

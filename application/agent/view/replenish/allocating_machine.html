@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    {include file="../application/common/view/web/agent/head.html" title=" - 场地管理"}
+    <link rel="stylesheet" type="text/css" href="/resource/webUpload/webuploader.css">
+    <script src="/resource/web/assets/app/js/toastr.js"></script>
+</head>
+<!-- begin::Body -->
+<body class="m-page--fluid m--skin- m-content--skin-light2 m-header--fixed m-header--fixed-mobile m-aside-left--enabled m-aside-left--skin-dark m-aside-left--fixed m-aside-left--offcanvas m-footer--push m-aside--offcanvas-default">
+<!-- begin:: Page -->
+<div class="m-grid m-grid--hor m-grid--root m-page">
+    <!-- BEGIN: Header -->
+    {include file="../application/common/view/web/agent/header.html"}
+    <!-- END: Header -->
+    <!-- begin::Body -->
+    <div class="m-grid__item m-grid__item--fluid m-grid m-grid--ver-desktop m-grid--desktop m-body">
+        <!-- BEGIN: Left Aside -->
+        {include file="../application/common/view/web/agent/left.html"}
+        <!-- END: Left Aside -->
+        <div class="m-grid__item m-grid__item--fluid m-wrapper">
+            <div class="m-subheader ">
+                <div class="d-flex align-items-center">
+                    <div class="mr-auto">
+                        <h3 class="m-subheader__title m-subheader__title--separator">供货商管理</h3>
+                        <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
+                            <li class="m-nav__item m-nav__item--home">
+                                <a href="{:url('Index/index')}" class="m-nav__link m-nav__link--icon">
+                                    <i class="m-nav__link-icon la la-home"></i>
+                                </a>
+                            </li>
+                            <li class="m-nav__separator">-</li>
+                            <li class="m-nav__item">
+                                <a href="{:url('Replenish/index')}" class="m-nav__link">
+                                    <span class="m-nav__link-text">场地管理</span>
+                                </a>
+                            </li>
+                            <li class="m-nav__separator">-</li>
+                            <li class="m-nav__item">
+                                <a href="" class="m-nav__link">
+                                    <span class="m-nav__link-text">机器分配</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="m-content">
+                <div class="m-portlet">
+                    <div class="m-portlet__head">
+                        <div class="m-portlet__head-caption">
+                            <div class="m-portlet__head-title">
+                                <h3 class="m-portlet__head-text">机器分配</h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="m-portlet__body">
+                        <form class="m-form m-form--fit m-form--label-align-right" action="{:url('')}" method="post" id="form">
+                            <div class="m-portlet__body">
+                                <input type="hidden" name="rep_id" value="{$info.rep_id}">
+                                <div class="m-radio-inline">
+
+                                    {if condition="!$machineList"} <div class="text-center">没有机器，请先创建机器</div>{/if}
+                                </div>
+                                <table class="table table-striped- table-bordered table-hover table-checkable" id="m_table_1">
+                                    <thead>
+                                        <tr>
+                                            <th class="text-middle text-center">
+                                                <label class="m-checkbox m-checkbox--solid m-checkbox--success mb-0">
+                                                    <input type="checkbox" name="checkall">ID
+                                                    <span></span>
+                                                </label>
+                                            </th>
+                                            <th class="text-middle text-center">设备名称</th>
+                                            <th class="text-middle text-center">设备号</th>
+                                            <th class="text-middle text-center">设备投放地址</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="machine_list">
+                                    {volist name="machineList" id="vo"}
+                                    <tr>
+                                        <td class="text-middle text-center">
+                                            <label class="m-checkbox m-checkbox--solid m-checkbox--success mb-0">
+                                                <input type="checkbox" name="machine_id[]" value="{$vo.machine_id}" {if condition="$vo.machine_rep_id==$info.rep_id"}checked{/if}>{$vo.machine_id}
+                                                <span></span>
+                                            </label>
+
+                                        </td>
+                                        <td class="text-middle text-center">{$vo.machine_name}</td>
+                                        <td class="text-middle text-center">{$vo.machine_code}</td>
+                                        <td class="text-middle text-center">{$vo.machine_address}</td>
+                                    </tr>
+                                    {/volist}
+                                    {if condition="!$machineList"} <tr><td colspan="3" class="noDataHeight">没有机器，请先创建机器</td></tr> {/if}
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="m-portlet__foot m-portlet__foot--fit">
+                                <div class="m-form__actions m-form__actions">
+                                    <div class="row">
+                                        <div class="col-lg-9 ml-lg-auto">
+                                            <button type="button" id="sub" class="btn btn-info">确认并保存</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- end:: Body -->
+    <!-- begin::Footer -->
+    {include file="../application/common/view/web/agent/footer.html"}
+    <!-- end::Footer -->
+</div>
+<!-- end:: Page -->
+{include file="../application/common/view/web/agent/foot.html"}
+</body>
+<!-- end::Body -->
+</html>
+<script type="text/javascript" src="/resource/webUpload/webuploader.js"></script>
+<script>
+    nav_url = "{:url('Replenish/index')}";
+
+    /**
+     * 全选、全不选
+     */
+    $('input[name="checkall"]').on("click",function(){
+        if($(this).is(':checked')){
+            $('input[name="machine_id[]"]').prop("checked",true);
+            // $('input[name="checkbox"]').each(function(){
+            //     $(this).prop("checked",true);
+            // });
+        }else{
+            $('input[name="machine_id[]"]').prop("checked",false);
+            // $('input[name="checkbox"]').each(function(){
+            //     $(this).prop("checked",false);
+            // });
+        }
+    });
+
+    $('#sub').click(function () {
+        submit_form({
+            url: '{:url("allocatingMachine")}',
+            data: $('#form').serialize(),
+            fun: function (res) {
+                if(res.state == 200){
+                    Swal.fire({
+                        title: res.msg,
+                        type:'success',
+                        timer: 2000,
+                        onClose: () => {
+                            window.location.href = '{:url("index")}';
+                        }
+                    });
+                }else{
+                    Swal.fire({
+                        title: res.msg,
+                        type:'error',
+                    });
+                }
+            }
+        });
+    });
+</script>

@@ -62,48 +62,41 @@
                             </div>
                         </div>
                         <div class="m-portlet__head-tools">
-                            <ul class="m-portlet__nav">
-                                <li class="m-portlet__nav-item">
-
-                                </li>
-                            </ul>
+                            <form action="" method="get" class="form-inline ">
+                                <div class="form-group mr-2">
+                                    <input type="text" name="code" id="code" class="form-control form-control-sm m-input--solid"  value="{$Think.get.code}" placeholder="设备号">
+                                </div>
+                                <div class="form-group mr-2">
+                                    <select class="form-control form-control-sm m-input--solid" id="rep_id" name="rep_id">
+                                        <option value="0">投放场地</option>
+                                        {volist name="rep_list" id="rep"}
+                                        <option value="{$rep.rep_id}">{$rep.rep_name}</option>
+                                        {/volist}
+                                    </select>
+                                </div>
+                                <div class="form-group mr-2" style="display: none">
+                                    <select class="form-control form-control-sm m-input--solid" id="status" name="status">
+                                        <option value="0">状态</option>
+                                        <option value="1">使用中</option>
+                                        <option value="2">已禁用</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <input type="submit" class="btn btn-info btn-sm" name="supplier_mobile" value="搜索">
+                                </div>
+                            </form>
                         </div>
                     </div>
                     <div class="m-portlet__body">
-                        <form class="m-form m-form--fit m--margin-bottom-20" action="{:url('index')}" method="get">
-                            <div class="row m--margin-bottom-20">
-                                <div class="col-lg-3 m--margin-bottom-10-tablet-and-mobile">
-                                    <label>设备号:</label>
-                                    <input type="text" class="form-control m-input" name="code" value="{$code}" placeholder="设备号">
-                                </div>
-
-                                <div class="col-lg-3 m--margin-bottom-10-tablet-and-mobile">
-                                    <label>投放地址:</label>
-                                    <input type="text" class="form-control m-input" name="address" name="{$address}" placeholder="投放地址">
-                                </div>
-                            </div>
-                            <div class="m-separator m-separator--md m-separator--dashed"></div>
-                            <div class="row">
-                                <div class="col-lg-12">
-                                    <button class="btn btn-brand m-btn m-btn--icon" id="m_search">
-												<span>
-													<i class="la la-search"></i>
-													<span>搜索</span>
-												</span>
-                                    </button>
-                                </div>
-                            </div>
-                        </form>
                         <div class="dataTables_wrapper">
                             <table class="table table-striped- table-bordered table-hover table-checkable"
                                    id="m_table_1">
                                 <thead>
                                 <tr>
-                                    <th class="text-center">设备ID</th>
                                     <th class="text-center">设备名称</th>
                                     <th class="text-center">设备号</th>
                                     <th class="text-center">设备加盟商</th>
-                                    <th class="text-center">设备投放地址</th>
+                                    <th class="text-center">投放场地</th>
                                     <th class="text-center">设备状态</th>
                                     <th class="text-center">类型创建时间</th>
                                     <th class="text-center">操作</th>
@@ -112,11 +105,10 @@
                                 <tbody>
                                 {volist name="machine_list" id="vo"}
                                 <tr>
-                                    <td class="text-center">{$vo.machine_id}</td>
-                                    <td class="text-center">{$vo.machine_name}</td>
-                                    <td class="text-center">{$vo.machine_code}</td>
-                                    <td class="text-center">{$vo.agent_name|default='暂无'}</td>
-                                    <td class="text-center">{$vo.machine_address}</td>
+                                    <td class="text-middle">{$vo.machine_name}</td>
+                                    <td class="text-middle">{$vo.machine_code}</td>
+                                    <td class="text-middle">{$vo.agent_name|default='暂无'}</td>
+                                    <td class="text-middle">{$vo.rep_name}</td>
                                     <td class="text-center"> {switch name='vo.machine_online'}
                                         {case value="1"}<span class="m-badge  m-badge--success m-badge--wide">在线</span> {/case}
                                         {case value="2"}<span class="m-badge  m-badge--metal m-badge--wide">离线</span>  {/case}
@@ -163,5 +155,6 @@
 <!-- end::Body -->
 </html>
 <script>
+    setValue("rep_id","{$rep_id}");
     nav_url = "{:url('Machine/index')}";
 </script>

@@ -72,4 +72,30 @@ class AgentPath
         return true;
     }
 
+
+    /**
+     * 获取最上级ID
+     * @param $id
+     * @return int|mixed
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\ModelNotFoundException
+     * @throws \think\exception\DbException
+     */
+    public static function getLastParentAgent($id)
+    {
+        $agent = Db::name("agent")->where("agent_id",$id)->field("agent_level,agent_parent_id")->find();
+        $agent_id = 0;
+        switch ($agent["agent_level"]){
+            case "2":
+                $agent_id = Db::name("agent")->where("agent_id",$agent["agent_parent_id"])->value("agent_id");
+                break;
+            case "3":
+                $agent_parent_id = Db::name("agent")->where("agent_id",$agent["agent_parent_id"])->value("agent_parent_id");
+                $agent_id = Db::name("agent")->where("agent_id",$agent_parent_id)->value("agent_id");
+                break;
+        }
+        return $agent_id;
+    }
+
+
 }

@@ -11,7 +11,14 @@
             white-space: nowrap;
             text-overflow: ellipsis;
         }
-
+        .tdStatus{
+            width: 50px;
+            height: 40px;
+        }
+        .tdStatus2{
+            width: 60px;
+            height: 40px;
+        }
     </style>
 </head>
 <!-- begin::Body -->
@@ -133,32 +140,32 @@
                                     <td class="text-middle text-center">{$vo.o_machine}</td>
                                     <td class="text-middle text-center">{$vo.o_channel}</td>
                                     <td class="text-middle text-center">{$vo.o_user|default="--"}</td>
-                                    <td class="text-middle text-overflow" style="max-width: 100px;" title="{$vo.o_goods}">{$vo.o_goods}</td>
+                                    <td class="text-middle text-center">{$vo.o_goods}</td>
                                     <td class="text-middle text-center">{$vo.o_money}</td>
                                     <td class="text-middle text-center">
                                         {switch name="$vo.o_pay_type"}
-                                        {case value="1"}<span class="m-badge  m-badge--success m-badge--wide">微信支付</span>{/case}
-                                        {case value="2"}<span class="m-badge  m-badge--info m-badge--wide">支付宝支付</span>{/case}
-                                        {case value="3"}<span class="m-badge  m-badge--danger m-badge--wide">VIP支付</span>{/case}
-                                        {case value="4"}<span class="m-badge  m-badge--primary m-badge--wide">抽奖</span>{/case}
-                                        {case value="5"}<span class="m-badge  m-badge--accent m-badge--wide">秘钥兑换</span>{/case}
+                                        {case value="1"}<span class="m-badge  m-badge--success m-badge--wide tdStatus">微信支付</span>{/case}
+                                        {case value="2"}<span class="m-badge  m-badge--info m-badge--wide tdStatus2">支付宝支付</span>{/case}
+                                        {case value="3"}<span class="m-badge  m-badge--danger m-badge--wide tdStatus">VIP支付</span>{/case}
+                                        {case value="4"}<span class="m-badge  m-badge--primary m-badge--wide tdStatus">抽奖</span>{/case}
+                                        {case value="5"}<span class="m-badge  m-badge--accent m-badge--wide tdStatus">秘钥兑换</span>{/case}
                                         {/switch}
                                     </td>
-                                    <td class="text-middle text-center">{$vo.o_trade_no}</td>
-                                    <td class="text-middle text-center"><input type="text" class="show-mch-no" value="{$so.o_mch_no|default='--'}"></td>
+                                    <td class="text-middle text-center"><input type="text" class="show-mch-no" value="{$vo.o_trade_no|default='--'}" readonly></td>
+                                    <td class="text-middle text-center"><input type="text" class="show-mch-no" value="{$vo.o_mch_no|default='--'}" readonly></td>
                                     <td class="text-middle text-center">
                                         {switch name="$vo.o_pay_status"}
-                                        {case value="1"}<span class="m-badge  m-badge--success m-badge--wide" title="{$vo.o_error_remark}">支付成功</span>{/case}
-                                        {case value="2"}<span class="m-badge  m-badge--danger m-badge--wide" title="{$vo.o_error_remark}">支付失败</span>{/case}
-                                        {case value="4"}<span class="m-badge  m-badge--accent m-badge--wide" title="{$vo.o_error_remark}">无需支付</span>{/case}
-                                        {case value="5"}<span class="m-badge  m-badge--metal m-badge--wide" title="{$vo.o_error_remark}">已退款</span>{/case}
+                                        {case value="1"}<span class="m-badge  m-badge--success m-badge--wide tdStatus" title="{$vo.o_error_remark}">支付成功</span>{/case}
+                                        {case value="2"}<span class="m-badge  m-badge--danger m-badge--wide tdStatus" title="{$vo.o_error_remark}">支付失败</span>{/case}
+                                        {case value="4"}<span class="m-badge  m-badge--accent m-badge--wide tdStatus" title="{$vo.o_error_remark}">无需支付</span>{/case}
+                                        {case value="5"}<span class="m-badge  m-badge--metal m-badge--wide tdStatus" title="{$vo.o_error_remark}">已退款</span>{/case}
                                         {/switch}
                                     </td>
                                     <td class="text-middle text-center">
                                         {switch name="$vo.o_out_status"}
-                                        {case value="1"}<span class="m-badge  m-badge--success m-badge--wide">出货成功</span>{/case}
-                                        {case value="2"}<span class="m-badge  m-badge--danger m-badge--wide">出货失败</span>{/case}
-                                        {case value="3"}<span class="m-badge  m-badge--metal m-badge--wide">未出货</span>{/case}
+                                        {case value="1"}<span class="m-badge  m-badge--success m-badge--wide tdStatus">出货成功</span>{/case}
+                                        {case value="2"}<span class="m-badge  m-badge--danger m-badge--wide tdStatus">出货失败</span>{/case}
+                                        {case value="3"}<span class="m-badge  m-badge--metal m-badge--wide tdStatus">未出货</span>{/case}
                                         {/switch}
                                         {if condition="$vo.o_error_remark != ''"}
                                         <i class="am-icon-warning" title="{$so.o_error_remark}"></i>
@@ -196,7 +203,6 @@
     $("select[name='payType']").val("{$payType}");
     $("select[name='payStatus']").val("{$payStatus}");
     $("select[name='outStatus']").val("{$outStatus}");
-
 </script>
 </body>
 <!-- end::Body -->

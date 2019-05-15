@@ -1,0 +1,84 @@
+<meta charset="utf-8" />
+<title>{$webconfig.title|default="自动售货机管理后台"}[title]</title>
+<meta name="description" content="Latest updates and statistic charts">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no">
+
+<!--begin::Web font -->
+<script src="/resource/web/assets/app/js/webfontloader.js"></script>
+<style>
+    ::-webkit-scrollbar {
+        width: 14px;
+        height: 14px;
+    }
+
+    ::-webkit-scrollbar-track,
+    ::-webkit-scrollbar-thumb {
+        border-radius: 999px;
+        border: 5px solid transparent;
+    }
+
+    ::-webkit-scrollbar-track {
+        box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.2) inset;
+    }
+
+    ::-webkit-scrollbar-thumb {
+        min-height: 20px;
+        background-clip: content-box;
+        box-shadow: 0 0 0 5px rgba(0, 0, 0, 0.2) inset;
+    }
+
+    ::-webkit-scrollbar-corner {
+        background: transparent;
+    }
+</style>
+<script>
+    WebFont.load({
+        google: {"families":["Poppins:300,400,500,600,700","Roboto:300,400,500,600,700"]},
+        active: function() {
+            sessionStorage.fonts = true;
+        }
+    });
+
+</script>
+
+<!--end::Web font -->
+
+<!--begin::Global Theme Styles -->
+<link href="/resource/web/assets/vendors/base/vendors.bundle.css" rel="stylesheet" type="text/css" />
+
+<!--RTL version:<link href="assets/vendors/base/vendors.bundle.rtl.css" rel="stylesheet" type="text/css" />-->
+<link href="/resource/web/assets/demo/default/base/style.bundle.css" rel="stylesheet" type="text/css" />
+
+<!--RTL version:<link href="assets/demo/default/base/style.bundle.rtl.css" rel="stylesheet" type="text/css" />-->
+
+<!--end::Global Theme Styles -->
+
+<!--end::Page Vendors Styles -->
+<link rel="shortcut icon" href="/favicon.ico" />
+<script src="/resource/js/jquery-2.1.4.js" type="text/javascript"></script>
+<script>
+    var nav_url = '';
+    if(nav_url == '') nav_url = '{:url("")}';
+    $(function () {
+        var nav_Dom = $('a[href="'+ nav_url +'"]');
+        nav_Dom.parent('li').addClass('m-menu__item--active');
+        nav_Dom.parent().parent().parent().parent().addClass('m-menu__item--open');
+    });
+
+    // 设置默认值
+    function setValue(name,value) {
+        let this_this = $('[name="'+ name +'"]');
+        let type = this_this.attr('type');
+        switch (type) {
+            case 'checkbox':
+                $('[name="'+ name +'"][value="'+ value +'"]').attr('checked',true);
+                break;
+            case 'radio':
+                $('[name="'+ name +'"][value="'+ value +'"]').prop('checked',true);
+                break;
+            default:
+                this_this.val(value);
+                break;
+        }
+    }
+</script>

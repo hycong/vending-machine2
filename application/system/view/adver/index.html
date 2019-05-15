@@ -64,82 +64,109 @@
                                 </li>
                             </ul>
                         </div>
+                        <div class="m-portlet__head-tools">
+                            <form action="" method="get" class="form-inline ">
+                                <div class="form-group mr-2">
+                                    <input type="text" name="name" id="name" class="form-control form-control-sm m-input--solid"  value="{$name}" placeholder="广告名称">
+                                </div>
+                                <div class="form-group mr-2">
+                                    <select class="form-control form-control-sm m-input--solid" id="type" name="type">
+                                        <option value="0">广告类型</option>
+                                        <option value="1">图片</option>
+                                        <option value="2">视频</option>
+                                        <option value="3">图片 + 视频</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <input type="submit" class="btn btn-info btn-sm" name="supplier_mobile" value="搜索">
+                                </div>
+                            </form>
+                        </div>
                     </div>
                     <div class="m-portlet__body">
                         <div class="tab-content" style="overflow: hidden">
                             <div class="m-portlet__body">
-                                <div class="m-pricing-table-1">
-                                    <div class="m-pricing-table-1__items row">
-                                        {volist name="adver_list" id="adv"}
-                                        <div class="m-pricing-table-1__item col-lg-3 parentResource">
-                                            <div class="m-pricing-table-1__visual">
-                                                <span class="m-pricing-table-1__icon m--font-bran">
-														{switch name="adv.resource_adver_type"}
-                                                        {case value="1"}<img src="{$adv.resource_img_path}" width="150" height="100" alt="{$adv.resource_name}"/>{/case}
+
+                                <!--begin::Content-->
+                                {volist name="adver_list" id="adv"}
+                                <div class="tab-content">
+                                    <div class="tab-pane active" id="m_widget5_tab1_content" aria-expanded="true">
+
+                                        <!--begin::m-widget5-->
+                                        <div class="m-widget5">
+                                            <div class="m-widget5__item">
+                                                <div class="m-widget5__content">
+                                                    <div class="m-widget5__pic">
+                                                        {switch name="adv.resource_adver_type"}
+                                                        {case value="1"}
+                                                            <img src="{$adv.resource_img_path}" style="width: 150px;height: 100px;" alt="{$adv.resource_name}"/>
+                                                        {/case}
                                                         {case value="2"}
-                                                    <video class="videoContent" controls poster="{$adv.resource_video_path}"  width="150" height="100">
-                                                        <source src="{$adv.resource_video_path}" type="video/mp4"/>
-                                                    </video>
-                                                    <!--<video src="{$adv.resource_video_path}" width="150" height="100" alt="{$adv.resource_name}" controls></video>-->
-                                                    {/case}
+                                                            <video class="videoContent" controls poster="{$adv.resource_video_path}" style="width: 150px;height: 100px;">
+                                                                <source src="{$adv.resource_video_path}" type="video/mp4"/>
+                                                            </video>
+                                                        <!--<video src="{$adv.resource_video_path}" width="150" height="100" alt="{$adv.resource_name}" controls></video>-->
+                                                        {/case}
                                                         {default}
-                                                            <img src="{$adv.resource_img_path}" width="150" height="100" alt="{$adv.resource_name}"/>
-                                                        {/switch}</span>
-                                                </span>
-                                            </div>
-                                            <span class="m-pricing-table-1__price" style="margin-top: 20rem">
-                                                <!--{$adv.resource_name}-->
-                                            </span>
-                                            <h2 class="m-pricing-table-1__subtitle">
-                                                名称 : <span class="m-widget5__info-date m--font-info">{$adv.resource_name}</span>
-                                            </h2>
-                                            <h2 class="m-pricing-table-1__subtitle">
-                                                投放类型 : <span class="m-widget5__info-date m--font-info"> {switch name="adv.resource_put_type"}
+                                                            <img src="{$adv.resource_img_path}" style="width: 150px;height: 100px;"  alt="{$adv.resource_name}"/>
+                                                        {/switch}
+                                                    </div>
+                                                    <div class="m-widget5__section">
+                                                        <h4 class="m-widget5__title">
+                                                            名称 : <span class="m-widget5__info-date m--font-info">{$adv.resource_name}</span>
+                                                        </h4>
+                                                        <h4 class="m-widget5__title">
+                                                            投放类型 : <span class="m-widget5__info-date m--font-info"> {switch name="adv.resource_put_type"}
                                                                             {case value="1"}不分屏机器{/case}
                                                                             {case value="2"}分屏机器{/case}
                                                          {/switch}</span>
-                                            </h2>
-                                            <h2 class="m-pricing-table-1__subtitle">
-                                                素材类型 : <span class="m-widget5__info-date m--font-info"> {switch name="adv.resource_adver_type"}
+                                                        </h4>
+                                                        <h4 class="m-widget5__title">
+                                                            素材类型 : <span class="m-widget5__info-date m--font-info"> {switch name="adv.resource_adver_type"}
                                                                             {case value="1"}图片{/case}
                                                                             {case value="2"}视频{/case}
                                                                             {default}图片 + 视频
                                                           {/switch}</span>
-                                            </h2>
-                                            <h2 class="m-pricing-table-1__subtitle">
-                                                素材状态 : {switch name="adv.resource_status"}
-                                                {case value="1"}<span class="m-widget5__info-date m--font-success">使用中</span>{/case}
-                                                {case value="2"}<span class="m-widget5__info-date m--font-danger">已下架</span>{/case}
-                                                {default}
-                                                {/switch}
-                                            </h2>
-                                            <!--<span class="m-pricing-table-1__description"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">-->
-												<!--Lorem ipsum aret </font></font><br><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">-->
-												<!--sed do </font><font style="vertical-align: inherit;">eiusmod </font></font><br><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">-->
-												<!--magna siad ali-->
-											<!--</font></font></span>-->
-                                            <div class="m-pricing-table-1__btn">
-                                                <div class="btn-group dropup">
-                                                    <button type="button btn-accent" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                        操作
-                                                    </button>
-                                                    <div class="dropdown-menu" x-placement="top-start" style="position: absolute; transform: translate3d(0px, -178px, 0px); top: 0px; left: 0px; will-change: transform;">
-                                                        {switch name="adv.resource_status"}
-                                                        {case value="1"}<a class="dropdown-item" href="javascript:void(0);"
-                                                                           onclick="Resource(this,'{$adv.resource_id}','{$adv.resource_name}',1)"><i class="flaticon-download"></i> 下架素材 </a>{/case}
-                                                        {case value="2"}<a class="dropdown-item" href="javascript:void(0);"
-                                                                           onclick="Resource(this,'{$adv.resource_id}','{$adv.resource_name}',2)"><i class="fa fa-file-upload"></i> 上架素材 </a>{/case}
+                                                        </h4>
+                                                        <h4 class="m-widget5__title" id="status_{$adv.resource_id}">
+                                                            素材状态 : {switch name="adv.resource_status"}
+                                                            {case value="1"}<span class="m-badge  m-badge--success m-badge--wide">使用中</span>{/case}
+                                                            {case value="2"}<span class="m-badge  m-badge--danger m-badge--wide">已下架</span>{/case}
+                                                            {default}
+                                                            {/switch}
+                                                        </h4>
+                                                    </div>
+                                                </div>
+                                                <div class="m-widget5__content" style="z-index: 100;">
+                                                    <div class="m-widget5__stats1">
+                                                        <span class="m-widget5__sales">
+                                                            <div class="dropdown">
+																	<button class="btn btn-info dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+																		操作
+																	</button>
+																	<div class="dropdown-menu" aria-labelledby="dropdownMenu2" x-placement="bottom-start" style="position: absolute;will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 41px, 0px);">
+																		{switch name="adv.resource_status"}
+                                                            {case value="1"}<a class="dropdown-item" href="javascript:void(0);"
+                                                                               onclick="Resource(this,'{$adv.resource_id}','{$adv.resource_name}',1)"><i class="flaticon-download"></i> 下架素材 </a>{/case}
+                                                            {case value="2"}<a class="dropdown-item" href="javascript:void(0);"
+                                                                               onclick="Resource(this,'{$adv.resource_id}','{$adv.resource_name}',2)"><i class="fa fa-cloud-upload"></i> 上架素材 </a>{/case}
 
-                                                        {/switch}
+                                                            {/switch}
 
-                                                        <a class="dropdown-item" href="javascript:void(0);" onclick="delAdver(this,'{$adv.resource_id}','{$adv.resource_name}')"><i class="flaticon-delete"></i> 删除素材 </a>
+                                                            <a class="dropdown-item" href="javascript:void(0);" onclick="delAdver(this,'{$adv.resource_id}','{$adv.resource_name}')"><i class="flaticon-delete"></i> 删除素材 </a>
+																	</div>
+                                                            </div>
+                                                        </span>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        {/volist}
+
+                                        <!--end::m-widget5-->
                                     </div>
                                 </div>
+                                {/volist}
+                                <!--end::Content-->
                             </div>
                             <div class="dataTables_wrapper">
                             <div class="dataTables_pager">
@@ -186,6 +213,7 @@
 <script src="/resource/web/assets/app/js/dashboard.js" type="text/javascript"></script>
 <!--end::Page Scripts -->
 <script>
+    setValue("type",'{$type}');
     nav_url = "{:url('adver/index')}";
     /**
      * 删除素材
@@ -244,14 +272,14 @@
            var text = '确定下架 “'+name+'” 素材？';
            var errorText = '下架素材失败，网络异常';
            var cancelText = '已取消下架素材';
-           var updateText = '素材状态 : <span class="m-widget5__info-date m--font-danger">已下架</span>';
+           var updateText = '素材状态 : <span class="m-badge  m-badge--danger m-badge--wide">已下架</span>';
            var newNode = '<a class="dropdown-item" href="javascript:void(0);"  onclick="Resource(this,'+id+',\''+name+'\',2);"><i class="flaticon-download"></i> 上架素材 </a>';
         }else{
             var title = '上架素材';
             var text = '确定上架 "'+name+'" 素材？';
             var errorText = '上架素材失败，网络异常';
             var cancelText = '已取消上架素材';
-            var updateText = '素材状态 : <span class="m-widget5__info-date m--font-success">使用中</span>';
+            var updateText = '素材状态 : <span class="m-badge  m-badge--success m-badge--wide">使用中</span>';
             var newNode = '<a class="dropdown-item" href="javascript:void(0);" onclick="Resource(this,'+id+',\''+name+'\',1);"><i class="flaticon-download"></i> 下架素材 </a>';
         }
         Swal.fire({
@@ -275,8 +303,8 @@
                             // node.text(updateText);
                             // oldNode.removeChild(node);
                             $(node).remove();
-                            $("#resourceStatus_"+id).empty();
-                            $("#resourceStatus_"+id).append(updateText);
+                            $("#status_"+id).empty();
+                            $("#status_"+id).append(updateText);
                             nextNode.before(newNode);
                             toastr.success(resData["msg"]);
                         }else{

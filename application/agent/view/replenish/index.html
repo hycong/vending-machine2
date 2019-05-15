@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    {include file="../application/common/view/web/agent/head.html" title=" - 场地管理"}
+    <style>
+        input[type=text].show-mch-no {
+            border: none;
+            background-color: transparent;
+            width: 83px;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
+
+    </style>
+</head>
+<!-- begin::Body -->
+<body class="m-page--fluid m--skin- m-content--skin-light2 m-header--fixed m-header--fixed-mobile m-aside-left--enabled m-aside-left--skin-dark m-aside-left--fixed m-aside-left--offcanvas m-footer--push m-aside--offcanvas-default">
+<!-- begin:: Page -->
+<div class="m-grid m-grid--hor m-grid--root m-page">
+    <!-- BEGIN: Header -->
+    {include file="../application/common/view/web/agent/header.html"}
+    <!-- END: Header -->
+    <!-- begin::Body -->
+    <div class="m-grid__item m-grid__item--fluid m-grid m-grid--ver-desktop m-grid--desktop m-body">
+        <!-- BEGIN: Left Aside -->
+        {include file="../application/common/view/web/agent/left.html"}
+        <!-- END: Left Aside -->
+        <div class="m-grid__item m-grid__item--fluid m-wrapper">
+            <div class="m-subheader ">
+                <div class="d-flex align-items-center">
+                    <div class="mr-auto">
+                        <h3 class="m-subheader__title m-subheader__title--separator">场地管理</h3>
+                        <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
+                            <li class="m-nav__item m-nav__item--home">
+                                <a href="{:url('Index/index')}" class="m-nav__link m-nav__link--icon">
+                                    <i class="m-nav__link-icon la la-home"></i>
+                                </a>
+                            </li>
+                            <li class="m-nav__separator">-</li>
+                            <li class="m-nav__item">
+                                <a href="{:url('Replenish/index')}" class="m-nav__link">
+                                    <span class="m-nav__link-text">场地管理</span>
+                                </a>
+                            </li>
+                            <li class="m-nav__separator">-</li>
+                            <li class="m-nav__item">
+                                <a href="" class="m-nav__link">
+                                    <span class="m-nav__link-text">场地列表</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="m-content">
+                <div class="m-portlet">
+                    <div class="m-portlet__head">
+                        <div class="m-portlet__head-caption">
+<!--                            <a href="{:url('createReplenish')}" class="btn btn-info m-btn m-btn&#45;&#45;icon m-btn&#45;&#45;wide m-btn&#45;&#45;sm m&#45;&#45;margin-right-10">-->
+<!--                                <span>-->
+<!--                                    <i class="fa fa-plus"></i>-->
+<!--                                    <span>创建加盟商</span>-->
+<!--                                </span>-->
+<!--                            </a>-->
+                        </div>
+                        <div class="m-portlet__head-tools">
+                            <form action="" method="get" class="form-inline ">
+                                <div class="form-group mr-2">
+                                    <input type="text" name="name" id="name" class="form-control form-control-sm"  value="{$Think.get.name}" placeholder="场地名称">
+                                </div>
+                                <div class="form-group mr-2">
+                                    <input type="text" name="username" id="username" class="form-control form-control-sm"  value="{$Think.get.username}" placeholder="联系电话">
+                                </div>
+                                <div class="form-group">
+                                    <input type="submit" class="btn btn-info btn-sm" name="supplier_mobile" value="搜索">
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="m-portlet__body">
+                        <div class="dataTables_wrapper">
+                            <table class="table table-striped m-table table-hover" id="m_table_1">
+                                <thead>
+                                <tr>
+                                    <th class="text-center text-middle">场地ID</th>
+                                    <th class="text-center text-middle">场地名称</th>
+                                    <th class="text-center text-middle">联系电话</th>
+                                    <th class="text-center text-middle">状态</th>
+                                    <th class="text-center text-middle">创建时间</th>
+                                    <th class="text-center text-middle">操作</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {volist name="$rep_list" id="vo"}
+                                <tr class="">
+                                    <td class="text-center text-middle">{$vo.rep_id}</td>
+                                    <td class="text-center text-middle">{$vo.rep_name}</td>
+                                    <td class="text-center text-middle">{$vo.rep_username}</td>
+                                    <td class="text-middle text-center">
+                                        {switch name="$vo.rep_status"}
+                                        {case value="1"}<span class="m-badge m-badge--success m-badge--wide">正在使用</span>{/case}
+                                        {case value="2"}<span class="m-badge m-badge--danger m-badge--wide">已禁用</span>{/case}
+                                        {/switch}
+                                    </td>
+                                    <td class="text-center text-middle">{$vo.rep_create_time}</td>
+                                    <td class="text-center text-middle">
+                                        <a class="btn btn-sm btn-info" href="{:url('allocatingMachine',['rep_id'=>$vo.rep_id])}"><i class="fa fa-pencil-square-o"></i> 分配机器</a>
+                                    </td>
+                                </tr>
+                                {/volist}
+                                {empty name="$rep_list"} <tr><td colspan="7" class="noDataHeight">没有数据</td></tr> {/empty}
+                                </tbody>
+                            </table>
+                            <div class="dataTables_pager">
+                                <div class="dataTables_paginate paging_simple_numbers">{$rep_list->render()}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- end:: Body -->
+    <!-- begin::Footer -->
+    {include file="../application/common/view/web/agent/footer.html"}
+    <!-- end::Footer -->
+</div>
+<!-- end:: Page -->
+{include file="../application/common/view/web/agent/foot.html"}
+</body>
+<!-- end::Body -->
+</html>
+<script>
+    nav_url = "{:url('replenish/index')}";
+
+
+</script>

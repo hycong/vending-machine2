@@ -25,7 +25,7 @@ class Goods extends Common
         $goodsType = input("goodsType",'1');
         $check = [];
         $goodsName = input("goods_name");
-        $goodsId = input("goods_id");
+        $goodsId = input("goods_id",0);
         if(trim($goodsName) != ''){
             $check["goods_name"] = ["like","%$goodsName%"];
         }

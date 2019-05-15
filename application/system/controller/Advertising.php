@@ -22,8 +22,10 @@ class Advertising extends Common
     public function index()
     {
         $code = input("code");
+        $name = input("name");
         $check = [];
         if(trim($code) != '') $check['m.machine_code']=['like',"%$code%"];
+        if(trim($name) != '') $check['ar.resource_name']=['like',"%$name%"];
         $putAdverList = Db::name("adver_put")
             ->alias('put')
             ->join("adver_resource ar",'ar.resource_id = put.put_adver_id','left')
@@ -34,6 +36,7 @@ class Advertising extends Common
             ->paginate($this->pageNum,false,['query'=>\request()->param()]);
         self::assign("putAdverList",$putAdverList);
         self::assign('code',$code);
+        self::assign('name',$name);
         return self::fetch();
     }
 

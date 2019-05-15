@@ -6,7 +6,7 @@
  * Time: 11:27
  */
 
-namespace app\agent\validate;
+namespace app\supplier\validate;
 
 
 use think\Validate;

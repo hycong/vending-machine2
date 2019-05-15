@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh">
 <head>
-    {include file="../application/common/view/web/agent/head.html" title=" - 商品管理"}
+    {include file="../application/common/view/web/supplier/head.html" title=" - 商品管理"}
     <style>
         input[type=text].show-mch-no {
             border: none;
@@ -19,12 +19,12 @@
 <!-- begin:: Page -->
 <div class="m-grid m-grid--hor m-grid--root m-page">
     <!-- BEGIN: Header -->
-    {include file="../application/common/view/web/agent/header.html"}
+    {include file="../application/common/view/web/supplier/header.html"}
     <!-- END: Header -->
     <!-- begin::Body -->
     <div class="m-grid__item m-grid__item--fluid m-grid m-grid--ver-desktop m-grid--desktop m-body">
         <!-- BEGIN: Left Aside -->
-        {include file="../application/common/view/web/agent/left.html"}
+        {include file="../application/common/view/web/supplier/left.html"}
         <!-- END: Left Aside -->
         <div class="m-grid__item m-grid__item--fluid m-wrapper">
             <div class="m-subheader ">
@@ -58,18 +58,12 @@
                     <div class="m-portlet__head">
                         <div class="m-portlet__head-caption">
                             <div class="m-portlet__head-tools">
-                                <ul class="nav nav-pills nav-pills--brand m-nav-pills--align-right m-nav-pills--btn-pill m-nav-pills--btn-sm" role="tablist">
-                                    <li class="nav-item m-tabs__item">
-                                        <a class="nav-link m-tabs__link" id="publicGoods">
-                                            公共商品库
-                                        </a>
-                                    </li>
-                                    <li class="nav-item m-tabs__item">
-                                        <a class="nav-link m-tabs__link" id="supplierGoods">
-                                            供货商商品库
-                                        </a>
-                                    </li>
-                                </ul>
+                                <a href="{:url('create_goods')}" class="btn btn-info m-btn m-btn--icon m-btn--wide m-btn--sm m--margin-right-10">
+                                <span>
+                                    <i class="fa fa-plus"></i>
+                                    <span>创建商品</span>
+                                </span>
+                                </a>
                             </div>
                         </div>
                         <div class="m-portlet__head-tools">
@@ -79,7 +73,11 @@
                                     <input type="text" class="form-control form-control-sm" name="goods_name" value="{$Think.get.goods_name}" placeholder="商品名称">
                                 </div>
                                 <div class="form-group mr-2">
-                                    <input type="text" class="form-control form-control-sm" name="goods_id" value="{$Think.get.goods_id}" placeholder="商品ID">
+                                    <select class="form-control form-control-sm m-input--solid" id="status" name="status">
+                                        <option value="0">状态</option>
+                                        <option value="1">已上架</option>
+                                        <option value="2">已下架</option>
+                                    </select>
                                 </div>
                                 <div class="form-group">
                                     <input type="submit" class="btn btn-info btn-sm" id="goodsSearch"  value="搜索">
@@ -92,20 +90,18 @@
                             <table class="table table-striped m-table table-hover" id="m_table_1">
                                 <thead>
                                 <tr>
-                                    <th class="text-center">商品ID</th>
                                     <th class="text-center">商品名称</th>
                                     <th class="text-center">商品图片</th>
                                     <th class="text-center">商品价格</th>
-                                    <th class="text-center">商品描述</th>
+                                    <th class="">商品描述</th>
                                     <th class="text-center">状态</th>
                                     <th class="text-center">创建时间</th>
-                                    <th class="text-center">操作</th>
+                                    <th class="">操作</th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                 {volist name="$goodsList" id="vo"}
                                 <tr class="">
-                                    <td class="text-middle text-center">{$vo.goods_id}</td>
                                     <td class="text-middle text-center">{$vo.goods_name}
                                         {eq name="$vo.goods_type" value=""}
                                         {else/}
@@ -114,16 +110,16 @@
                                     </td>
                                     <td class="text-middle text-center"><img src="{$vo.goods_pic}" alt="{$vo.goods_name}" width="30px" height="30px"></td>
                                     <td class="text-middle text-center">{$vo.goods_price}</td>
-                                    <td class="text-middle text-center">{$vo.goods_desc}</td>
+                                    <td class="text-middle">{$vo.goods_desc}</td>
                                     <td class="text-middle text-center">
                                         {switch name="$vo.goods_status"}
                                         {case value="1"}<span class="m-badge  m-badge--success m-badge--wide">在售</span>{/case}
-                                        {case value="2"}<span class="m-badge  m-badge--metal m-badge--wide">在售</span>{/case}
+                                        {case value="2"}<span class="m-badge  m-badge--metal m-badge--wide">已下架</span>{/case}
                                         {/switch}
                                     </td>
                                     <td class="text-middle text-center">{$vo.goods_createTime}</td>
-                                    <td class="text-middle text-center">
-                                            <div class="btn-group btn-group-sm">
+                                    <td class="text-middle">
+                                            <div class=" m-demo__preview m-demo__preview--btn">
                                                 {switch name="$vo.goods_status"}
                                                 {case value="1"}
                                                 <a href="javascript:void(0);" onclick="down_goods('{$vo.goods_id}')"
@@ -132,8 +128,12 @@
                                                 </a>
                                                 {/case}
                                                 {case value="2"}
-                                                <a href="javascript:void(0);" onclick="up_goods('{$vo.goods_id}')"
+                                                <a href="{:url('edit_goods',['goods_id'=>$vo['goods_id']])}"
                                                    class="btn btn-info m-btn--wide btn-sm">
+                                                    <span class="fa fa-edit"></span>编辑
+                                                </a>
+                                                <a href="javascript:void(0);" onclick="up_goods('{$vo.goods_id}')"
+                                                   class="btn btn-accent m-btn--wide btn-sm">
                                                     <span class="fa fa-cloud-upload"></span>上架
                                                 </a>
                                                 {/case}
@@ -155,40 +155,19 @@
     </div>
     <!-- end:: Body -->
     <!-- begin::Footer -->
-    {include file="../application/common/view/web/agent/footer.html"}
+    {include file="../application/common/view/web/supplier/footer.html"}
     <!-- end::Footer -->
 </div>
 <!-- end:: Page -->
-{include file="../application/common/view/web/agent/foot.html"}
+{include file="../application/common/view/web/supplier/foot.html"}
 </body>
 <!-- end::Body -->
 </html>
 <script>
     nav_url = "{:url('Goods/index')}";
+    setValue("status","{$status}");
     $(function () {
-        var goodsType = "{$goodsType}";
-        $("input[name='goodsType']").val(goodsType);
-        if(goodsType == 1){
-            $("#publicGoods").addClass("active");
-            $("#supplierGoods").removeClass("active");
-        }else{
-            $("#publicGoods").removeClass("active");
-            $("#supplierGoods").addClass("active");
-        }
 
-        $("#publicGoods").click(function () {
-            $("#supplierGoods").removeClass("active");
-            $("#publicGoods").addClass("active");
-            $("input[name='goodsType']").val(1);
-            $("#goodsSearch").click();
-        });
-
-        $("#supplierGoods").click(function () {
-            $("input[name='goodsType']").val(2);
-            $("#publicGoods").removeClass("active");
-            $("#supplierGoods").addClass("active");
-            $("#goodsSearch").click();
-        });
     });
     /**
      * 下架

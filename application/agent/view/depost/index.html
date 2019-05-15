@@ -58,12 +58,13 @@
                     </div>
                     <div class="m-portlet__body">
                         <div class="dataTables_wrapper">
-                            <table class="table table-striped- table-bordered table-hover table-checkable">
+                            <table class="table table-striped m-table table-hover" id="m_table_1">
                                 <thead>
                                 <tr>
                                     <th  class="text-center text-middle">提现时间</th>
                                     <th  class="text-center text-middle">提现金额</th>
-                                    <th class="text-center text-middle">提现手续费</th>
+                                    <th  class="text-center text-middle">提现手续费</th>
+                                    <th  class="text-center text-middle">税收比例</th>
                                     <th  class="text-center text-middle">提现银行</th>
                                     <th  class="text-center text-middle">提现账号</th>
                                     <th  class="text-center text-middle">提现人</th>
@@ -79,7 +80,8 @@
                                 <tr class="extract_box_{$vo.extract_id}">
                                     <td class="text-center text-middle">{$vo.extract_time}</td>
                                     <td class="text-center text-middle">{$vo.extract_money|floatval}</td>
-                                    <td class="text-center text-middle">{$vo.extract_tax_number}%({$vo.extract_tax}元)</td>
+                                    <td class="text-center text-middle">{$vo.extract_tax}%({$vo.extract_tax_money}元)</td>
+                                    <td class="text-center text-middle">{$vo.extract_taxes_dues}%({$vo.extract_taxes_dues_money}元)</td>
                                     <td class="text-center text-middle">{$vo.extract_bank}</td>
                                     <td class="text-center text-middle">{$vo.extract_card}</td>
                                     <td class="text-center text-middle">{$vo.extract_name}</td>
@@ -101,9 +103,8 @@
                                                     <span class="am-icon-pencil-square-o"></span> 撤销提现 </a>{/case}
                                                 {case value="2"}
                                                 <a href="javascript:void(0);"
-                                                   onclick="depositDetail(this)" data-toggle="modal" data-target="#depositDetail"
-                                                   data-extract_tax_number = '{$vo.extract_tax_number}' data-extract_remark = '{$vo.extract_remark}' data-extract_result_remark='{$vo.extract_result_remark}'
-                                                   data-extract_deal_time='{$vo.extract_deal_time}' data-extract_time="{$vo.extract_time}"
+                                                   onclick="depositDetail(this)" data-toggle="modal" data-target="#depositDetail" data-extract_result_remark='{$vo.extract_result_remark}'
+                                                   data-extract_deal_time='{$vo.extract_deal_time}'
                                                    class="btn btn-info m-btn--wide btn-sm"> <span class="am-icon-pencil-square-o"></span> 详情
                                                 </a>
                                                 {/case}
@@ -146,13 +147,13 @@
                     <div class="modal-body">
                         <div class="m-portlet__body">
                             <div class="form-group m-form__group row">
-                                <label for="extractStatus" class="col-2 col-form-label">处理时间:</label>
+                                <label for="extractDealTime" class="col-2 col-form-label">处理时间:</label>
                                 <div class="col-10" >
                                     <input type="text" class="form-control m-input m-input--solid" readonly id="extractDealTime">
                                 </div>
                             </div>
                             <div class="form-group m-form__group row">
-                                <label for="extractStatus" class="col-2 col-form-label">处理意见:</label>
+                                <label for="extractResultRemark" class="col-2 col-form-label">处理意见:</label>
                                 <div class="col-10" >
                                     <textarea class="form-control m-input m-input--solid" id="extractResultRemark" rows="3" readonly></textarea>
                                 </div>

@@ -6,7 +6,7 @@
  * Time: 10:53
  */
 
-namespace app\agent\controller;
+namespace app\supplier\controller;
 
 
 use think\Controller;
@@ -27,20 +27,18 @@ class Login extends Controller
             // 验证失败 输出错误信息
             return returnState(100,$result);
         }
-        $user = Db::name('agent')->where('agent_username',$post_data["username"])->find();
+        $user = Db::name('supplier')->where('supplier_mobile',$post_data["username"])->find();
         if(!$user){
             return returnState(100,'用户名不存在，请重新输入',$post_data);
-        }else if($user['agent_password'] != md5($post_data["password"])) {
+        }else if($user['supplier_password'] != md5($post_data["password"])) {
             return returnState(100, '密码错误，请重新输入');
         }
-        Db::name('agent')->where('agent_id',$user['agent_id'])->update([
-            'agent_last_time' => date('Y-m-d H:i:s'),
-            'agent_last_ip' => Request::instance()->ip(),
-        ]);
-        Session::set('agentNickname',$user['agent_name']);
-        Session::set('agentId',$user['agent_id']);
-        Session::set("agentLevel",$user["agent_level"]);
-        Session::set("agentParentId",$user["agent_parent_id"]);
+//        Db::name('supplier')->where('supplier_id',$user['supplier_id'])->update([
+//            'agent_last_time' => date('Y-m-d H:i:s'),
+//            'agent_last_ip' => Request::instance()->ip(),
+//        ]);
+        Session::set('supplierNickname',$user['supplier_mobile']);
+        Session::set('supplierId',$user['supplier_id']);
         return returnState(200,'验证成功');
     }
 

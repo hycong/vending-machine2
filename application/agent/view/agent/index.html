@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh">
 <head>
-    {include file="../application/common/view/web/agent/head.html" title=" - 商品管理"}
+    {include file="../application/common/view/web/agent/head.html" title=" - 加盟商管理"}
     <style>
         input[type=text].show-mch-no {
             border: none;
@@ -30,7 +30,7 @@
             <div class="m-subheader ">
                 <div class="d-flex align-items-center">
                     <div class="mr-auto">
-                        <h3 class="m-subheader__title m-subheader__title--separator">商品管理</h3>
+                        <h3 class="m-subheader__title m-subheader__title--separator">加盟商管理</h3>
                         <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
                             <li class="m-nav__item m-nav__item--home">
                                 <a href="{:url('Index/index')}" class="m-nav__link m-nav__link--icon">
@@ -39,14 +39,14 @@
                             </li>
                             <li class="m-nav__separator">-</li>
                             <li class="m-nav__item">
-                                <a href="{:url('Orders/index')}" class="m-nav__link">
-                                    <span class="m-nav__link-text">商品管理</span>
+                                <a href="{:url('Agent/index')}" class="m-nav__link">
+                                    <span class="m-nav__link-text">加盟商管理</span>
                                 </a>
                             </li>
                             <li class="m-nav__separator">-</li>
                             <li class="m-nav__item">
                                 <a href="" class="m-nav__link">
-                                    <span class="m-nav__link-text">商品库列表</span>
+                                    <span class="m-nav__link-text">加盟商列表</span>
                                 </a>
                             </li>
                         </ul>
@@ -57,32 +57,37 @@
                 <div class="m-portlet">
                     <div class="m-portlet__head">
                         <div class="m-portlet__head-caption">
-                            <div class="m-portlet__head-tools">
-                                <ul class="nav nav-pills nav-pills--brand m-nav-pills--align-right m-nav-pills--btn-pill m-nav-pills--btn-sm" role="tablist">
-                                    <li class="nav-item m-tabs__item">
-                                        <a class="nav-link m-tabs__link" id="publicGoods">
-                                            公共商品库
-                                        </a>
-                                    </li>
-                                    <li class="nav-item m-tabs__item">
-                                        <a class="nav-link m-tabs__link" id="supplierGoods">
-                                            供货商商品库
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
+                            <a href="{:url('createAgent')}" class="btn btn-info m-btn m-btn--icon m-btn--wide m-btn--sm m--margin-right-10">
+                                <span>
+                                    <i class="fa fa-plus"></i>
+                                    <span>创建加盟商</span>
+                                </span>
+                            </a>
                         </div>
                         <div class="m-portlet__head-tools">
                             <form action="" method="get" class="form-inline ">
-                                <input type="hidden" name="goodsType">
                                 <div class="form-group mr-2">
-                                    <input type="text" class="form-control form-control-sm" name="goods_name" value="{$Think.get.goods_name}" placeholder="商品名称">
+                                    <input type="text" name="name" id="name" class="form-control form-control-sm m-input--solid"  value="{$Think.get.name}" placeholder="加盟商呢称">
                                 </div>
                                 <div class="form-group mr-2">
-                                    <input type="text" class="form-control form-control-sm" name="goods_id" value="{$Think.get.goods_id}" placeholder="商品ID">
+                                    <input type="text" name="username" id="username" class="form-control form-control-sm m-input--solid"  value="{$Think.get.username}" placeholder="加盟商登录名称">
+                                </div>
+                                <div class="form-group mr-2">
+                                    <select class="form-control form-control-sm m-input--solid" id="status" name="status">
+                                        <option value="0">状态</option>
+                                        <option value="1">使用中</option>
+                                        <option value="2">已禁用</option>
+                                    </select>
+                                </div>
+                                <div class="form-group mr-2" style="display: none">
+                                    <select class="form-control form-control-sm m-input--solid" id="level" name="level">
+                                        <option value="0">级别</option>
+                                        <option value="2">二级加盟商</option>
+                                        <option value="3">三级加盟商</option>
+                                    </select>
                                 </div>
                                 <div class="form-group">
-                                    <input type="submit" class="btn btn-info btn-sm" id="goodsSearch"  value="搜索">
+                                    <input type="submit" class="btn btn-info btn-sm" name="supplier_mobile" value="搜索">
                                 </div>
                             </form>
                         </div>
@@ -92,60 +97,70 @@
                             <table class="table table-striped m-table table-hover" id="m_table_1">
                                 <thead>
                                 <tr>
-                                    <th class="text-center">商品ID</th>
-                                    <th class="text-center">商品名称</th>
-                                    <th class="text-center">商品图片</th>
-                                    <th class="text-center">商品价格</th>
-                                    <th class="text-center">商品描述</th>
+                                    <th class="text-center">ID</th>
+                                    <th class="text-center">加盟商名称</th>
+                                    <th class="text-center">联系人</th>
+                                    <th class="text-center">联系人电话</th>
+                                    <th class="text-center">登录账号</th>
+                                    <th class="text-center">余额</th>
                                     <th class="text-center">状态</th>
                                     <th class="text-center">创建时间</th>
                                     <th class="text-center">操作</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                {volist name="$goodsList" id="vo"}
+                                {volist name="$agent_list" id="vo"}
                                 <tr class="">
-                                    <td class="text-middle text-center">{$vo.goods_id}</td>
-                                    <td class="text-middle text-center">{$vo.goods_name}
-                                        {eq name="$vo.goods_type" value=""}
-                                        {else/}
-                                        <span style="color: red">({$vo.goods_type})</span>
-                                        {/eq}
-                                    </td>
-                                    <td class="text-middle text-center"><img src="{$vo.goods_pic}" alt="{$vo.goods_name}" width="30px" height="30px"></td>
-                                    <td class="text-middle text-center">{$vo.goods_price}</td>
-                                    <td class="text-middle text-center">{$vo.goods_desc}</td>
-                                    <td class="text-middle text-center">
-                                        {switch name="$vo.goods_status"}
-                                        {case value="1"}<span class="m-badge  m-badge--success m-badge--wide">在售</span>{/case}
-                                        {case value="2"}<span class="m-badge  m-badge--metal m-badge--wide">在售</span>{/case}
+                                    <td class="text-middle text-center">{$vo.agent_id}</td>
+                                    <td class="text-middle text-center">{$vo.agent_name}</td>
+                                    <td class="text-middle text-center">{$vo.agent_contacts}</td>
+                                    <td class="text-middle text-center">{$vo.agent_mobile}</td>
+                                    <td class="text-middle text-center">{$vo.agent_username}</td>
+                                    <td class="text-middle text-center">{$vo.agent_balance}</td>
+                                    <td class="text-middle text-center" style="display: none">
+                                        {switch name="$vo.agent_level"}
+                                        {case value="1"}品牌方{/case}
+                                        {case value="2"}省{/case}
+                                        {case value="3"}市{/case}
+                                        {case value="4"}区{/case}
                                         {/switch}
                                     </td>
-                                    <td class="text-middle text-center">{$vo.goods_createTime}</td>
                                     <td class="text-middle text-center">
-                                            <div class="btn-group btn-group-sm">
-                                                {switch name="$vo.goods_status"}
+                                        {switch name="$vo.agent_status"}
+                                        {case value="1"}<span class="m-badge m-badge--success m-badge--wide">使用中</span>{/case}
+                                        {case value="2"}<span class="m-badge m-badge--danger m-badge--wide">已禁用</span>{/case}
+                                        {/switch}
+                                    </td>
+                                    <td class="text-middle text-center">{$vo.agent_createTime}</td>
+                                    <td class="text-middle text-center" nowrap="">
+                                        <span class="dropdown">
+                                            <a href="#" class="btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill" data-toggle="dropdown" aria-expanded="false">
+                                              <i class="la la-ellipsis-h"></i>
+                                            </a>
+                                            <div class="dropdown-menu dropdown-menu-right">
+                                                {switch name="$vo.agent_status"}
                                                 {case value="1"}
-                                                <a href="javascript:void(0);" onclick="down_goods('{$vo.goods_id}')"
-                                                   class="btn btn-danger m-btn--wide btn-sm">
-                                                    <span class="fa fa-cloud-download"></span>下架
-                                                </a>
+                                                <a onclick="delAgentStatus('{$vo.agent_id}')" class="dropdown-item"><i class="fa fa-ban text-danger"></i> 禁用</a>
                                                 {/case}
                                                 {case value="2"}
-                                                <a href="javascript:void(0);" onclick="up_goods('{$vo.goods_id}')"
-                                                   class="btn btn-info m-btn--wide btn-sm">
-                                                    <span class="fa fa-cloud-upload"></span>上架
-                                                </a>
+                                                <a onclick="changeAgentStatus('{$vo.agent_id}')" class="dropdown-item"><i class="fa fa-ban"></i> 恢复</a>
+                                                <a onclick="delAgent('{$vo.agent_id}')" class="dropdown-item"><i class="fa fa-trash-o text-danger"></i> 删除</a>
                                                 {/case}
                                                 {/switch}
+<!--                                                <a href="{:url('index',['parent_id'=>$vo.agent_id])}" class="dropdown-item">下级</a>-->
                                             </div>
+                                        </span>
+                                        <a href="{:url('editAgent',['agent_id'=>$vo.agent_id])}" class="m-portlet__nav-link btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill" title="编辑">
+                                            <i class="la la-edit"></i>
+                                        </a>
                                     </td>
                                 </tr>
                                 {/volist}
+                                {empty name="$agent_list"} <tr><td colspan="9" class="noDataHeight">没有数据</td></tr> {/empty}
                                 </tbody>
                             </table>
                             <div class="dataTables_pager">
-                                <div class="dataTables_paginate paging_simple_numbers">{$goodsList->render()}</div>
+                                <div class="dataTables_paginate paging_simple_numbers">{$agent_list->render()}</div>
                             </div>
                         </div>
                     </div>
@@ -160,43 +175,16 @@
 </div>
 <!-- end:: Page -->
 {include file="../application/common/view/web/agent/foot.html"}
-</body>
-<!-- end::Body -->
-</html>
 <script>
-    nav_url = "{:url('Goods/index')}";
-    $(function () {
-        var goodsType = "{$goodsType}";
-        $("input[name='goodsType']").val(goodsType);
-        if(goodsType == 1){
-            $("#publicGoods").addClass("active");
-            $("#supplierGoods").removeClass("active");
-        }else{
-            $("#publicGoods").removeClass("active");
-            $("#supplierGoods").addClass("active");
-        }
-
-        $("#publicGoods").click(function () {
-            $("#supplierGoods").removeClass("active");
-            $("#publicGoods").addClass("active");
-            $("input[name='goodsType']").val(1);
-            $("#goodsSearch").click();
-        });
-
-        $("#supplierGoods").click(function () {
-            $("input[name='goodsType']").val(2);
-            $("#publicGoods").removeClass("active");
-            $("#supplierGoods").addClass("active");
-            $("#goodsSearch").click();
-        });
-    });
+    nav_url = "{:url('agent/index')}";
+    setValue("status","{$status}");
     /**
-     * 下架
+     * 禁用
      */
-    function down_goods(id) {
+    function delAgentStatus(id) {
         submit_form({
-            url: '{:url("downGoods")}',
-            data: {goods_id:id},
+            url: '{:url("delAgentStatus")}',
+            data: {agent_id:id},
             fun: function (res) {
                 if(res.state == 200){
                     Swal.fire({
@@ -218,12 +206,12 @@
     }
 
     /**
-     * 上架
+     * 恢复
      */
-    function up_goods(id) {
+    function changeAgentStatus(id) {
         submit_form({
-            url: '{:url("upGoods")}',
-            data: {goods_id:id},
+            url: '{:url("changeAgentStatus")}',
+            data: {agent_id:id},
             fun: function (res) {
                 if(res.state == 200){
                     Swal.fire({
@@ -246,9 +234,9 @@
 
 
     /**
-     * 下架
+     * 删除
      */
-    function del_goods(id) {
+    function delAgent(id) {
         Swal.fire({
             title: '你确定要删除吗?',
             text: "删除后无法恢复！",
@@ -261,8 +249,8 @@
         }).then((result) => {
             if (result.value) {
                 submit_form({
-                    url: '{:url("delGoods")}',
-                    data: {goods_id:id},
+                    url: '{:url("delAgent")}',
+                    data: {agent_id:id},
                     fun: function (res) {
                         if(res.state == 200){
                             Swal.fire({
@@ -286,3 +274,6 @@
         return false;
     }
 </script>
+</body>
+<!-- end::Body -->
+</html>

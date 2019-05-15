@@ -172,7 +172,7 @@
                                                 </tr>
                                                 <tr>
                                                     <td class="am-text-right">处理结果</td>
-                                                    <td class="">{$vo.extract_result_remark}</td>
+                                                    <td class="">{$vo.extract_remark}</td>
                                                 </tr>
                                                 <tr>
                                                     <td class="am-text-right">处理人</td>
@@ -191,11 +191,11 @@
                                                         <input type="hidden" name="extract_id" value="{$vo.extract_id}">
                                                         <div class="m-radio-inline">
                                                             <label class="m-radio">
-                                                                <input type="radio" name="extract_status" value="2"> 已转账
+                                                                <input type="radio" name="extract_status" value="1"> 已转账
                                                                 <span></span>
                                                             </label>
                                                             <label class="m-radio">
-                                                                <input type="radio" name="extract_status" value="3" checked> 已拒绝
+                                                                <input type="radio" name="extract_status" value="2" checked> 已拒绝
                                                                 <span></span>
                                                             </label>
                                                         </div>
