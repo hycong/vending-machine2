@@ -170,10 +170,12 @@
                                                     <td class="am-text-right">提现备注</td>
                                                     <td class="">{$vo.extract_remark}</td>
                                                 </tr>
+                                                {if condition="$vo.extract_status != 1"}
                                                 <tr>
                                                     <td class="am-text-right">处理结果</td>
                                                     <td class="">{$vo.extract_remark}</td>
                                                 </tr>
+                                                {/if}
                                                 <tr>
                                                     <td class="am-text-right">处理人</td>
                                                     <td class="">
