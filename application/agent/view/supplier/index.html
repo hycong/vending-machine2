@@ -120,7 +120,7 @@
 
                         <!--begin: Datatable -->
                         <div class="dataTables_wrapper">
-                            <table class="table table-striped- table-bordered table-hover table-checkable"
+                            <table class="table table-striped- table-bordered table-hover table-checkable {empty name='$supplierList'}noDataHeight-table{/empty}"
                                    id="m_table_1">
                                 <thead>
                                 <tr>
@@ -159,6 +159,7 @@
                                 {/volist}
                                 </tbody>
                             </table>
+                            <div class="noDataHeight">没有数据</div>
                             <div class="dataTables_pager">
                                 <div class="dataTables_paginate paging_simple_numbers">{$supplierList->render()}</div>
                             </div>

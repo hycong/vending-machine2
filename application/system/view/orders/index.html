@@ -11,7 +11,6 @@
             white-space: nowrap;
             text-overflow: ellipsis;
         }
-
     </style>
 </head>
 <!-- begin::Body -->
@@ -61,10 +60,10 @@
                             <form action="" method="get" class="form-inline ">
                                 <input type="hidden" name="goodsType">
                                 <div class="form-group mr-2">
-                                    <input type="text" class="form-control form-control-sm m-input--solid" name="machineCode" value="{$Think.get.machineCode}" placeholder="设备序号">
+                                    <input type="text" class="form-control form-control-sm" name="machineCode" value="{$Think.get.machineCode}" placeholder="设备序号">
                                 </div>
                                 <div class="form-group mr-2">
-                                    <select name="goodsId"  class="form-control form-control-sm m-input--solid">
+                                    <select name="goodsId"  class="form-control form-control-sm">
                                         <option value="0">消费商品</option>
                                         {volist name="goodsList" id="goods"}
                                         <option value="{$goods.goods_id}">{$goods.goods_name}({$goods.goods_type})</option>
@@ -72,7 +71,7 @@
                                     </select>
                                 </div>
                                 <div class="form-group mr-2">
-                                    <select name="payType" class="form-control form-control-sm m-input--solid">
+                                    <select name="payType" class="form-control form-control-sm">
                                         <option value="0">支付类型</option>
                                         <option value="1">微信支付</option>
                                         <option value="2">支付宝支付</option>
@@ -82,7 +81,7 @@
                                     </select>
                                 </div>
                                 <div class="form-group mr-2">
-                                    <select name="payStatus" class="form-control form-control-sm m-input--solid">
+                                    <select name="payStatus" class="form-control form-control-sm">
                                         <option value="0">支付状态</option>
                                         <option value="1">支付成功</option>
                                         <option value="2">支付失败</option>
@@ -91,7 +90,7 @@
                                     </select>
                                 </div>
                                 <div class="form-group mr-2">
-                                    <select name="outStatus" class="form-control form-control-sm m-input--solid">
+                                    <select name="outStatus" class="form-control form-control-sm">
                                         <option value="0">出货状态</option>
                                         <option value="1">出货成功</option>
                                         <option value="2">出货失败</option>
@@ -106,32 +105,32 @@
                     </div>
                     <div class="m-portlet__body">
                         <div class="dataTables_wrapper">
-                            <table class="table table-striped- table-bordered table-hover table-checkable" id="m_table_1">
+                            <table class="table table-striped- table-bordered table-hover table-checkable {empty name='$order_list'}noDataHeight-table{/empty}" id="m_table_1">
                                 <thead>
                                 <tr>
-                                    <th>订单ID</th>
+                                    <th class="text-center">订单ID</th>
                                     <th class="text-center">设备序号</th>
-                                    <th>货道</th>
-                                    <th>消费用户</th>
-                                    <th>消费商品</th>
-                                    <th>消费金额</th>
-                                    <th>支付类型</th>
-                                    <th>支付订单</th>
-                                    <th>商户订单号</th>
+                                    <th class="text-center">货道</th>
+                                    <th class="text-center">消费用户</th>
+<!--                                    <th>消费商品</th>-->
+                                    <th class="text-center">消费金额</th>
+                                    <th class="text-center">支付类型</th>
+                                    <th class="text-center">支付订单</th>
+                                    <th class="text-center">商户订单号</th>
                                     <th class="text-center">支付状态</th>
                                     <th class="text-center">出货状态</th>
-                                    <th>生成订单时间</th>
+<!--                                    <th>生成订单时间</th>-->
                                     <th class="text-center">操作</th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                 {volist name="$order_list" id="vo"}
-                                <tr class="">
-                                    <td class="text-middle">{$vo.o_id}</td>
+                                <tr>
+                                    <td class="text-middle text-center" rowspan="2">{$vo.o_id}</td>
                                     <td class="text-middle text-center">{$vo.o_machine}</td>
                                     <td class="text-middle text-center">{$vo.o_channel}</td>
                                     <td class="text-middle">{$vo.o_user|default="--"}</td>
-                                    <td class="text-middle text-overflow" style="max-width: 100px;" title="{$vo.o_goods}">{$vo.o_goods}</td>
+<!--                                    <td class="text-middle text-overflow" style="max-width: 100px;" title="{$vo.o_goods}">{$vo.o_goods}</td>-->
                                     <td class="text-middle">{$vo.o_money}</td>
                                     <td class="text-middle">
                                         {switch name="$vo.o_pay_type"}
@@ -140,10 +139,10 @@
                                         {case value="3"}<span style="color: #19a97b">VIP支付</span>{/case}
                                         {case value="4"}<span style="color: red">抽奖</span>{/case}
                                         {case value="5"}<span style="color: red">秘钥兑换</span>{/case}
-                                        {/switch}
+                                        {/switch}0
                                     </td>
-                                    <td class="text-middle"><input type="text" class="show-mch-no" readonly value="{$vo.o_trade_no}"></td>
-                                    <td class="text-middle"><input type="text" class="show-mch-no" readonly value="{$vo.o_mch_no|default='--'}"></td>
+                                    <td class="text-middle text-center"><input type="text" class="show-mch-no" readonly value="{$vo.o_trade_no}"></td>
+                                    <td class="text-middle text-center"><input type="text" class="show-mch-no" readonly value="{$vo.o_mch_no|default='--'}"></td>
                                     <td class="text-middle text-center">
                                         {switch name="$vo.o_pay_status"}
                                         {case value="1"}<span class="m-badge m-badge--success m-badge--wide" title="{$vo.o_error_remark}">支付成功</span>{/case}
@@ -163,17 +162,34 @@
                                         <i class="am-icon-warning" title="{$vo.o_error_remark}"></i>
                                         {/if}
                                     </td>
-                                    <td class="text-middle">{$vo.o_createTime}</td>
-                                    <td class="text-center">
+<!--                                    <td class="text-middle">{$vo.o_createTime}</td>-->
+                                    <td class="text-middle text-center" rowspan="2">
                                         {if condition="$Think.config.employ_config.wechat_refund == 1"}
                                         {if condition="$vo.o_pay_status == 1 && in_array($vo.o_out_status,[2,3])"}<a class="btn btn-sm btn-info" href="{:url('wechat_refund',['o_id'=>$vo.o_id])}"><i class="fa fa-refresh"></i> 退款</a>{/if}
                                         {/if}
                                     </td>
                                 </tr>
+                                <tr>
+                                    <td colspan="9" class="p-0">
+                                        <table class="table table-striped- table-hover m-0 p-0">
+                                            <tr>
+                                                <td>
+                                                    消费商品：<input type="text" class="show-mch-no" readonly value="{$vo.o_goods}" style="width: 150px;">
+                                                </td>
+                                                <td>优惠金额：{$vo.o_createTime}</td>
+                                                <td>创建时间：{$vo.o_createTime}</td>
+                                            </tr>
+                                        </table>
+<!--                                        <div class="pull-left text-left">-->
+<!--&lt;!&ndash;                                            消费商品：<font class="text-overflow" style="max-width: 300px;">{$vo.o_goods}</font>&ndash;&gt;-->
+<!--                                        </div>-->
+<!--                                        <div class="pull-right text-right">创建时间：{$vo.o_createTime}</div>-->
+                                    </td>
+                                </tr>
                                 {/volist}
-                                {empty name="$order_list"} <tr><td colspan="13" class="noDataHeight">没有数据</td></tr> {/empty}
                                 </tbody>
                             </table>
+                            <div class="noDataHeight">没有数据</div>
                             <div class="dataTables_pager">
                                 <div class="dataTables_paginate paging_simple_numbers">{$order_list->render()}</div>
                             </div>

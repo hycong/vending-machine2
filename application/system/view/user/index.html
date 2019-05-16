@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    {include file="../application/common/view/web/head.html" title=" - 用户管理"}
+    <style>
+
+    </style>
+</head>
+<!-- begin::Body -->
+<body class="m-page--fluid m--skin- m-content--skin-light2 m-header--fixed m-header--fixed-mobile m-aside-left--enabled m-aside-left--skin-dark m-aside-left--fixed m-aside-left--offcanvas m-footer--push m-aside--offcanvas-default">
+<!-- begin:: Page -->
+<div class="m-grid m-grid--hor m-grid--root m-page">
+    <!-- BEGIN: Header -->
+    {include file="../application/common/view/web/header.html"}
+    <!-- END: Header -->
+    <!-- begin::Body -->
+    <div class="m-grid__item m-grid__item--fluid m-grid m-grid--ver-desktop m-grid--desktop m-body">
+        <!-- BEGIN: Left Aside -->
+        {include file="../application/common/view/web/left.html"}
+        <!-- END: Left Aside -->
+        <div class="m-grid__item m-grid__item--fluid m-wrapper">
+            <div class="m-subheader ">
+                <div class="d-flex align-items-center">
+                    <div class="mr-auto">
+                        <h3 class="m-subheader__title m-subheader__title--separator">用户管理</h3>
+                        <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
+                            <li class="m-nav__item m-nav__item--home">
+                                <a href="{:url('Index/index')}" class="m-nav__link m-nav__link--icon">
+                                    <i class="m-nav__link-icon la la-home"></i>
+                                </a>
+                            </li>
+                            <li class="m-nav__separator">-</li>
+                            <li class="m-nav__item">
+                                <a href="{:url('user/index')}" class="m-nav__link">
+                                    <span class="m-nav__link-text">用户管理</span>
+                                </a>
+                            </li>
+                            <li class="m-nav__separator">-</li>
+                            <li class="m-nav__item">
+                                <a href="" class="m-nav__link">
+                                    <span class="m-nav__link-text">用户列表</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="m-content">
+                <div class="m-portlet">
+                    <div class="m-portlet__head">
+                        <div class="m-portlet__head-caption"></div>
+                        <div class="m-portlet__head-tools">
+                            <form action="" method="get" class="form-inline ">
+                                <div class="form-group mr-2">
+                                    <input type="text" class="form-control form-control-sm" name="user_name"
+                                           value="{$Think.get.user_name}" placeholder="用户名称">
+                                </div>
+                                <div class="form-group mr-2">
+                                    <input type="text" class="form-control form-control-sm" name="user_openid"
+                                           value="{$Think.get.user_openid}" placeholder="用户OpenId">
+                                </div>
+                                <div class="form-group mr-2">
+                                    <input type="text" class="form-control form-control-sm" name="user_id"
+                                           value="{$Think.get.user_id}" placeholder="用户ID">
+                                </div>
+                                <div class="form-group mr-2">
+                                    <select class="form-control form-control-sm" name="user_subscribe">
+                                        <option value="">是否关注</option>
+                                        <option value="1">已关注</option>
+                                        <option value="2">已取消关注</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <input type="submit" class="btn btn-info btn-sm" value="搜索">
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="m-portlet__body">
+                        <div class="dataTables_wrapper">
+                            <table class="table table-striped- table-bordered table-hover table-checkable {empty name='$userList'}noDataHeight-table{/empty}"
+                                   id="m_table_1">
+                                <thead>
+                                <tr>
+                                    <th class="text-center">用户ID</th>
+                                    <th class="text-center">用户名称</th>
+                                    <th class="text-center">用户性别</th>
+                                    <th class="text-center">用户头像</th>
+                                    <th class="text-center">用户OpenId</th>
+                                    <th class="text-center">用户状态</th>
+                                    <th class="text-center">用户取关次数</th>
+                                    <th class="text-center">首关时间</th>
+                                    <th class="text-center">操作</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {volist name="$userList" id="vo"}
+                                <tr class="">
+                                    <td class="text-middle text-center">{$vo.user_id}</td>
+                                    <td class="text-middle text-center">{$vo.user_name}</td>
+                                    <td class="text-middle text-center">
+                                        {switch name="$vo.user_gender"}
+                                        {case value="1"}<div class="text-info"><i class="fa fa-user-circle-o"></i> 男</div>{/case}
+                                        {case value="2"}<div class="text-pink"><i class="fa fa-user-circle-o" style=""></i> 女</div>{/case}
+                                        {case value="3"}<div class="text-gray"><i class="fa fa-user-circle-o" style=""></i> 未知</div>{/case}
+                                        {/switch}
+                                    </td>
+                                    <td class="text-middle text-center">
+                                        {if condition="$vo.user_pic"}
+                                        <img src="{$vo.user_pic}" alt="{$vo.user_name}" style="width: 35px;height: 35px;">
+                                        {else}
+                                        没有头像
+                                        {/if}
+                                    </td>
+                                    <td class="text-middle text-center">{$vo.user_openid}</td>
+                                    <td class="text-middle text-center">
+                                        {switch name="$vo.user_subscribe"}
+                                        {case value="1"}<span class="m-badge m-badge--success m-badge--wide">已关注</span>{/case}
+                                        {case value="2"}<span class="m-badge m-badge--accent m-badge--wide">未关注</span>{/case}
+                                        {case value="3"}<span class="m-badge m-badge--danger m-badge--wide">取消关注</span>{/case}
+                                        {/switch}
+                                    </td>
+                                    <td class="text-middle text-center">{$vo.user_unsubscribe_num}</td>
+                                    <td class="text-middle text-center">{$vo.user_createTime}</td>
+                                    <td class="text-middle text-center"></td>
+                                </tr>
+                                {/volist}
+                                </tbody>
+                            </table>
+                            <div class="noDataHeight">没有数据</div>
+                            <div class="dataTables_pager">
+                                <div class="dataTables_paginate paging_simple_numbers">{$userList->render()}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- end:: Body -->
+    <!-- begin::Footer -->
+    {include file="../application/common/view/web/footer.html"}
+    <!-- end::Footer -->
+</div>
+<!-- end:: Page -->
+{include file="../application/common/view/web/foot.html"}
+</body>
+<!-- end::Body -->
+</html>
+<script>
+    nav_url = "{:url('User/index')}";
+
+    setValue('user_name','{$Think.get.user_name}');
+    setValue('user_openid','{$Think.get.user_openid}');
+    setValue('user_id','{$Think.get.user_id}');
+    setValue('user_subscribe','{$Think.get.user_subscribe}');
+</script>

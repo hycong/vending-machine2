@@ -94,7 +94,7 @@
                     </div>
                     <div class="m-portlet__body">
                         <div class="dataTables_wrapper">
-                            <table class="table table-striped m-table table-hover" id="m_table_1">
+                            <table class="table table-striped- m-table table-bordered table-hover {empty name='$agent_list'}noDataHeight-table{/empty}" id="m_table_1">
                                 <thead>
                                 <tr>
                                     <th class="text-center">ID</th>
@@ -156,9 +156,9 @@
                                     </td>
                                 </tr>
                                 {/volist}
-                                {empty name="$agent_list"} <tr><td colspan="9" class="noDataHeight">没有数据</td></tr> {/empty}
                                 </tbody>
                             </table>
+                            <div class="noDataHeight">没有数据</div>
                             <div class="dataTables_pager">
                                 <div class="dataTables_paginate paging_simple_numbers">{$agent_list->render()}</div>
                             </div>

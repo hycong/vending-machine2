@@ -80,7 +80,7 @@
                     </div>
                     <div class="m-portlet__body">
                         <div class="dataTables_wrapper">
-                            <table class="table table-striped- table-bordered table-hover table-checkable" id="m_table_1">
+                            <table class="table table-striped- table-bordered table-hover table-checkable {empty name='$goods_list'}noDataHeight-table{/empty}" id="m_table_1">
                                 <thead>
                                 <tr>
                                     <th class="text-center">商品ID</th>
@@ -95,7 +95,7 @@
                                 </thead>
                                 <tbody>
                                 {volist name="$goods_list" id="vo"}
-                                <tr class="">
+                                <tr>
                                     <td class="text-middle text-center">{$vo.goods_id}</td>
                                     <td class="text-middle">{$vo.goods_name}
                                         {eq name="$vo.goods_type" value=""}
@@ -112,7 +112,7 @@
                                         {case value="2"}<span class="m-badge m-badge--danger m-badge--wide">已下架</span>{/case}
                                         {/switch}
                                     </td>
-                                    <td class="text-middle">{$vo.goods_createTime}</td>
+                                    <td class="text-middle text-center">{$vo.goods_createTime}</td>
                                     <td class="text-middle" nowrap="">
                                         <span class="dropdown">
                                             <a href="#" class="btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill" data-toggle="dropdown" aria-expanded="false">
@@ -142,9 +142,9 @@
                                     </td>
                                 </tr>
                                 {/volist}
-                                {empty name="$goods_list"} <tr><td colspan="10" class="noDataHeight">没有数据</td></tr> {/empty}
                                 </tbody>
                             </table>
+                            <div class="noDataHeight">没有数据</div>
                             <div class="dataTables_pager">
                                 <div class="dataTables_paginate paging_simple_numbers">{$goods_list->render()}</div>
                             </div>

@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    {include file="../application/common/view/web/head.html" title=" - 活动管理"}
+    <link rel="stylesheet" type="text/css" href="/resource/webUpload/webuploader.css">
+    <script src="/resource/web/assets/app/js/toastr.js"></script>
+</head>
+<!-- begin::Body -->
+<body class="m-page--fluid m--skin- m-content--skin-light2 m-header--fixed m-header--fixed-mobile m-aside-left--enabled m-aside-left--skin-dark m-aside-left--fixed m-aside-left--offcanvas m-footer--push m-aside--offcanvas-default">
+<!-- begin:: Page -->
+<div class="m-grid m-grid--hor m-grid--root m-page">
+    <!-- BEGIN: Header -->
+    {include file="../application/common/view/web/header.html"}
+    <!-- END: Header -->
+    <!-- begin::Body -->
+    <div class="m-grid__item m-grid__item--fluid m-grid m-grid--ver-desktop m-grid--desktop m-body">
+        <!-- BEGIN: Left Aside -->
+        {include file="../application/common/view/web/left.html"}
+        <!-- END: Left Aside -->
+        <div class="m-grid__item m-grid__item--fluid m-wrapper">
+            <div class="m-subheader ">
+                <div class="d-flex align-items-center">
+                    <div class="mr-auto">
+                        <h3 class="m-subheader__title m-subheader__title--separator">活动管理</h3>
+                        <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
+                            <li class="m-nav__item m-nav__item--home">
+                                <a href="{:url('Index/index')}" class="m-nav__link m-nav__link--icon">
+                                    <i class="m-nav__link-icon la la-home"></i>
+                                </a>
+                            </li>
+                            <li class="m-nav__separator">-</li>
+                            <li class="m-nav__item">
+                                <a href="{:url('Activity/index')}" class="m-nav__link">
+                                    <span class="m-nav__link-text">活动管理</span>
+                                </a>
+                            </li>
+                            <li class="m-nav__separator">-</li>
+                            <li class="m-nav__item">
+                                <a href="" class="m-nav__link">
+                                    <span class="m-nav__link-text">活动列表</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="m-content">
+                <form class="m-form m-form--fit m-form--label-align-right" action="{:url('')}" method="post" id="form">
+                    <div class="m-portlet">
+                        <input type="hidden" name="activity_id" value="{$info.activity_id}">
+                        <div class="m-portlet__head">
+                            <div class="m-portlet__head-caption">
+                                <div class="m-portlet__head-title">
+                                    <h3 class="m-portlet__head-text">{$info.activity_name|default=""} - 添加优惠卷</h3>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="m-portlet__body">
+                            <div class="form-group m-form__group pr-0 pl-0 row">
+                                <label for="coupon_title" class="col-form-label col-lg-2 col-md-2 col-sm-12">优惠卷名称</label>
+                                <div class="col-lg-10 col-md-10 col-sm-12">
+                                    <input class="form-control" type="text" id="coupon_title" name="coupon_title"
+                                           placeholder="请输入优惠卷名称" required>
+                                </div>
+                            </div>
+                            <div class="form-group m-form__group pr-0 pl-0 row">
+                                <label for="coupon_money" class="col-form-label col-lg-2 col-md-2 col-sm-12">优惠卷金额</label>
+                                <div class="col-lg-10 col-md-10 col-sm-12">
+                                    <input class="form-control" type="text" id="coupon_money" value="0"
+                                           name="coupon_money" placeholder="请输入优惠卷金额">
+                                </div>
+                            </div>
+                            <div class="form-group m-form__group pr-0 pl-0 row">
+                                <label for="coupon_sum_number" class="col-form-label col-lg-2 col-md-2 col-sm-12">优惠卷数量</label>
+                                <div class="col-lg-10 col-md-10 col-sm-12">
+                                    <input class="form-control" type="number" id="coupon_sum_number" value="0"
+                                           name="coupon_sum_number" placeholder="请输入优惠卷数量">
+                                </div>
+                            </div>
+                            <div class="form-group m-form__group pr-0 pl-0 row">
+                                <label for="coupon_probability" class="col-form-label col-lg-2 col-md-2 col-sm-12">中奖机率</label>
+                                <div class="col-lg-10 col-md-10 col-sm-12">
+                                    <input class="form-control" type="number" id="coupon_probability" value="0"
+                                           name="coupon_probability" placeholder="请输入中奖机率">
+                                </div>
+                            </div>
+                            <div class="form-group m-form__group pr-0 pl-0 row">
+                                <label for="coupon_type" class="col-form-label col-lg-2 col-md-2 col-sm-12">优惠卷类型</label>
+                                <div class="col-lg-10 col-md-10 col-sm-12">
+                                    <select class="form-control" name="coupon_type" id="coupon_type">
+                                        <option value="1">代金券</option>
+                                        <option value="2">买一送一</option>
+                                        <option value="3">谢谢参与</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="m-portlet__foot m-portlet__foot--fit">
+                            <div class="m-form__actions m-form__actions">
+                                <div class="row">
+                                    <div class="col-lg-9 ml-lg-auto">
+                                        <button type="button" id="sub" class="btn btn-info">确认并保存</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- end:: Body -->
+    <!-- begin::Footer -->
+    {include file="../application/common/view/web/footer.html"}
+    <!-- end::Footer -->
+</div>
+<!-- end:: Page -->
+{include file="../application/common/view/web/foot.html"}
+</body>
+<!-- end::Body -->
+</html>
+<script>
+    nav_url = "{:url('Activity/index')}";
+
+    $('#sub').click(function () {
+        submit_form({
+            url: '{:url("")}',
+            data: $('#form').serialize(),
+            fun: function (res) {
+                if (res.state == 200) {
+                    Swal.fire({
+                        title: res.msg,
+                        type: 'success',
+                        timer: 2000,
+                        onClose: () => {
+                            window.location.href = res.url;
+                        }
+                    });
+                } else {
+                    Swal.fire({
+                        title: res.msg,
+                        type: 'error',
+                    });
+                }
+            }
+        });
+    });
+</script>

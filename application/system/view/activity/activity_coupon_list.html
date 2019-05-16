@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    {include file="../application/common/view/web/head.html" title=" - 活动管理"}
+</head>
+<!-- begin::Body -->
+<body class="m-page--fluid m--skin- m-content--skin-light2 m-header--fixed m-header--fixed-mobile m-aside-left--enabled m-aside-left--skin-dark m-aside-left--fixed m-aside-left--offcanvas m-footer--push m-aside--offcanvas-default">
+<!-- begin:: Page -->
+<div class="m-grid m-grid--hor m-grid--root m-page">
+    <!-- BEGIN: Header -->
+    {include file="../application/common/view/web/header.html"}
+    <!-- END: Header -->
+    <!-- begin::Body -->
+    <div class="m-grid__item m-grid__item--fluid m-grid m-grid--ver-desktop m-grid--desktop m-body">
+        <!-- BEGIN: Left Aside -->
+        {include file="../application/common/view/web/left.html"}
+        <!-- END: Left Aside -->
+        <div class="m-grid__item m-grid__item--fluid m-wrapper">
+            <div class="m-subheader ">
+                <div class="d-flex align-items-center">
+                    <div class="mr-auto">
+                        <h3 class="m-subheader__title m-subheader__title--separator">活动管理</h3>
+                        <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
+                            <li class="m-nav__item m-nav__item--home">
+                                <a href="{:url('Index/index')}" class="m-nav__link m-nav__link--icon">
+                                    <i class="m-nav__link-icon la la-home"></i>
+                                </a>
+                            </li>
+                            <li class="m-nav__separator">-</li>
+                            <li class="m-nav__item">
+                                <a href="{:url('Activity/index')}" class="m-nav__link">
+                                    <span class="m-nav__link-text">活动管理</span>
+                                </a>
+                            </li>
+                            <li class="m-nav__separator">-</li>
+                            <li class="m-nav__item">
+                                <a href="" class="m-nav__link">
+                                    <span class="m-nav__link-text">活动列表</span>
+                                </a>
+                            </li>
+                            <li class="m-nav__separator">-</li>
+                            <li class="m-nav__item">
+                                <a href="" class="m-nav__link">
+                                    <span class="m-nav__link-text">优惠卷列表</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="m-content">
+                <div class="m-portlet">
+                    <div class="m-portlet__head">
+                        <div class="m-portlet__head-caption">
+                            <a href="{:url('createActivityCoupon',['activity_id'=>$info.activity_id])}"
+                               class="btn btn-info m-btn m-btn--icon m-btn--wide m-btn--sm m--margin-right-10">
+                                <span>
+                                    <i class="fa fa-plus"></i>
+                                    <span>添加优惠卷</span>
+                                </span>
+                            </a>
+                        </div>
+                        <div class="m-portlet__head-tools">
+                            <form action="" method="get" class="form-inline ">
+
+                            </form>
+                        </div>
+                    </div>
+                    <div class="m-portlet__body">
+                        <div class="dataTables_wrapper">
+                            <table class="table table-striped- table-bordered table-hover table-checkable {empty name='$activityList'}noDataHeight-table{/empty}"
+                                   id="m_table_1">
+                                <thead>
+                                <tr>
+                                    <th class="text-center">优惠卷ID</th>
+                                    <th class="text-center">优惠卷名称</th>
+                                    <th class="text-center">优惠卷类型</th>
+                                    <th class="text-center">优惠卷金额</th>
+                                    <th class="text-center">总卷数</th>
+                                    <th class="text-center">剩余可领卷数</th>
+                                    <th class="text-center">状态</th>
+                                    <th class="text-center">创建时间</th>
+                                    <th class="text-center">操作</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {volist name="$activityList" id="vo"}
+                                <tr class="">
+                                    <td class="text-middle text-center">{$vo.coupon_id}</td>
+                                    <td class="text-middle text-center">{$vo.coupon_title}</td>
+                                    <td class="text-middle text-center">
+                                        {switch name="$vo.coupon_type"}
+                                        {case value="1"}代金券{/case}
+                                        {case value="2"}买一送一{/case}
+                                        {case value="3"}谢谢参与{/case}
+                                        {/switch}
+                                    </td>
+                                    <td class="text-middle text-center">￥{$vo.coupon_money}</td>
+                                    <td class="text-middle text-center">{$vo.coupon_sum_number}</td>
+                                    <td class="text-middle text-center">{$vo.coupon_surplus_number}</td>
+                                    <td class="text-middle text-center">
+                                        {switch name="$vo.coupon_status"}
+                                        {case value="1"}<span class="m-badge m-badge--success m-badge--wide">使用中</span>{/case}
+                                        {case value="2"}<span class="m-badge m-badge--danger m-badge--wide">禁用中</span>{/case}
+                                        {/switch}
+                                    </td>
+                                    <td class="text-middle text-center">{$vo.coupon_createTime}</td>
+                                    <td class="text-middle text-center">
+                                        <div class="am-btn-toolbar">
+                                            <div class="am-btn-group am-btn-group-xs">
+                                                <a class="btn btn-info btn-sm" href="{:url('userCouponlist',['log_activity_id'=>$vo.coupon_activity_id,'log_coupon_id'=>$vo.coupon_id])}">
+                                                    <i class="fa fa-list"></i> 领取详情
+                                                </a>
+                                                {switch name="$vo.coupon_status"}
+                                                {case value="1"}
+                                                <a class="btn btn-danger btn-sm" onclick="disabledActivity('{$vo.coupon_id}')">
+                                                    <i class="fa fa-refresh"></i> 禁用
+                                                </a>
+                                                {/case}
+                                                {case value="2"}
+                                                <a class="btn btn-info btn-sm" onclick="changeStatus('{$vo.coupon_id}')">
+                                                    <span class="fa fa-refresh"></span> 恢复
+                                                </a>
+                                                {/case}
+                                                {/switch}
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                {/volist}
+                                </tbody>
+                            </table>
+                            <div class="noDataHeight">没有数据</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- end:: Body -->
+    <!-- begin::Footer -->
+    {include file="../application/common/view/web/footer.html"}
+    <!-- end::Footer -->
+</div>
+<!-- end:: Page -->
+{include file="../application/common/view/web/foot.html"}
+</body>
+<!-- end::Body -->
+</html>
+<script>
+    nav_url = "{:url('Activity/index')}";
+
+    // 禁用
+    function disabledActivity(id) {
+        submit_form({
+            url: '{:url("disabledCoupon")}',
+            data: {coupon_id: id},
+            fun: function (res) {
+                if (res.state == 200) {
+                    Swal.fire({
+                        title: res.msg,
+                        type: 'success',
+                        timer: 2000,
+                        onClose: () => {
+                            window.location.reload();
+                        }
+                    });
+                } else {
+                    Swal.fire({
+                        title: res.msg,
+                        type: 'error',
+                    });
+                }
+            }
+        });
+    }
+
+    // 恢复
+    function changeStatus(id) {
+        submit_form({
+            url: '{:url("changeCouponStatus")}',
+            data: {coupon_id: id},
+            fun: function (res) {
+                if (res.state == 200) {
+                    Swal.fire({
+                        title: res.msg,
+                        type: 'success',
+                        timer: 2000,
+                        onClose: () => {
+                            window.location.reload();
+                        }
+                    });
+                } else {
+                    Swal.fire({
+                        title: res.msg,
+                        type: 'error',
+                    });
+                }
+            }
+        });
+    }
+
+</script>

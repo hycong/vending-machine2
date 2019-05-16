@@ -10508,7 +10508,7 @@ a.text-dark:hover, a.text-dark:focus {
 }
 
 .btn-info {
-    color: #fff;
+    color: #fff !important;
     background-color: #36a3f7;
     border-color: #36a3f7
 }
@@ -53876,6 +53876,15 @@ and (min-width: 1025px) {
     }
 }
 
+
+
+.text-pink {
+    color: #ff94a7;
+}
+.text-gray {
+    color: #a3a3a3;
+}
+
 .text-middle {
     vertical-align: middle !important;
 }
@@ -53884,9 +53893,20 @@ and (min-width: 1025px) {
     white-space: nowrap;
     text-overflow: ellipsis;
 }
+.noDataHeight-table {
+    margin-bottom: 0;
+}
 .noDataHeight {
     text-align: center;
-    vertical-align: middle !important;
     height: 45vh;
     color: #ccc;
+    display: none;
+    border: 2px solid #f4f5f8;
+    border-top: none;
+    vertical-align: middle !important;
+    align-items: center;
+    justify-content: center;
+}
+.noDataHeight-table+.noDataHeight {
+    display: flex;
 }
