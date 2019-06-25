@@ -51,4 +51,11 @@ class Common extends Controller
         $agentAccount = Db::name("agent_account")->where("agent_id",$id)->find();
         return $agentAccount;
     }
+
+
+    protected function errorFetch($msg = ''){
+        return $this->fetch('common/error_fetch',[
+            'msg'=>$msg
+        ]);
+    }
 }

@@ -16,6 +16,12 @@ class AgentPath
 {
     protected static $cache;
 
+    /**
+     * 查询加盟商下级ID
+     * @param $id
+     * @param bool $is_self
+     * @return array|mixed
+     */
     public static function get_path($id,$is_self = true){
         static::$cache = Cache::get('agent_path');
         $returndata = [];
@@ -36,12 +42,21 @@ class AgentPath
         return $returndata;
     }
 
+    /**
+     * 清楚加盟商缓存
+     */
     public static function close_path(){
         static::$cache = [];
         Cache::set('agent_path',null);
     }
 
-
+    /**
+     * 设置下级ID信息
+     * @param $new_id       新加盟商ID
+     * @param $id           创建者ID
+     * @param $level        创建者等级
+     * @return bool
+     */
     public static function set_level_path($new_id,$id,$level){
         for ($i=$level;$i>=1;$i--){
             $info = Db::name('agent')->where(['agent_id'=>$id])->find();
@@ -55,7 +70,13 @@ class AgentPath
         return true;
     }
 
-
+    /**
+     * 清楚删除的下级ID
+     * @param $del_id       删除加盟商ID
+     * @param $pid          删除加盟商上级ID
+     * @param $level        删除加盟商等级
+     * @return bool
+     */
     public static function del_level_path($del_id,$pid,$level){
         for ($i=$level;$i>=1;$i--){
             $info = Db::name('agent')->where(['agent_id'=>$pid])->find();

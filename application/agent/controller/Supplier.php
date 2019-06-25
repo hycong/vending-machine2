@@ -22,8 +22,11 @@ class Supplier extends Common
      */
     public function index()
     {
-//        $agentCheck["supplier_agent_id"] = ["eq",$this->agentId];
+        $where = [
+            'supplier_agent_id' => ['eq',$this->agentId],
+        ];
         $supplierList = Db::name("supplier")
+            ->where($where)
             ->order("supplier_id DESC")
             ->paginate($this->pageNum,false,["query"=>$this->request->param()]);
         self::assign("supplierList",$supplierList);
@@ -33,7 +36,10 @@ class Supplier extends Common
 
     public function restPassword()
     {
+        $supplier_id = input('supplier_id');
+        $info  = Db::name('supplier')->where(['supplier_id'=>$supplier_id,'supplier_agent_id' => ['eq',$this->agentId]])->find();
         if($this->request->isPost()){
+            if(!$info) return returnState(100,'没有供货商信息');
             $input = $this->request->only(['supplier_id','supplier_password'],'post');
             $result = $this->validate($input,'ASupplier.restPassword');
             if(true !== $result){
@@ -69,9 +75,9 @@ class Supplier extends Common
             $input["supplier_agent_id"] = $this->agentId;
             $res = Db::name("supplier")->insert($input);
             if($res > 0){
-                return returnState(200,'创建加盟商成功');
+                return returnState(200,'创建供货商成功');
             }
-            return returnState(100,"网络异常,创建加盟商失败");
+            return returnState(100,"网络异常,创建供货商失败");
         }
         return self::fetch();
     }
@@ -85,7 +91,10 @@ class Supplier extends Common
      */
     public function editSupplier()
     {
+        $supplierId = input("supplier_id");
+        $info  = Db::name('supplier')->where(['supplier_id'=>$supplierId,'supplier_agent_id' => ['eq',$this->agentId]])->find();
         if($this->request->isPost()){
+            if(!$info) return returnState(100,'没有供货商信息');
             $input = $this->request->only(['supplier_id','supplier_name','supplier_mobile','supplier_status'],'post');
             $checkName = Db::name("supplier")->where([
                 "supplier_id"=>["neq",$input["supplier_id"]],
@@ -111,10 +120,10 @@ class Supplier extends Common
                 return returnState(100,'网络异常，修改供货商信息失败');
             }
         }
-        $supplierId = input("supplier_id");
         if(intval($supplierId) == 0){
             return self::error("未接收到供货商ID");
         }
+        if(!$info) return $this->error('没有供货商信息');
         $supplier = Db::name("supplier")->where("supplier_id",$supplierId)->find();
         self::assign("supplier",$supplier);
         return self::fetch();
@@ -149,7 +158,7 @@ class Supplier extends Common
     {
         Db::startTrans();
         try{
-            Db::name("supplier")->where("supplier_id",$supplierId)->setField("supplier_status",2);
+            Db::name("supplier")->where(["supplier_id"=>$supplierId,'supplier_agent_id'=>$this->agentId])->setField("supplier_status",2);
             Db::commit();
             return returnState(200,'禁用供货商成功');
         }catch (\PDOException $e){
@@ -167,7 +176,7 @@ class Supplier extends Common
     {
         Db::startTrans();
         try{
-            Db::name("supplier")->where("supplier_id",$supplierId)->setField("supplier_status",1);
+            Db::name("supplier")->where(["supplier_id"=>$supplierId,'supplier_agent_id'=>$this->agentId])->setField("supplier_status",1);
             Db::commit();
             return returnState(200,'启用供货商成功');
         }catch (\PDOException $e){
@@ -191,7 +200,7 @@ class Supplier extends Common
         }
         Db::startTrans();
         try{
-            Db::name("supplier")->where("supplier_id",$supplierId)->delete();
+            Db::name("supplier")->where(["supplier_id"=>$supplierId,'supplier_agent_id'=>$this->agentId])->delete();
             Db::commit();
             return returnState(200,'删除供货商成功');
         }catch (\PDOException $e){

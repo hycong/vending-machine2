@@ -150,9 +150,11 @@
 <!--                                                <a href="{:url('index',['parent_id'=>$vo.agent_id])}" class="dropdown-item">下级</a>-->
                                             </div>
                                         </span>
+                                        {if condition="$agentId == $vo.agent_parent_id"}
                                         <a href="{:url('editAgent',['agent_id'=>$vo.agent_id])}" class="m-portlet__nav-link btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill" title="编辑">
                                             <i class="la la-edit"></i>
                                         </a>
+                                        {/if}
                                     </td>
                                 </tr>
                                 {/volist}
